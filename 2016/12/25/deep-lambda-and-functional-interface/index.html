@@ -1,0 +1,997 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,Java8,Lambda,函数式编程,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="我上一篇文章介绍了函数式接口和Lambda表达式 ，以及Java解决所谓的闭包。http://azing.xyz/2016/12/22/lambda-and-Functional-Programming这次深入一下。 0x00 函数式接口前面讲了一下函数式接口，不过可能只是讲了个大概，大致讲了一下什么是函数式接口   函数式接口就是：一个interface，里面只有一个抽象方法，其他什么都没有。">
+<meta name="keywords" content="Java,Java8,Lambda,函数式编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数式接口和Lambda表达式深入理解">
+<meta property="og:url" content="http://xzing.github.io/2016/12/25/deep-lambda-and-functional-interface/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="我上一篇文章介绍了函数式接口和Lambda表达式 ，以及Java解决所谓的闭包。http://azing.xyz/2016/12/22/lambda-and-Functional-Programming这次深入一下。 0x00 函数式接口前面讲了一下函数式接口，不过可能只是讲了个大概，大致讲了一下什么是函数式接口   函数式接口就是：一个interface，里面只有一个抽象方法，其他什么都没有。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-3eab911b3c5091b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-b2f5132dd4857d68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-3fe1ad8f57634766.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-42538ac6cf9ae118.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-c34dd07136009926.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-e0b9a6da4bda1b31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-f32ee64c93382c58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-0d9b2930abe06bdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-40ba305a25e2587f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-03-01T07:35:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数式接口和Lambda表达式深入理解">
+<meta name="twitter:description" content="我上一篇文章介绍了函数式接口和Lambda表达式 ，以及Java解决所谓的闭包。http://azing.xyz/2016/12/22/lambda-and-Functional-Programming这次深入一下。 0x00 函数式接口前面讲了一下函数式接口，不过可能只是讲了个大概，大致讲了一下什么是函数式接口   函数式接口就是：一个interface，里面只有一个抽象方法，其他什么都没有。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-3eab911b3c5091b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2016/12/25/deep-lambda-and-functional-interface/">
+
+
+
+
+
+  <title>函数式接口和Lambda表达式深入理解 | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-stackplan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            menu.STACKPLAN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.htm" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/12/25/deep-lambda-and-functional-interface/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">函数式接口和Lambda表达式深入理解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-25T20:27:06+08:00">
+                2016-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2016/12/25/deep-lambda-and-functional-interface/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2016/12/25/deep-lambda-and-functional-interface/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2016/12/25/deep-lambda-and-functional-interface/" class="leancloud_visitors" data-flag-title="函数式接口和Lambda表达式深入理解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/1112615-3eab911b3c5091b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>我上一篇文章介绍了函数式接口和Lambda表达式 ，以及Java解决所谓的闭包。<a href="http://azing.xyz/2016/12/22/lambda-and-Functional-Programming" target="_blank" rel="noopener">http://azing.xyz/2016/12/22/lambda-and-Functional-Programming</a><br>这次深入一下。</p>
+<h2 id="0x00-函数式接口"><a href="#0x00-函数式接口" class="headerlink" title="0x00 函数式接口"></a>0x00 函数式接口</h2><p>前面讲了一下函数式接口，不过可能只是讲了个大概，大致讲了一下什么是函数式接口</p>
+<blockquote>
+<ul>
+<li>函数式接口就是：一个interface，里面只有一个抽象方法，其他什么都没有。</li>
+<li>FunctionalInterface注解标注一个函数式接口，不能标注<code>类</code>，<code>方法</code>，<code>枚举</code>，<code>属性</code>这些。</li>
+<li>如果接口被标注了<code>@FunctionalInterface</code>，这个类就必须符合函数式接口的规范</li>
+<li>即使一个接口没有标注<code>@FunctionalInterface</code>，如果这个接口满足函数式接口规则，依旧被当作函数式接口。</li>
+</ul>
+</blockquote>
+<p>这次我们来用代码来深入了解函数式接口</p>
+<a id="more"></a>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-b2f5132dd4857d68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Demo01"><br>如上图，只包含一个抽象方法是最普通的函数式接口</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-3fe1ad8f57634766.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="两个抽象方法，报错"><br>再看，当接口有两个抽象方法的时候，就不在是函数式接口了，使用<code>@FunctionalInterface</code>标注编译时会报错</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-42538ac6cf9ae118.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="特例-01"><br>奇怪的是这里有3个抽象方法，为什么不报错？<br>我们知道<code>toString</code>和<code>equals</code>方法是Object的方法，Java基础告诉我们，Object是所有类的默认父类，也就是说任何对象都会包含Object里面的方法，即使是函数式接口的实现，也会有Object的默认方法，所以：<strong>重写Object中的方法，不会计入接口方法中</strong>，除了final不能重写的，Object中所能复写的方法，写到接口中，不会影响函数式接口的特性</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-c34dd07136009926.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="特例-02"><br>Java8 允许接口中含有非抽象方法，这种在接口中使用<code>default</code>修饰的非抽象方法称为默认方法，默认方法也不会影响函数式接口的特性。我们依然可以认为<code>DemoConsumer</code>是一个函数式接口。</p>
+<h2 id="0x01-Lambda表达式深入"><a href="#0x01-Lambda表达式深入" class="headerlink" title="0x01 Lambda表达式深入"></a>0x01 Lambda表达式深入</h2><p>Lambda表达式的形式如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（param1, param2, param3, param4…）-&gt;&#123; doing……&#125;；</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>由此引申出多种写法：<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//1.</span></span><br><span class="line">() -&gt; System.out.println(<span class="string">"Hello Lambda"</span>);</span><br><span class="line"><span class="comment">//2.</span></span><br><span class="line">number1 -&gt; <span class="keyword">int</span> a = number1 * <span class="number">2</span>;</span><br><span class="line"><span class="comment">//3.</span></span><br><span class="line">(number1, number2) -&gt; <span class="keyword">int</span> a = number1 + number2;</span><br><span class="line"><span class="comment">//4.</span></span><br><span class="line">(number1, number2) -&gt; &#123;</span><br><span class="line">  <span class="keyword">int</span> a = number1 + number2;</span><br><span class="line">  System.out.println(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>下面通过重构一段代码，来深入了解一下Lambda表达式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class FunctionalInterfaceTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; demoList = Arrays.asList( &quot;Zing&quot;, &quot;阿三&quot;, &quot;小明&quot;, &quot;小红&quot;, &quot;赵日天&quot;);</span><br><span class="line">       rollCall(demoList);</span><br><span class="line">    &#125;</span><br><span class="line">    public static void rollCall(List&lt;? extends String&gt; list)&#123;</span><br><span class="line">        for(String name : list)&#123;</span><br><span class="line">            if(name.startsWith(&quot;小&quot;))&#123;</span><br><span class="line">                System.out.println(name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果希望筛选的条件能自由定义，而不是<code>name.startsWith(&quot;小&quot;)</code>写死，并且希望找到人名后，不是简单的<code>System.out.println(name);</code>，而是能做一些其他的事情。<br>继续重构：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 函数式接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Checker</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">String</span>&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">check</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Out</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">achievement</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FunctionalInterfaceTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 点名</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLambda</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; demoList = Arrays.asList(<span class="string">"小明"</span>, <span class="string">"Zing"</span>, <span class="string">"阿三"</span>, <span class="string">"小红"</span>, <span class="string">"赵日天"</span>);</span><br><span class="line">        rollCall(demoList,</span><br><span class="line">                name-&gt; name.startsWith(<span class="string">"Z"</span>),</span><br><span class="line">                name-&gt;&#123;</span><br><span class="line">                    String rate = name + <span class="string">"是单身狗!"</span>;</span><br><span class="line">                    System.out.println(rate);</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 点名逻辑</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> checker</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rollCall</span><span class="params">(List&lt;? extends String&gt; list, Checker checker,Out out)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(String name : list)&#123;</span><br><span class="line">            <span class="keyword">if</span>(checker.check(name))&#123;</span><br><span class="line">                out.achievement(name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-e0b9a6da4bda1b31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行结果"><br>一不小心暴露了什么。哈哈哈</p>
+<p>通过上面的重构，很明显，这么写也是合法的<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Checker checker =  name-&gt; name.startsWith(<span class="string">"Z"</span>),</span><br><span class="line">Out estimator = name-&gt;&#123;</span><br><span class="line">    String rate = name + <span class="string">"是单身狗!"</span>;</span><br><span class="line">    System.out.println(rate);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>由此可以知道，Lambda和函数式接口是等价的。</p>
+<h2 id="0x02-补充"><a href="#0x02-补充" class="headerlink" title="0x02 补充"></a>0x02 补充</h2><ul>
+<li><strong>类型</strong></li>
+</ul>
+<p>有人会很奇怪，为什么<br><code>Checker checker = name-&gt; name.startsWith(&quot;Z&quot;)</code><br>这样写的时候，name会被当成String 类型？</p>
+<p>这是Java的类型推断，大致逻辑是编译器知道函数式接口方法的输入参数类型，所以无论前面的参数是什么名字，都会被当成方法所需要的参数类型。</p>
+<ul>
+<li><strong>简单缩写</strong></li>
+</ul>
+<p>还有一个奇怪的地方<code>name-&gt;name.startsWith(&quot;Z&quot;)</code>为什么这样写也可以？<br>为什么不是写成<code></code>name-&gt;{ return name.startsWith(“Z”);}` 。<br>很明显，后面的写法是没有错的，</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-f32ee64c93382c58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>但是Idea会有一个虚线，说明不需要写return<br><img src="http://upload-images.jianshu.io/upload_images/1112615-0d9b2930abe06bdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="展开看说明"><br>当只需要执行一条语句的时候，lambda支持这种简洁返回。所以为什么拒绝呢？</p>
+<ul>
+<li><strong>外部参数</strong></li>
+</ul>
+<p>Lambda表达式是不能操作外部对象的，因为Lambda 实质上是接口的子对象，只能访问静态资源和本身的内部变量。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-40ba305a25e2587f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="报错！"><br>编译器会要求将外部变量使用<code>final</code>修饰。</p>
+<ul>
+<li><strong>和方法引用结合</strong></li>
+</ul>
+<p><strong>方法引用</strong><code>Method References</code>是Java8配合Lambda一起做出的新特性，当Lambda表达式里面只执行已知的方法的时候，可以使用方法引用来写出跟简洁易读的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; demoList = Arrays.asList(<span class="string">"小明"</span>, <span class="string">"Zing"</span>, <span class="string">"阿三"</span>, <span class="string">"小红"</span>, <span class="string">"赵日天"</span>);</span><br><span class="line">demoList.forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
+<p>看到这里想必心里不禁想说，我擦，好简洁！<br>官方给出了4种方法引用</p>
+<blockquote>
+<p>Kinds of Method References</p>
+</blockquote>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reference to a static method</td>
+<td>ContainingClass::staticMethodName</td>
+</tr>
+<tr>
+<td>Reference to an instance method of a particular object</td>
+<td>containingObject::instanceMethodName</td>
+</tr>
+<tr>
+<td>Reference to an instance method of an arbitrary object of a particular type</td>
+<td>ContainingType::methodName</td>
+</tr>
+<tr>
+<td>Reference to a constructor</td>
+<td>ClassName::new</td>
+</tr>
+</tbody>
+</table>
+<p>来源：<br><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html</a></p>
+</blockquote>
+<p>我想我就不用翻译了吧，出门百度翻译😉</p>
+<hr>
+<p>love&amp;peace<br><a href="https://micorochio.github.io/fs-plan/" target="_blank" rel="noopener">FS全栈计划目录：https://micorochio.github.io/fs-plan/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Java8/" rel="tag"># Java8</a>
+          
+            <a href="/tags/Lambda/" rel="tag"># Lambda</a>
+          
+            <a href="/tags/函数式编程/" rel="tag"># 函数式编程</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/21/lambda-and-Functional-Programming/" rel="next" title="函数式接口和Java8的Lambda表达式">
+                <i class="fa fa-chevron-left"></i> 函数式接口和Java8的Lambda表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/02/build-an-angularJS-2-project/" rel="prev" title="用WebStorm创建AngularJS 2项目">
+                用WebStorm创建AngularJS 2项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-函数式接口"><span class="nav-number">1.</span> <span class="nav-text">0x00 函数式接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Lambda表达式深入"><span class="nav-number">2.</span> <span class="nav-text">0x01 Lambda表达式深入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-补充"><span class="nav-number">3.</span> <span class="nav-text">0x02 补充</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

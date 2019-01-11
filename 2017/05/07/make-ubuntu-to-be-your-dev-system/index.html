@@ -1,0 +1,958 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,Linux,Ubuntu,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="0x00 从Windows安装我是Mac用户，新公司用PC，为了适应，决定用Linux做主力开发系统，首先需要安装系统 有两种方式：   使用EasyBCD 添加引导 使用UltraISO制作安装U盘   EasyBCD安装的坑：  需要自己写ISO引导位置12345title Install Ubuntu 16.04root (hd0,1)kernel (hd0,1)/vmlinuz.efi b">
+<meta name="keywords" content="Java,Linux,Ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Ubuntu快速搭建Java Web开发环境">
+<meta property="og:url" content="http://xzing.github.io/2017/05/07/make-ubuntu-to-be-your-dev-system/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="0x00 从Windows安装我是Mac用户，新公司用PC，为了适应，决定用Linux做主力开发系统，首先需要安装系统 有两种方式：   使用EasyBCD 添加引导 使用UltraISO制作安装U盘   EasyBCD安装的坑：  需要自己写ISO引导位置12345title Install Ubuntu 16.04root (hd0,1)kernel (hd0,1)/vmlinuz.efi b">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-0579862bb72c3641.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-05-06T13:16:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Ubuntu快速搭建Java Web开发环境">
+<meta name="twitter:description" content="0x00 从Windows安装我是Mac用户，新公司用PC，为了适应，决定用Linux做主力开发系统，首先需要安装系统 有两种方式：   使用EasyBCD 添加引导 使用UltraISO制作安装U盘   EasyBCD安装的坑：  需要自己写ISO引导位置12345title Install Ubuntu 16.04root (hd0,1)kernel (hd0,1)/vmlinuz.efi b">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-0579862bb72c3641.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2017/05/07/make-ubuntu-to-be-your-dev-system/">
+
+
+
+
+
+  <title>使用Ubuntu快速搭建Java Web开发环境 | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-stackplan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            menu.STACKPLAN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.htm" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/05/07/make-ubuntu-to-be-your-dev-system/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用Ubuntu快速搭建Java Web开发环境</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-07T05:06:11+08:00">
+                2017-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/05/07/make-ubuntu-to-be-your-dev-system/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/05/07/make-ubuntu-to-be-your-dev-system/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/05/07/make-ubuntu-to-be-your-dev-system/" class="leancloud_visitors" data-flag-title="使用Ubuntu快速搭建Java Web开发环境">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-从Windows安装"><a href="#0x00-从Windows安装" class="headerlink" title="0x00 从Windows安装"></a>0x00 从Windows安装</h2><p>我是Mac用户，新公司用PC，为了适应，决定用Linux做主力开发系统，首先需要安装系统</p>
+<p>有两种方式：</p>
+<blockquote>
+<ol>
+<li>使用EasyBCD 添加引导</li>
+<li>使用UltraISO制作安装U盘</li>
+</ol>
+</blockquote>
+<p>EasyBCD安装的坑：</p>
+<ol>
+<li>需要自己写ISO引导位置<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title Install Ubuntu 16.04</span><br><span class="line">root (hd0,1)</span><br><span class="line">kernel (hd0,1)/vmlinuz.efi boot=casper iso-scan/filename=/ubuntu-16.04-desktop-amd64.iso ro quiet </span><br><span class="line">splash locale=zh_CN.UTF-8</span><br><span class="line">initrd (hd0,1)/initrd.lz</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>hd(0,1)表示第一个物理分区的第二个盘，当然不一定是C盘。所以ISO文件的位置一定会坑到一堆人。<br>其实可以安装时更改hd位置，参考：<a href="http://www.jianshu.com/p/9b4e4137bc11" target="_blank" rel="noopener">http://www.jianshu.com/p/9b4e4137bc11</a></p>
+<ol start="2">
+<li>要将ISO文件解压，将其中 .disk 文件夹，initrd.lz，vmlinuz.efi 文件放到C盘中，不能少。</li>
+</ol>
+<p>UltraISO安装的坑<br>UltraISO版本一定要新版的，我用的是UltraISO 9，不然U盘启动会报错，老毛桃的刻录工具版本太低。建议自己下载一个。<br><a id="more"></a></p>
+<h2 id="0x01安装配置"><a href="#0x01安装配置" class="headerlink" title="0x01安装配置"></a>0x01安装配置</h2><p>Ubuntu 安装过程中一般情况不用特殊配置，不过我建议修改一下分区，因为是图形化界面，使用<code>/home</code>目录较多，建议使用分区大一些。<br>大致如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">分区：swap    格式：swap    大小：与内存一样大小</span><br><span class="line">分区：/boot   格式：xfs     大小：500M   （启动区以前大约40M，且不能随便更改）</span><br><span class="line">分区：/       格式：xfs     大小：剩下空间的一半</span><br><span class="line">分区：/home   格式：xfs     大小：剩下的空间（如果没有特殊要求）</span><br></pre></td></tr></table></figure></p>
+<p>其实这只是我单方面建议，因为home太小，系统被我玩的卡的不行，尤其VBOX装虚拟机 大约35G，瞬间占满home</p>
+<p>所以，要装虚拟机，建议home分大一些。，其实这些也不是绝对<br>在CentOS中，只有<code>/boot</code>和<code>/</code>两个物理分区。至于分区做什么用的，可以参考Linux 资料</p>
+<p>如果不会分区，大佬的建议是，除了<code>swap</code>和<code>/boot</code> 其余空间全部分给<code>/</code></p>
+<h2 id="0x02-环境变量的配置"><a href="#0x02-环境变量的配置" class="headerlink" title="0x02 环境变量的配置"></a>0x02 环境变量的配置</h2><p>这个很重要，也很简单，只要记住三点</p>
+<ol>
+<li>vim ~/.profile</li>
+<li>写准软件bin文件夹的位置，（不一定是bin文件夹，只要是存放可执行文件的文件夹都可以）</li>
+<li>保存好文件，然后一点要运行<code>source ~/.profile</code>才能生效</li>
+</ol>
+<p>这里以Maven，和JDK举例<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.profile</span><br></pre></td></tr></table></figure></p>
+<p>将jdk文件的位置和maven的位置准确的写进去<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#JAVA_HOME</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jdk/jdk1.8</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JAVA_HOME</span>/jre/lib:<span class="variable">$CLASSPATH</span>  </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JAVA_HOME</span>/jre/bin:<span class="variable">$PATH</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">#MAVEN_HOME</span></span><br><span class="line"><span class="built_in">export</span> MAVEN_HOME=/usr/<span class="built_in">local</span>/maven/apache-maven-3.3.9</span><br><span class="line"><span class="built_in">export</span> MAVEN_OPTS=<span class="string">"-Xms256m -Xmx512m"</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;MAVEN_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
+<p>写完 按<code>esc</code> 输入<code>:wq</code>保存退出<br>执行source命令，使环境变量生效<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.profile</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><strong>记住路径一定要写对，不然环境变量配了也白配。</strong></p>
+</blockquote>
+<h2 id="0x03-IDE和其他软件的安装"><a href="#0x03-IDE和其他软件的安装" class="headerlink" title="0x03 IDE和其他软件的安装"></a>0x03 IDE和其他软件的安装</h2><p>JDK安装我就不提了，教程特别多，只要解压后配置好环境变量就能使用了。</p>
+<p>1.eclipse<br>即下即用，想方便可以再运行后，将应用绑定到dock上</p>
+<p>2.IDEA<br>也是即下即用，不过可以将IDEA 文件夹下bin目录中 idea.sh 使用ln -s 命令链接到桌面上，或者配置IDEA_HOME。这样找运行文件会快一些。</p>
+<p>3.Node<br>这个可以用apt-get命令安装，这样会方便很多，编译安装需要安装gcc编译器，另外<br>然后执行configure<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># prefix 参数是配置软件安装的位置</span></span><br><span class="line">./configure  --prefix=/usr/<span class="built_in">local</span>/node</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
+<p>4.Python<br>建议apt-get安装</p>
+<p>5.Git<br>一样建议apt-get安装</p>
+<p>6.Nginx<br>建议编译安装，步骤自己查，我只提醒一下，记住先安装依赖，zlib，pcre，openssl。</p>
+<p>7.虚拟机安装<br>因为Wine 特别难用，所以需要安装个虚拟机，跑个QQ和微信什么的，这里推荐使用VisualBox，开源免费。<br>Ubuntu 16.04 apt源中有，如果想尝试deb安装的话，可以先apt-get 安装deb工具<br>安装完成后，可以使用 win+tab 搜索 virtual box，就能找到。<br>我用deb安装一直失败，使用后来换apt-get安装了。</p>
+<p>8.搭建梯子<br>这个有太多教程，我建议看看秋水逸冰的博客：<br><a href="https://shadowsocks.be/9.html" target="_blank" rel="noopener">https://shadowsocks.be/9.html</a><br>如果用docker搭建梯子，可以看看mritd现有的docker镜像<br><a href="https://hub.docker.com/r/mritd/shadowsocks/" target="_blank" rel="noopener">https://hub.docker.com/r/mritd/shadowsocks/</a></p>
+<h2 id="0x04-OpenVPN的使用"><a href="#0x04-OpenVPN的使用" class="headerlink" title="0x04 OpenVPN的使用"></a>0x04 OpenVPN的使用</h2><p>也许公司代码在内网中，<br><a href="http://blog.csdn.net/w746805370/article/details/51774609" target="_blank" rel="noopener">http://blog.csdn.net/w746805370/article/details/51774609</a><br>知乎大神的原文被知乎河蟹了，这里包括如何搭建Server 和运行Client，自行取用。</p>
+<p>这里只写一个Client链接VPN命令。<br>找服务端拿到client.ovpn 文件，注意位置，可能跟我的不一样。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvpn /etc/openvpn/client.ovpn</span><br></pre></td></tr></table></figure></p>
+<p>如果你不想一直开着命令窗口，可以用下面的命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohub openvpn /etc/openvpn/client.ovpn &amp;</span><br></pre></td></tr></table></figure></p>
+<h2 id="最后补充"><a href="#最后补充" class="headerlink" title="最后补充"></a>最后补充</h2><p>MySQL安装我没写，建议用docker 跑MySQL，我也才开始看docker，现在只会跑个mysql，还是没问题的。国外镜像需要良好的梯子。</p>
+<p>UI美化我也没写，你可以自己搜索unity-tweak-tool ，然后自行玩耍。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-0579862bb72c3641.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="奏是姐样的"></p>
+<hr>
+<p>其他的坑，以后遇到就给补上。<br>爱转不转吧<br>作者<a href="https://micorochio.github.io/2017/05/07/make-ubuntu-to-be-your-dev-system/" target="_blank" rel="noopener">zing</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/29/2017-04-2823:53:23/" rel="next" title="一次艰难的拒绝">
+                <i class="fa fa-chevron-left"></i> 一次艰难的拒绝
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/08/gradle-learning-01/" rel="prev" title="初探Gradle">
+                初探Gradle <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-从Windows安装"><span class="nav-number">1.</span> <span class="nav-text">0x00 从Windows安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01安装配置"><span class="nav-number">2.</span> <span class="nav-text">0x01安装配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-环境变量的配置"><span class="nav-number">3.</span> <span class="nav-text">0x02 环境变量的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-IDE和其他软件的安装"><span class="nav-number">4.</span> <span class="nav-text">0x03 IDE和其他软件的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-OpenVPN的使用"><span class="nav-number">5.</span> <span class="nav-text">0x04 OpenVPN的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后补充"><span class="nav-number">6.</span> <span class="nav-text">最后补充</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

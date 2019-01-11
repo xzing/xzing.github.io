@@ -1,0 +1,1025 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,笔记,Java基础,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="第四章讲了类的设计，大部分应该遵守，书中也给出了遵守这些规则的理由, 然后书已经看得差不多了，这样记笔记实在没啥效率，后面就不这么写了。">
+<meta name="keywords" content="Java,笔记,Java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java 读书笔记-第四章">
+<meta property="og:url" content="http://xzing.github.io/2017/08/07/reading-effective-java-03/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="第四章讲了类的设计，大部分应该遵守，书中也给出了遵守这些规则的理由, 然后书已经看得差不多了，这样记笔记实在没啥效率，后面就不这么写了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-89717ee7e4af41a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-f77f4dd18ff0fad7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-10-03T16:21:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java 读书笔记-第四章">
+<meta name="twitter:description" content="第四章讲了类的设计，大部分应该遵守，书中也给出了遵守这些规则的理由, 然后书已经看得差不多了，这样记笔记实在没啥效率，后面就不这么写了。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-89717ee7e4af41a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2017/08/07/reading-effective-java-03/">
+
+
+
+
+
+  <title>Effective Java 读书笔记-第四章 | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-stackplan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            menu.STACKPLAN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.htm" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/08/07/reading-effective-java-03/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Effective Java 读书笔记-第四章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-07T08:00:41+08:00">
+                2017-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/08/07/reading-effective-java-03/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/08/07/reading-effective-java-03/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/08/07/reading-effective-java-03/" class="leancloud_visitors" data-flag-title="Effective Java 读书笔记-第四章">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>第四章讲了类的设计，大部分应该遵守，书中也给出了遵守这些规则的理由, 然后书已经看得差不多了，这样记笔记实在没啥效率，后面就不这么写了。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-89717ee7e4af41a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<a id="more"></a>
+<h2 id="0x01-类的成员的可访问性最小化"><a href="#0x01-类的成员的可访问性最小化" class="headerlink" title="0x01 类的成员的可访问性最小化"></a>0x01 类的成员的可访问性最小化</h2><p>可访问性最小化的好处：</p>
+<ul>
+<li>隐藏了实现，保护了信息</li>
+<li>封装，减少了耦合，减轻了维护负担</li>
+</ul>
+<blockquote>
+<ul>
+<li>私有的（private） —— 只有在声明该成员的顶层类内部才可以访问这个成员。</li>
+<li>包级私有的（package-private） —— 声明该成员的包内部的任何类都可以访问这个成员。从技术上讲，它被称为“缺省（default）访问级别”，如果没有为成员指定访问修饰符，就采用这个访问级别。</li>
+<li>受保护的（protected） —— 声明该成员的子类可以访问这个成员（但有一些限制[JLS，6.6.2]），并且，声明该成员的包内部的任何类也可以访问这个成员。</li>
+<li>公有的（public） —— 在任何地方都可以访问该成员。</li>
+</ul>
+</blockquote>
+<p>一旦类的属性被公开，则你有责任负责兼容到底。<br>如果一个类中用一个对象实例作为属性，则这个属性一定不能是public的，最好是final的，可以保证线程安全。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxx</span></span>&#123;</span><br><span class="line">  <span class="comment">//潜在安全漏洞</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VALUES = &#123; ... &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="0x02-不直接公开属性修改权限，用方法操作属性"><a href="#0x02-不直接公开属性修改权限，用方法操作属性" class="headerlink" title="0x02 不直接公开属性修改权限，用方法操作属性"></a>0x02 不直接公开属性修改权限，用方法操作属性</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> x;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的类无法改变属性的表示方式，也不能对两个属性进行任何附加要求，比如限定上下限。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> y;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Point</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.x = x;</span><br><span class="line">      <span class="keyword">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getX</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> x; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getY</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> y; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setX</span><span class="params">(<span class="keyword">double</span> x)</span> </span>&#123; <span class="keyword">this</span>.x = x; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setY</span><span class="params">(<span class="keyword">double</span> y)</span> </span>&#123; <span class="keyword">this</span>.y = y; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码很好的封装了内部属性，并提供了操作方法，在方法内部可以对属性操作进行约束。<br>数据是抽象的，应最小化的缩小对外界的影响，所以可变的属性应该私有化，而不是直接暴露。只有不需要改变的属性，才可以暴露，比如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HOURS_PER_DAT    = <span class="number">24</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MINUTES_PER_HOUR = <span class="number">60</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x03-可变性最小化"><a href="#0x03-可变性最小化" class="headerlink" title="0x03 可变性最小化"></a>0x03 可变性最小化</h2><p><code>String</code>是final的。<code>BigInteger</code>,<code>BigDecimal</code>有很多属性也是final的，这些final的属性让这些类的可变性变小了，为什么要这么设计？</p>
+<ul>
+<li>不可变的类比可变类更加易于设计、实现和使用。</li>
+<li>它们不容易出错，而且不可变对象本质上是线程安全的，它们不要求同步。</li>
+<li>不可变对象可以被自由地共享。</li>
+<li>不需要进行保护性拷贝。</li>
+<li>也可以共享它们的内部信息。</li>
+<li>不可变对象为其他对象提供了大量的构建（building blocks）<blockquote>
+<p>最后一条解释一下：不可变对象即使被放进集合set、或者map中，（一般设计集合的键-值映射是不希望发生变化的）也不用考虑对象值被修改。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>当然也有缺点：每个值都需要一个新对象</strong><br>因为这有，有些操作，每进行一次操作，都会产生一个新对象，例如String的拼接。<br>所以，许多不可变的类拥有一个或者多个非final的域，它们在第一次被请求执行这些计算的时候，把一些开销昂贵的计算结果缓存在这些域中。如果将来再次请求同样的计算，就直接返回这些缓存的值，从而节约了重新计算所需要的开销。</p>
+<p>书中有了5个提议：</p>
+<blockquote>
+<ol>
+<li>不要提供任何会修改对象状态的方法（也成为mutator）。</li>
+<li>保证类不会被扩展。</li>
+<li>使所有的域都是final的。(其实不用特别严格执行这一条)</li>
+<li>使所有的域都成为私有的。</li>
+<li>确保对于任何可变组件的互斥访问。</li>
+</ol>
+</blockquote>
+<p>另外对于不可变对象，构造器应该创建完全初始化的对象，并建立起所有的约束关系。</p>
+<p>如果类不能被做成是不可变的，仍然应该尽可能地限制它的可变性。</p>
+<h2 id="0x04-复合优先继承"><a href="#0x04-复合优先继承" class="headerlink" title="0x04 复合优先继承"></a>0x04 复合优先继承</h2><p>复合优先继承的原因很简单，为了保证对象的安全。为什么这么说？<br>当类有跨包继承的时候，有些域属性按道理是不可以使用的，但是继承后某些方法就有可能会操作到这些属性，如果精心设计了，那倒没什么。就怕粗心了，有些无法预知的安全问题。<br>所以当对象有跨包使用并且需要扩展的时候，可以选择将对象放进一个新类作为域属性。这样处理会比继承好一点。</p>
+<p>学术一点就是：跨包继承打破了封装性。</p>
+<p>当然这不是绝对的，有些类天生应该被继承，这是设计上决定的。<br>书中有代码介绍了为什么会破坏封装性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Broken - Inappropriate use of inheritance!</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InstrumentedHashSet</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">HashSet</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">// The number of attempted element insertions</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> addCount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InstrumentedHashSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InstrumentedHashSet</span><span class="params">(<span class="keyword">int</span> initCap, <span class="keyword">float</span> loadFactor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(initCap, loadFactor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        addCount++;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.add(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">        addCount += c.size();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.addAll(c);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAddCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> addCount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个类看起来非常合理，但是它不能正常工作。假设我们创建了一个实例，并利用addAll方法添加了三个元素：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">InstrumentedHashSet&lt;String&gt; s =</span><br><span class="line">    <span class="keyword">new</span> InstrumentedHashSet&lt;String&gt;();</span><br><span class="line">s.addAll(Arrays.asList(<span class="string">"Snap"</span>, <span class="string">"Crackle"</span>, <span class="string">"Pop"</span>));</span><br></pre></td></tr></table></figure></p>
+<p>实际上继承后，一个<code>super.addAll()</code>导致了getAddCount方法拿出的结果不是预期的，上面的代码应该返回3，但是返回的确实6.<br>因为HashSet的addAll方法已经计数了。</p>
+<p>综上，复合优先于继承，<br>你只需要</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InstrumentedHashSet</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">private</span> HashSet&lt;E&gt; innerHashSet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就可以拥有HashSet的一切。</p>
+<p>但是！ 复合后很难使用回调模型！使用回调模型的时候，注意规避。</p>
+<blockquote>
+<p>简而言之，继承的功能非常强大，但是也存在诸多问题，因为它违背了封装原则。只有当子类和超类之间确实存在子类型关系是，使用继承才是恰当的。即便如此，如果子类和超类处在不同的包中，并且超类并不是为了继承而设计的，那么就成将会导致脆弱性（fragility）。为了避免这种脆弱性，可以用复合和转发机制来代替继承，尤其是当存在适当的接口可以实现包装类的时候。包装类不仅比子类更加健壮，而且功能也更加强大。</p>
+</blockquote>
+<h2 id="0x05-要么为继承而设计，要么禁止继承"><a href="#0x05-要么为继承而设计，要么禁止继承" class="headerlink" title="0x05 要么为继承而设计，要么禁止继承"></a>0x05 要么为继承而设计，要么禁止继承</h2><p>上一条已经说过，继承不是最佳的代码复用方式。所以当你设计一个类，并且希望这个类可以被继承的时候，一定要做好准备工作，设计好方法，提供详实的文档，保证继承者的使用。让使用者能规避一些安全问题，或者设计的时候直规避。<br>书上举了两个例子：</p>
+<ul>
+<li><p><code>java.util.AbstractCollection</code>的规范:</p>
+<blockquote>
+<p>public boolean remove(Object o)<br><br>Removes a single instance of the specified element from this colletion, if it is present(optional operation). More formally, removes an element e such that (o==null ? e==nul : o.equals()), if the collection contains one or more such elements. Returns true if the collection contained the specified element (or equivalently, if the collection changed as a result of the call).<br><br>This implementation iterates over the collecting looking for the specified element. If it finds the elements, it removes the element from the collection using the iterators’s remove method. Note that this implementation throws an UnsupportedOperationException if the iterator returned by this collection’s iterator method does not implement the remove method.<br><br>（如果这个集合中存在指定的元素，就从中删除该指定元素中的单个实例（这是项可选的操作）。更一般地，如果集合中包含一个或者多个这样的元素e，就从中删除这种元素，以便(o==null ? e==nul : o.equals())。如果集合中包含指定的元素就返回true（如果调用最终改变了集合，也一样）。<br><br>该实现遍历整个集合来查找指定的元素。如果它找到该元素，将会利用迭代器的remove方法将之从集合中删除。注意，如果由该集合的iterator方法返回的迭代器没有实现remove方法，该实现就会抛出UnsupportedOperationException。）</p>
+</blockquote>
+</li>
+<li><p><code>java.util.AbstractList</code>中的<code>removeRange</code>方法：</p>
+<blockquote>
+<p>protected void removeRange(int fromIndex, int toIndex)<br><br>Removes from this list all of the elements whose index is between fromIndex, inclusive, and toIndex, exclusive. Shifts any elements to the left (reduces their index). This call shortens the ArrayList by (toIndex - ‘fromIndex’) elements. (If toIndex==fromIndex, this operation has no effect.)<br>This method is called by the clear operation on this list and its sublists. Overriding this method to take advantage of the internals of the list implementation can substantially imporve the performance of the clear operation on this list and its sublists.<br><br>This implementation get a list iterator positioned before fromIndex and repeatedly calls ListIterator.next follows by ListIterator.remove, until the entire range has been removed. Note: If ListIterator.remove requires linear time, this implementation requires quadratic time.<br>Parameters:<br><br><br>fromIndex index of first element to be removed.<br><br>toIndex index after last element to be removed.<br><br><br>（从列表中删除所有索引处于fromIndex（含）和toIndex（不含）之间的元素。将所有符合条件的元素移到左边（减小索引）。这一调用将从ArrayList中删除（toIndex - fromIndex）之间的元素。（如果toIndex == fromIndex，这项操作就无效。）<br><br>这个方法是通过clear操作在这个列表及其自列表中调用的。覆盖这个方法来利用列表实现的内部信息，可以充分地改善这个列表及其子列表中的clear操作的性能。<br><br>这项实现获得了一个处在fromIndex之前的列表迭代器，并一次地重复调用ListIterator.remove和ListIterator.next，直到整个范围都被移除为止。<br>注意：如果ListIterator.remove需要线性的时间，该实现就需要平方级的时间。<br><br>参数：<br><br><br>fromIndex 要移除的第一个元素的索引<br><br>toIndex 要移除的最后一个元素之后的索引）<br></p>
+</blockquote>
+</li>
+</ul>
+<p>后面讲述了如何设计保护域属性，对不能继承的类要用final修饰来禁止子类化。</p>
+<h2 id="0x06-接口和抽象类优先使用接口"><a href="#0x06-接口和抽象类优先使用接口" class="headerlink" title="0x06 接口和抽象类优先使用接口"></a>0x06 接口和抽象类优先使用接口</h2><p>对的，标题即方法。</p>
+<p>你会问为什么？</p>
+<ul>
+<li>子类可以实现多个接口，却不能实现多个抽象类。</li>
+<li>实现多个接口意味着类是混合类，更加适合代码复用</li>
+<li>接口可以让程序员设计出非层次结构的类</li>
+</ul>
+<blockquote>
+<p>层次结构：就是金字塔结构</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-f77f4dd18ff0fad7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片来自网络，侵删！"></p>
+<p>这样设计，顶部就是父类，一层一层往下就是子类，如果使用抽象类，则就是金字塔结构的层次模型。如果使用接口，那就是树模型，一个类可以实现多个接口，实现接口的功能。</p>
+<p>书中有些例子，这里不说明了。</p>
+<h2 id="0x07-接口只定义类型"><a href="#0x07-接口只定义类型" class="headerlink" title="0x07 接口只定义类型"></a>0x07 接口只定义类型</h2><p>你一定见过下面的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.nio_study;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DemoInterface</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> BigDecimal PI = BigDecimal.valueOf(<span class="number">3.1415926</span>);</span><br><span class="line">    publi <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> DELETED = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> NORMAL = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><strong>这是对接口的不良使用</strong></p>
+</blockquote>
+<p>接口按照JAVA的初衷来说，是不涉及代码逻辑细节的，这些常量是纯粹的实现细节。这样的API暴露了设计细节。而且一旦以后某些属性不使用了，子类依旧需要实现该接口，维护代价也会上升。如果是存粹的常量值接口，你还不如用枚举。</p>
+<p>这里应该使用枚举类型<code>enum</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> state&#123;</span><br><span class="line">        DELETED,</span><br><span class="line">        NORMAL,</span><br><span class="line">        ABNORMAL</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果担心枚举需要扩展，可以让枚举实现一个空接口。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ADEMO</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> demo1 implements ADEMO&#123;</span><br><span class="line">    A,</span><br><span class="line">    B,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> demo2 implements ADEMO&#123;</span><br><span class="line">    C,</span><br><span class="line">    D,</span><br><span class="line">    E</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样调用处可以随时扩展新的枚举：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomthingByDemo</span><span class="params">(ADEMO A)</span></span>&#123;</span><br><span class="line">    <span class="comment">// TODO </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>以上是枚举扩展部分是个人观点，实际中请慎用，应该尽量把类设计的完善一点，有问题可以留言。</em></p>
+<h2 id="0x08-类层次优于标签类"><a href="#0x08-类层次优于标签类" class="headerlink" title="0x08 类层次优于标签类"></a>0x08 类层次优于标签类</h2><p>标签类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Tagged class - vastly inferior to a class hierarchy</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Figure</span> </span>&#123;</span><br><span class="line">    <span class="keyword">enum</span> Shape &#123; RECTANGLE, CIRCLE&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Tag field - the shape of this figure</span></span><br><span class="line">    <span class="keyword">final</span> Shape shape;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These fields are used only if shape is RECTANGLE</span></span><br><span class="line">    <span class="keyword">double</span> length;</span><br><span class="line">    <span class="keyword">double</span> width;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This field is used only if shape is CIRCLE</span></span><br><span class="line">    <span class="keyword">double</span> radius;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Constructor for circle</span></span><br><span class="line">    Figure(<span class="keyword">double</span> radius) &#123;</span><br><span class="line">        shape = Shape.CIRCLE;</span><br><span class="line">        <span class="keyword">this</span>.radius = radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Constructor for rectangle</span></span><br><span class="line">    Figure(<span class="keyword">double</span> length, <span class="keyword">double</span> width) &#123;</span><br><span class="line">        shape = Shape.RECTANGLE;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">        <span class="keyword">this</span>.width = width;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (shape) &#123;</span><br><span class="line">          <span class="keyword">case</span> RECTANGLE:</span><br><span class="line">            <span class="keyword">return</span> length * width;</span><br><span class="line">          <span class="keyword">case</span> CIRCLE:</span><br><span class="line">            <span class="keyword">return</span> Math.PI * (radius * radius);</span><br><span class="line">          <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面一段代码，大致的意思是一个类，里面有两个标签对象，圆和矩形。<br>看起来还好，但是标签一多分支代码就越复杂，难以维护；而且还有很多模板代码… 写这种代码的大部分是刨坑小能手，交接给别人后，别人在一堆分支结构中摸不着头脑，然后问候你家人也是常有的事情。</p>
+<p>这时候可以设计成层次类。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Class hierarchy replacement for a tagged class</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Figure</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">extends</span> <span class="title">Figure</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">double</span> radius;</span><br><span class="line"></span><br><span class="line">    Circle(<span class="keyword">double</span> radius) &#123; <span class="keyword">this</span>.radius = radius; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> Math.PI * (radius * radius); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> <span class="keyword">extends</span> <span class="title">Figure</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">double</span> length; </span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">double</span> width;</span><br><span class="line"></span><br><span class="line">    Rectangle(<span class="keyword">double</span> length, <span class="keyword">double</span> width) &#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">        <span class="keyword">this</span>.width  = width;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> length * width; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>优点：</p>
+<ul>
+<li>条理清楚，每个子类去掉了不相关的属性</li>
+<li>不需要大量的样板代码，无须标签区分</li>
+<li>别人看地轻松一点</li>
+<li>方便检查代码层次关系，灵活性很高</li>
+</ul>
+<h2 id="0x09-用函数对象表示策略"><a href="#0x09-用函数对象表示策略" class="headerlink" title="0x09 用函数对象表示策略"></a>0x09 用函数对象表示策略</h2><p>java已经支持lambda表达式了，所以，这一条可以使用lambda表达式来代替。<br>因为lambda表达式自身是没有域属性的（即无状态），天生线程安全。</p>
+<p>函数对象表示策略，首先知道策略是什么，这里举个例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringLengthComparator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String s1, String s2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s1.length() - s2.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在一个函数中，需要动态的根据两个参数的不同属性来执行不同的逻辑，这个逻辑就是策略。</p>
+<p>上面代码的策略是根据字符的长短实现字符串的大小比较。<br>书上有些说明，但是请还是了解一下java 8 的lambda表达式，很有用！！！<br>这里就不仔细说了。</p>
+<h2 id="0x10-优先考虑静态成员类"><a href="#0x10-优先考虑静态成员类" class="headerlink" title="0x10 优先考虑静态成员类"></a>0x10 优先考虑静态成员类</h2><blockquote>
+<p>静态成员类是最简单的一种嵌套类。最好把他看作是普通的类，只是碰巧被声明在另一个类的内部而已，它可以方位外围类的所有成员，包括那些声明为私有的成员。</p>
+</blockquote>
+<p>这么做的目的跟最早说明的访问权限最小化类似<br>当你需要一个类，只供某一个类访问时，务必将其作为静态成员类，放在某个类的内部。</p>
+<p>静态static可以减少类对外围对象的依赖，减少时间和空间的消耗。</p>
+<p>个人观点：虽让书上这么说了，不过实际上，一般很少设计一个类，只供某个类使用。如果类的代码量很大，还是抽出来做独立类吧。</p>
+<p>love &amp; peace</p>
+<p>转载请注明出处：<a href="https://micorochio.github.io/2017/08/06/reading-effective-java-03/" target="_blank" rel="noopener">https://micorochio.github.io/2017/08/06/reading-effective-java-03/</a></p>
+<p>如若有误请帮忙指正，谢谢</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/Java基础/" rel="tag"># Java基础</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/06/reading-effective-java-02/" rel="next" title="Effective Java 读书笔记-第三章">
+                <i class="fa fa-chevron-left"></i> Effective Java 读书笔记-第三章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/10/the_thread_RAM_modle_in_jvm/" rel="prev" title="Java线程的内存模型基础知识">
+                Java线程的内存模型基础知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-类的成员的可访问性最小化"><span class="nav-number">1.</span> <span class="nav-text">0x01 类的成员的可访问性最小化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-不直接公开属性修改权限，用方法操作属性"><span class="nav-number">2.</span> <span class="nav-text">0x02 不直接公开属性修改权限，用方法操作属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-可变性最小化"><span class="nav-number">3.</span> <span class="nav-text">0x03 可变性最小化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-复合优先继承"><span class="nav-number">4.</span> <span class="nav-text">0x04 复合优先继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-要么为继承而设计，要么禁止继承"><span class="nav-number">5.</span> <span class="nav-text">0x05 要么为继承而设计，要么禁止继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-接口和抽象类优先使用接口"><span class="nav-number">6.</span> <span class="nav-text">0x06 接口和抽象类优先使用接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x07-接口只定义类型"><span class="nav-number">7.</span> <span class="nav-text">0x07 接口只定义类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x08-类层次优于标签类"><span class="nav-number">8.</span> <span class="nav-text">0x08 类层次优于标签类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x09-用函数对象表示策略"><span class="nav-number">9.</span> <span class="nav-text">0x09 用函数对象表示策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x10-优先考虑静态成员类"><span class="nav-number">10.</span> <span class="nav-text">0x10 优先考虑静态成员类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

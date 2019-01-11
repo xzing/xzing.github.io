@@ -1,0 +1,961 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Linux,ansible,运维,自动化持续部署,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="因为公司想对项目逐步转向为自动化部署，所以安排我和一位大佬做起了运维。目前是想先用ansible实现从git上获取code，在ansible主机上编译，配置，打包，发布。所以就有了这篇文章。">
+<meta name="keywords" content="Linux,ansible,运维,自动化持续部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动化部署工具 Ansible填坑记录">
+<meta property="og:url" content="http://xzing.github.io/2017/05/31/ansible-learning-01/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="因为公司想对项目逐步转向为自动化部署，所以安排我和一位大佬做起了运维。目前是想先用ansible实现从git上获取code，在ansible主机上编译，配置，打包，发布。所以就有了这篇文章。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-fea8ebad97cb96d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-deb275ca4824f5ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-168b6a19d6b502f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-06-04T02:55:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自动化部署工具 Ansible填坑记录">
+<meta name="twitter:description" content="因为公司想对项目逐步转向为自动化部署，所以安排我和一位大佬做起了运维。目前是想先用ansible实现从git上获取code，在ansible主机上编译，配置，打包，发布。所以就有了这篇文章。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-fea8ebad97cb96d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2017/05/31/ansible-learning-01/">
+
+
+
+
+
+  <title>自动化部署工具 Ansible填坑记录 | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-stackplan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            menu.STACKPLAN
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.htm" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/05/31/ansible-learning-01/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自动化部署工具 Ansible填坑记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T01:48:58+08:00">
+                2017-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/05/31/ansible-learning-01/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/05/31/ansible-learning-01/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/05/31/ansible-learning-01/" class="leancloud_visitors" data-flag-title="自动化部署工具 Ansible填坑记录">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>因为公司想对项目逐步转向为自动化部署，所以安排我和一位大佬做起了运维。目前是想先用ansible实现从git上获取code，在ansible主机上编译，配置，打包，发布。所以就有了这篇文章。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-fea8ebad97cb96d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><a id="more"></a></p>
+<h1 id="0x00-安装"><a href="#0x00-安装" class="headerlink" title="0x00 安装"></a>0x00 安装</h1><p>Ubuntu 16.04<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install software-properties-common</span><br><span class="line">sudo apt-add-repository ppa:ansible/ansible</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ansible</span><br></pre></td></tr></table></figure></p>
+<p>Pip安装<br>pip是Python的包管理工具，先装好pip，再安装ansible。目前建议Python版本：2.7，pip版本：9<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install ansible</span><br></pre></td></tr></table></figure></p>
+<p>源码编译安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/ansible/ansible.git --recursive</span><br><span class="line"><span class="built_in">cd</span> ./ansible</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
+<p>CentOS安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install ansible</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+</blockquote>
+<ul>
+<li>强烈建议使用CentOS安装。且安装ansible用户最好能保证拥有其他需要使用软件的权限，如Maven，Java，Python，Mysql等<br>否则ansible使用到这些软件时，容易出现权限不足，或者找不到环境变量等问题</li>
+<li>Windows server 和OS X最好放在虚拟机里学习ansible，因为这是运维专用的，最好运行在Linux系统上，有实战意义。</li>
+</ul>
+<p>检测安装成功:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible --version</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-deb275ca4824f5ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h1 id="0x01-配置"><a href="#0x01-配置" class="headerlink" title="0x01 配置"></a>0x01 配置</h1><p>安装之后是需要做一些配置，如果你是从源码<code>make install</code>安装的，可能没有配置文件。可以直接从example文件夹中，复制一份到<code>/etc/ansible/</code>下就可以了。</p>
+<p>如果没有这个文件夹，创建一下就行，保证ansible的操作用户有这个文件夹的操作权限。</p>
+<p>如果是其他方式安装的，执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible --version</span><br></pre></td></tr></table></figure></p>
+<p>可以看到配置文件的位置，找不到就去github上看看，example文件夹里有<br>这两个文件，很重要！</p>
+<ul>
+<li>ansible.cfg：是ansible 全局的配置</li>
+<li>hosts：是ansible管理的主机列表，和部分参数。</li>
+</ul>
+<p>anbile配置文件是有优先级的<br>下面是ansible1.5只后版本查找ansible.cfg的优先级。</p>
+<ol>
+<li>ANSIBLE_CONFIG (an environment variable)</li>
+<li>ansible.cfg (in the current directory)</li>
+<li>.ansible.cfg (in the home directory)</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ol>
+<p>下面是配置参数大全，参考用。<br>刚开始使用的时候，主要配置hosts文件位置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># (扩展插件存放目录)</span></span><br><span class="line">action_plugins = /usr/share/ansible_plugins/action_plugins </span><br><span class="line"><span class="comment"># (插入Ansible模板的字符串)</span></span><br><span class="line">ansible_managed = Ansible managed: &#123;file&#125; modified on %Y-%m-%d %H:%M:%S by &#123;uid&#125; on &#123;host&#125;</span><br><span class="line"><span class="comment"># （PlayBook是否需要提供密码，默认为No）</span></span><br><span class="line"><span class="comment"># ask_pass=True</span></span><br><span class="line"><span class="comment"># （PlayBook是否需要提供sudo 密码）[](http://www.ansible.cn/docs/intro_configuration.html#ask-sudo-pass)</span></span><br><span class="line"><span class="comment"># ask_sudo_pass=True</span></span><br><span class="line"><span class="comment"># （回调函数插件存放路径）</span></span><br><span class="line">action_plugins = /usr/share/ansible_plugins/action_plugins</span><br><span class="line"><span class="comment"># （连接插件存放路径）</span></span><br><span class="line">action_plugins = /usr/share/ansible_plugins/action_plugins</span><br><span class="line"><span class="comment"># （是否展示警告信息）</span></span><br><span class="line">deprecation_warnings = True</span><br><span class="line"><span class="comment"># （是否展示跳过的主机的信息）</span></span><br><span class="line"><span class="comment"># display_skipped_hosts=True</span></span><br><span class="line"><span class="comment"># （执行错误时候赋予的变量）</span></span><br><span class="line"><span class="comment"># error_on_undefined_vars=True</span></span><br><span class="line"><span class="comment"># （默认的Shell）</span></span><br><span class="line"><span class="comment"># executable = /bin/bash</span></span><br><span class="line"><span class="comment"># （拦截器插件）</span></span><br><span class="line">action_plugins = /usr/share/ansible_plugins/action_plugins</span><br><span class="line"><span class="comment"># （最大进程数）</span></span><br><span class="line">forks=5</span><br><span class="line"><span class="comment"># （哈希特性，没事不用去动它）</span></span><br><span class="line"><span class="comment"># hash_behavior=replace</span></span><br><span class="line"><span class="comment"># （资产文件存放位置）</span></span><br><span class="line">hostfile = /etc/ansible/hosts</span><br><span class="line"><span class="comment"># （是否检查SSH key）</span></span><br><span class="line">host_key_checking=True</span><br><span class="line"><span class="comment"># （JinJa扩展）</span></span><br><span class="line">jinja2_extensions = jinja2.ext.do,jinja2.ext.i18n</span><br><span class="line"><span class="comment"># （PlayBook变量）</span></span><br><span class="line">legacy_playbook_variables = no</span><br><span class="line"><span class="comment"># （Ansible默认库）</span></span><br><span class="line">library = /usr/share/ansible</span><br><span class="line"><span class="comment"># （日志路径）</span></span><br><span class="line">log_path=/var/<span class="built_in">log</span>/ansible.log</span><br><span class="line"><span class="comment"># （插件路径）</span></span><br><span class="line">action_plugins = /usr/share/ansible_plugins/action_plugins</span><br><span class="line"><span class="comment"># （默认模块名称）</span></span><br><span class="line">module_name = <span class="built_in">command</span></span><br><span class="line"><span class="comment"># (输出样式)</span></span><br><span class="line">nocolor=0</span><br><span class="line"><span class="comment"># (是否使用cowsay打印)</span></span><br><span class="line">nocows=0</span><br><span class="line"><span class="comment"># （主机）</span></span><br><span class="line">hosts=*</span><br><span class="line"><span class="comment"># （pool间隔）</span></span><br><span class="line">poll_interval=15</span><br><span class="line"><span class="comment"># （私钥的存放路径）</span></span><br><span class="line">private_key_file=/path/to/file.pem</span><br><span class="line"><span class="comment"># （远程连接端口号）</span></span><br><span class="line">remote_port = 22</span><br><span class="line"><span class="comment"># (远程目录临时文件夹)</span></span><br><span class="line">remote_temp = <span class="variable">$HOME</span>/.ansible/tmp</span><br><span class="line"><span class="comment"># （远程用户）</span></span><br><span class="line">remote_user = root</span><br><span class="line"><span class="comment"># （角色路径）</span></span><br><span class="line">roles_path = /opt/mysite/roles</span><br><span class="line"><span class="comment"># （SUDO执行）</span></span><br><span class="line">sudo_exe=sudo</span><br><span class="line"><span class="comment"># （SUDO标记）</span></span><br><span class="line">sudo_flags=-H</span><br><span class="line"><span class="comment"># （sudo用户）</span></span><br><span class="line">sudo_user=root</span><br><span class="line"><span class="comment"># （重连次数）</span></span><br><span class="line">timeout = 10</span><br><span class="line"><span class="comment"># （传输模式） 默认用的smart</span></span><br><span class="line">transport</span><br><span class="line"><span class="comment"># （变量插件存放路径）</span></span><br><span class="line">action_plugins = /usr/share/ansible_plugins/action_plugins</span><br><span class="line"><span class="comment"># SSH变量</span></span><br><span class="line"><span class="comment"># (SSH连接参数)</span></span><br><span class="line">ssh_args = -o ControlMaster=auto -o ControlPersist=60s</span><br><span class="line"><span class="comment"># （采用SCP还是SFTP进行文件传输）</span></span><br><span class="line">scp_if_ssh=False</span><br></pre></td></tr></table></figure></p>
+<h1 id="0x02-host文件"><a href="#0x02-host文件" class="headerlink" title="0x02 host文件"></a>0x02 host文件</h1><p>hosts文件是ansible管理主机的Inventory文件，里面存放的是主机组和部分参数<br>例如<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">local</span>]</span><br><span class="line">127.0.0.2 ansible_ssh_port=22 ansible_user=zing ansible_ssh_pass=别傻了，我不会写的</span><br><span class="line"></span><br><span class="line">[webserver]</span><br><span class="line">xxx1.example.com ansible_ssh_port=33 ansible_user=root</span><br><span class="line">xxx2.example.com</span><br></pre></td></tr></table></figure></p>
+<p>port：ssh到目标主机的端口<br>user：目标主机将会以这个身份登录<br>pass：目标主机该用户的密码</p>
+<p>中括号内是主机的分组名</p>
+<ul>
+<li>下面的是主机地址，可以是ip，可以是域名。ip（域名）之后跟的是链接参数。</li>
+<li>如果啥都不写，安装咱们之前写的ansible.cfg中定义的默认配置来进行ssh链接</li>
+<li>其中如果两台主机进行了ssh 互信。那么ansible_ssh_pass参数可以不写。<br><a href="http://ansible-tran.readthedocs.io/en/latest/docs/intro_inventory.html" target="_blank" rel="noopener">http://ansible-tran.readthedocs.io/en/latest/docs/intro_inventory.html</a><br>在上面有详细讲解hosts文件定义的规范和技巧。</li>
+</ul>
+<p>遇到几个坑：</p>
+<p>错误：用户没有ssh的权限。首先保证user能被ssh连上。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to connect to the host via ssh: Permission denied</span><br></pre></td></tr></table></figure></p>
+<p>错误：密码不对<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authentication failure.</span><br></pre></td></tr></table></figure></p>
+<p>错误：主机没有sshpass模块，这个想办法自己装上。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">to use the <span class="string">'ssh'</span> connection <span class="built_in">type</span> with passwords, you must install the sshpass program</span><br></pre></td></tr></table></figure></p>
+<h1 id="0x03-爱因斯坦的小板凳-hello-world"><a href="#0x03-爱因斯坦的小板凳-hello-world" class="headerlink" title="0x03 爱因斯坦的小板凳 hello world"></a>0x03 爱因斯坦的小板凳 hello world</h1><p>接下来介绍使用ansible在目标主机上打印出：hello world<br>先不管命令的含义<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible 127.0.0.1 -m <span class="built_in">command</span> -a <span class="string">'echo "hello world"'</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-168b6a19d6b502f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="成功！"></p>
+<h1 id="0x04-参考"><a href="#0x04-参考" class="headerlink" title="0x04 参考"></a>0x04 参考</h1><ul>
+<li><a href="http://ansible-tran.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">http://ansible-tran.readthedocs.io/en/latest/index.html</a></li>
+<li><a href="http://docs.ansible.com/ansible/" target="_blank" rel="noopener">http://docs.ansible.com/ansible/</a></li>
+<li><a href="http://docs.ansible.com/ansible/intro_configuration.html" target="_blank" rel="noopener">http://docs.ansible.com/ansible/intro_configuration.html</a></li>
+<li>已失效：<a href="http://www.kiratechblog.com/?p=420" target="_blank" rel="noopener">http://www.kiratechblog.com/?p=420</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
+          
+            <a href="/tags/运维/" rel="tag"># 运维</a>
+          
+            <a href="/tags/自动化持续部署/" rel="tag"># 自动化持续部署</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/08/gradle-learning-01/" rel="next" title="初探Gradle">
+                <i class="fa fa-chevron-left"></i> 初探Gradle
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/05/ansible-learning-02/" rel="prev" title="Ansible自动化部署入门">
+                Ansible自动化部署入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-安装"><span class="nav-number">1.</span> <span class="nav-text">0x00 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-配置"><span class="nav-number">2.</span> <span class="nav-text">0x01 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-host文件"><span class="nav-number">3.</span> <span class="nav-text">0x02 host文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-爱因斯坦的小板凳-hello-world"><span class="nav-number">4.</span> <span class="nav-text">0x03 爱因斯坦的小板凳 hello world</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-参考"><span class="nav-number">5.</span> <span class="nav-text">0x04 参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
