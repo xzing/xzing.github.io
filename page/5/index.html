@@ -322,7 +322,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/08/26/JSP-leaning/">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/08/26/change-Launchpad-colum-number/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -341,7 +341,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/08/26/JSP-leaning/" itemprop="url">JSP学习笔记</a></h1>
+                <a class="post-title-link" href="/2016/08/26/change-Launchpad-colum-number/" itemprop="url">OS X 中Launchpad 图标行列数量更改</a></h1>
         
 
         <div class="post-meta">
@@ -373,8 +373,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2016/08/26/JSP-leaning/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2016/08/26/JSP-leaning/" class="cy_cmt_count" data-xid="2016/08/26/JSP-leaning/" itemprop="commentsCount"></span>
+                <a href="/2016/08/26/change-Launchpad-colum-number/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2016/08/26/change-Launchpad-colum-number/" class="cy_cmt_count" data-xid="2016/08/26/change-Launchpad-colum-number/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -382,7 +382,7 @@
 
           
           
-             <span id="/2016/08/26/JSP-leaning/" class="leancloud_visitors" data-flag-title="JSP学习笔记">
+             <span id="/2016/08/26/change-Launchpad-colum-number/" class="leancloud_visitors" data-flag-title="OS X 中Launchpad 图标行列数量更改">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -411,54 +411,31 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h4 id="1-Tomcat的目录结构"><a href="#1-Tomcat的目录结构" class="headerlink" title="1.Tomcat的目录结构"></a>1.Tomcat的目录结构</h4><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bin：</td>
-<td>存放各种平台的启动、停止等命令</td>
-</tr>
-<tr>
-<td>conf：</td>
-<td>存放服务器的各种配置文件</td>
-</tr>
-<tr>
-<td>lib：</td>
-<td>存放服务器需要的jar包</td>
-</tr>
-<tr>
-<td>log：</td>
-<td>服务器的日志</td>
-</tr>
-<tr>
-<td>temp：</td>
-<td>服务器启动时，存放临时文件</td>
-</tr>
-<tr>
-<td>webapps：</td>
-<td>Web应用文件存放于此</td>
-</tr>
-<tr>
-<td>work：</td>
-<td>Tomcat吧JSP生成的servlet存放在这个文件夹下</td>
-</tr>
-</tbody>
-</table>
+          <p>改变Launchpad内图标排列的行数和列数</p>
+<p>启动<strong>终端</strong></p>
+<ul>
+<li>改变行数量<br><code>defaults write com.apple.dock springboard-rows -int X</code></li>
+</ul>
+<ul>
+<li><p>改变列数量<br><code>defaults write com.apple.dock springboard-columns -int X</code></p>
+</li>
+<li><p>使改变生效<br><code>killall Dock</code></p>
+<p><strong>将X换成数字</strong></p>
+</li>
+</ul>
+<p>如果想恢复原样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.dock springboard-rows Default</span><br><span class="line">defaults write com.apple.dock springboard-columns Default</span><br><span class="line">killall Dock</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><em>提示：千万不要改太小了，一行最少放5个，否则改回来你得拖好多图标到某页上</em><br><br><strong> 本人实践，13寸笔记本上，最佳是一页5行，每行9个（rows=5，columns=9）</strong>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/08/26/JSP-leaning/#more" rel="contents">
+            <a class="btn" href="/2016/08/26/change-Launchpad-colum-number/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
-    </div>
+    </li></ul></div>
 
     <div>
       
