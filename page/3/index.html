@@ -1615,7 +1615,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/01/16/mark-CentOS-7-install-mysql-5-7/">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/01/16/change-linux-yum-repo/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -1634,7 +1634,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/16/mark-CentOS-7-install-mysql-5-7/" itemprop="url">(笔记备份)CentOS 7 安装与卸载 MySQL 5.7</a></h1>
+                <a class="post-title-link" href="/2017/01/16/change-linux-yum-repo/" itemprop="url">(笔记备份)CentOS 7 换yum源</a></h1>
         
 
         <div class="post-meta">
@@ -1666,8 +1666,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/01/16/mark-CentOS-7-install-mysql-5-7/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/01/16/mark-CentOS-7-install-mysql-5-7/" class="cy_cmt_count" data-xid="2017/01/16/mark-CentOS-7-install-mysql-5-7/" itemprop="commentsCount"></span>
+                <a href="/2017/01/16/change-linux-yum-repo/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2017/01/16/change-linux-yum-repo/" class="cy_cmt_count" data-xid="2017/01/16/change-linux-yum-repo/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -1675,7 +1675,7 @@
 
           
           
-             <span id="/2017/01/16/mark-CentOS-7-install-mysql-5-7/" class="leancloud_visitors" data-flag-title="(笔记备份)CentOS 7 安装与卸载 MySQL 5.7">
+             <span id="/2017/01/16/change-linux-yum-repo/" class="leancloud_visitors" data-flag-title="(笔记备份)CentOS 7 换yum源">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1704,16 +1704,12 @@
 
       
         
-          <p>还挺麻烦的，老折腾了，CentOS 7 用MariaDB代替了MySQL，<br>yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，<br>不过由于服务器在国外，我的小水管4kb/s 安装了十几个小时。</p>
-<h2 id="0x00-先介绍卸载"><a href="#0x00-先介绍卸载" class="headerlink" title="0x00 先介绍卸载"></a>0x00 先介绍卸载</h2><p>防止重装<br></p>
-<ul>
-<li>yum方式</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> #查看yum是否安装过mysql</span><br><span class="line">yum list installed mysql*</span><br></pre></td></tr></table></figure>
-<p>如或显示了列表，说明系统中有MySQL<br><img src="http://upload-images.jianshu.io/upload_images/1112615-bba6b2eec0c79a1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+          <h2 id="0x00-备份原来的源"><a href="#0x00-备份原来的源" class="headerlink" title="0x00 备份原来的源"></a>0x00 备份原来的源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bk</span></span><br></pre></td></tr></table></figure>
+<h2 id="0x01-下载阿里源"><a href="#0x01-下载阿里源" class="headerlink" title="0x01 下载阿里源"></a>0x01 下载阿里源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /etc/yum.repos.d</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo wget -nc http://mirrors.aliyun.com/repo/Centos-7.repo</span></span><br></pre></td></tr></table></figure>
+<h2 id="0x02-更改阿里yum源为默认源"><a href="#0x02-更改阿里yum源为默认源" class="headerlink" title="0x02 更改阿里yum源为默认源"></a>0x02 更改阿里yum源为默认源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mv CentOS-7.repo CentOS-Base.repo</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/16/mark-CentOS-7-install-mysql-5-7/#more" rel="contents">
+            <a class="btn" href="/2017/01/16/change-linux-yum-repo/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1797,7 +1793,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">47</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1810,7 +1806,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-count">68</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
