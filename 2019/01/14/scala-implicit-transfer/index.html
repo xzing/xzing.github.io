@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="elasticsearch,">
+  <meta name="keywords" content="Scala,隐式转换,">
 
 
 
@@ -90,20 +90,22 @@
 
 
 
-<meta name="description" content="文章搬家N久没动手写东西了，原来的博客估计被我玩废了。这次讲一个开发中遇到的问题。现在有一个document如下：">
-<meta name="keywords" content="elasticsearch">
+<meta name="description" content="最早写安卓的应该知道，每个点击事件就是一个匿名内部类,例如1234567loginBtn = (Button) findViewById(BTN_ID);loginBtn.setOnClickListener(new View.OnClickListener() &amp;#123;    @Override    public void onClick(View view) &amp;#123;">
+<meta name="keywords" content="Scala,隐式转换">
 <meta property="og:type" content="article">
-<meta property="og:title" content="博客迁移">
-<meta property="og:url" content="http://xzing.github.io/2019/01/14/elasticsearch-count-the-number-of-array/index.html">
+<meta property="og:title" content="Scala的隐式转换">
+<meta property="og:url" content="http://xzing.github.io/2019/01/14/scala-implicit-transfer/index.html">
 <meta property="og:site_name" content="AIX Zing">
-<meta property="og:description" content="文章搬家N久没动手写东西了，原来的博客估计被我玩废了。这次讲一个开发中遇到的问题。现在有一个document如下：">
+<meta property="og:description" content="最早写安卓的应该知道，每个点击事件就是一个匿名内部类,例如1234567loginBtn = (Button) findViewById(BTN_ID);loginBtn.setOnClickListener(new View.OnClickListener() &amp;#123;    @Override    public void onClick(View view) &amp;#123;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-a1674f0b81489fd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-01-14T03:01:17.671Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-0ea66bc12f53d708.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-92567a9cd095afa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-8368d2a96320786c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-14T07:43:22.752Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="博客迁移">
-<meta name="twitter:description" content="文章搬家N久没动手写东西了，原来的博客估计被我玩废了。这次讲一个开发中遇到的问题。现在有一个document如下：">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1112615-a1674f0b81489fd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Scala的隐式转换">
+<meta name="twitter:description" content="最早写安卓的应该知道，每个点击事件就是一个匿名内部类,例如1234567loginBtn = (Button) findViewById(BTN_ID);loginBtn.setOnClickListener(new View.OnClickListener() &amp;#123;    @Override    public void onClick(View view) &amp;#123;">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1112615-0ea66bc12f53d708.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -131,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://xzing.github.io/2019/01/14/elasticsearch-count-the-number-of-array/">
+  <link rel="canonical" href="http://xzing.github.io/2019/01/14/scala-implicit-transfer/">
 
 
 
 
 
-  <title>博客迁移 | AIX Zing</title>
+  <title>Scala的隐式转换 | AIX Zing</title>
 </head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -324,7 +326,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/01/14/elasticsearch-count-the-number-of-array/">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/01/14/scala-implicit-transfer/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -341,7 +343,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">博客迁移</h1>
+          <h1 class="post-title" itemprop="name headline">Scala的隐式转换</h1>
         
 
         <div class="post-meta">
@@ -353,7 +355,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-14T06:07:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-14T19:00:23+08:00">
                 2019-01-14
               </time>
             
@@ -373,8 +375,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2019/01/14/elasticsearch-count-the-number-of-array/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/01/14/elasticsearch-count-the-number-of-array/" itemprop="commentsCount"></span>
+                <a href="/2019/01/14/scala-implicit-transfer/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/01/14/scala-implicit-transfer/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -382,7 +384,7 @@
 
           
           
-             <span id="/2019/01/14/elasticsearch-count-the-number-of-array/" class="leancloud_visitors" data-flag-title="博客迁移">
+             <span id="/2019/01/14/scala-implicit-transfer/" class="leancloud_visitors" data-flag-title="Scala的隐式转换">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -410,16 +412,29 @@
       
 
       
-        <p><img src="https://upload-images.jianshu.io/upload_images/1112615-a1674f0b81489fd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>文章搬家<br>N久没动手写东西了，原来的博客估计被我玩废了。这次讲一个开发中遇到的问题。<br>现在有一个document如下：</p>
-<a id="more"></a>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"_index"</span>: <span class="string">"test_index_8088"</span>,</span><br><span class="line">  <span class="attr">"_type"</span>: <span class="string">"_doc"</span>,</span><br><span class="line">  <span class="attr">"_id"</span>: <span class="string">"fa358749ec18e"</span>,</span><br><span class="line">  <span class="attr">"_version"</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">"_score"</span>: <span class="number">8.956308</span>,</span><br><span class="line">  <span class="attr">"_source"</span>: &#123;</span><br><span class="line">    <span class="attr">"collectGroupId"</span>: <span class="string">"126"</span>,</span><br><span class="line">    <span class="attr">"createTime"</span>: <span class="string">"2018-10-28 21:05:45"</span>,</span><br><span class="line">    <span class="attr">"products"</span>: [</span><br><span class="line">      <span class="string">"6Gq9wI-cAAgAATtm48QX17zNzBinKTwIkMfZClrLxnGxx01Tcui"</span>,</span><br><span class="line">      <span class="string">"7Mrm-iPgAAgAASFBdrR7bYVCPK6acU-_9fam7K5ZuzLUysdNuii"</span>,</span><br><span class="line">      <span class="string">"9b_L759yAAgAASNTxVpC3L9CV_cKoRgFeuzH6LWbgPrndqO539t"</span>,</span><br><span class="line">      <span class="string">"A9jPFpaeAAgAAQby28p89RsysknPafv3NUOspVoORTTUsvCOowj"</span>,</span><br><span class="line">      <span class="string">"AFZJwTu0AAgAAR3wO_EfpkYEIrG_cS0hOdLmIRgOoIZH05xqRcE"</span>,</span><br><span class="line">      <span class="string">"AcPVcTbmAAgAAQldtAxISNo3eGe7sXNa66x7S6BKYit9uNjtTQE"</span>,</span><br><span class="line">      <span class="string">"CG8Exa1AAAgAAS-UnPEWxT_yHLNs_2IYVpJwcdm1wQLlEF99Pu_"</span>,</span><br><span class="line">      <span class="string">"ClARKM7eAAgAAQgWWJJtsAYDuY5CVWi9ibuZeOMqHzWZBedrtZT"</span>,</span><br><span class="line">      <span class="string">"DCcGF8cSAAgAAQb4RZko-mE6EsBtRrCS4qawDc4Nf9YShXzogiG"</span>,</span><br><span class="line">      <span class="string">"G7r4dRkYAAgAAREwvmZvI-FXFBxKpEaFTDQfbCIaK8qp2NVYM1b"</span>,</span><br><span class="line">      <span class="string">"HiXaAldyAAgAAS6bVaEFohXAb_jJmP0zhUewaUFeIeERd3N5Krg"</span>,</span><br><span class="line">      <span class="string">"KhZNddRIAAgAARzY4EA8UHf9R0vRuwKE9Nq6Fbm8Q-RV55RRnwL"</span>,</span><br><span class="line">      <span class="string">"LQgqBgrsAAgAARPY2i52soLNgeg46mRfLoxBptoGsl2VVGMABrL"</span>,</span><br><span class="line">      <span class="string">"My9WHr7KAAgAASyQu5ku6ltNl7Hz3yNUHOxQxRKZLuOiVmqWGHQ"</span>,</span><br><span class="line">      <span class="string">"NS2uRagaAAgAAQ37ddZ0IxihFxyZPXRbUggd3f6h14iMo8uH7P8"</span>,</span><br><span class="line">      <span class="string">"Oi8FzUv-AAgAAS8gPhAFyteFxb3W3n0O2Y5P-ZGkk7egm81gA6v"</span>,</span><br><span class="line">      <span class="string">"PsxpwxQaAAgAATsSsAkc3IuyqAcI2hM2XXWayrN-ejcD8WXYtC4"</span>,</span><br><span class="line">      <span class="string">"PxAmpUOcAAgAARwLvIEseJ-JmIOA45HcrLJtZX3UR2jnkU-5j6n"</span>,</span><br><span class="line">      <span class="string">"Q5g-uCnMAAgAASNziwp8ovaMcUpBUYHPKrKqZkj5pTFmOD6Nyyz"</span>,</span><br><span class="line">      <span class="string">"RE9oJOugAAgAARRWsGEt5TDTRJbR1jpGCB6OAZp0c7AYUrZogRb"</span>,</span><br><span class="line">      <span class="string">"TkdtqYWcAAgAARDqZ_J9QuV_CR88qMCpe7BJWL-oe05yYPejl7g"</span>,</span><br><span class="line">      <span class="string">"UC0y4BBoAAgAATsjzkQE1CAXxwPAESvbXcmo_9ygqwpHHvvAG6P"</span>,</span><br><span class="line">      <span class="string">"VAQ2teJwAAgAAQWq1pZHGY0PmTtsN9FvHFeynhxs9WIk9o9kTDz"</span>,</span><br><span class="line">      <span class="string">"YEXHe2jYAAgAASu3QqB2dcVB6OKO7lsMCOSVxuTtJbHO7pnUnwA"</span>,</span><br><span class="line">      <span class="string">"ZjpMJ0-QAAgAAQ1vAXErFv-XfzkrkuWX2lhT14nDgRcwPuc26_M"</span>,</span><br><span class="line">      <span class="string">"_D-xqoEcAAgAAT5dxKQT7fvNuRQEG7h7HDroOF5rdCKMgJpqIcp"</span>,</span><br><span class="line">      <span class="string">"_T8K0LzIAAgAATY4kPRXDfM9094X4_PCXFKjwdlMhONRb8ZcmEH"</span>,</span><br><span class="line">      <span class="string">"_tyqjLHMAAgAAQBb_kA7FOsaketh7sOauAmtTxGpobm26qIW07C"</span>,</span><br><span class="line">      <span class="string">"cRo_BhFWAAgAAT43m5AvxO9N18ZEQ_JfAlZd7N-GAkn5JaxEWAD"</span>,</span><br><span class="line">      <span class="string">"cr31zA9GAAgAAQ-6sEA4O2pgQplW_kq7gHoGn3mkMSi2Kjz9bhx"</span>,</span><br><span class="line">      <span class="string">"dKAAV6G2AAgAATfskVpYQA4uPPEo3PfxkUxqD5Pssjl1ZmxfSOb"</span>,</span><br><span class="line">      <span class="string">"e91zvaNQAAgAAQvRwoQgPrahjvK8g4lKr6fkLRh1DVPdWk_cRXS"</span>,</span><br><span class="line">      <span class="string">"eP-es5liAAgAATs3NuQ-77zfUq3mBJyD6Zg-nFMZan9InCLfxHX"</span>,</span><br><span class="line">      <span class="string">"eaw9J4oCAAgAASQ1r8QN9Ca9TJFGUsYnYoSKZD3QpqjqYSwIaaE"</span>,</span><br><span class="line">      <span class="string">"foyca7GqAAgAARC0mQQSh9W3xdz9zJBw98KBn00SXmSxKadEFRp"</span>,</span><br><span class="line">      <span class="string">"gcYfQvCEAAgAASg4xo5OfJ6gDnYTcIEveKlN7TU3jykaFGdyM8h"</span>,</span><br><span class="line">      <span class="string">"hJsqPPP0AAgAAQsAi8Zs0az6cc3yAZxm-sBKOu_ZzDNtZ2iSxn3"</span>,</span><br><span class="line">      <span class="string">"jKeNbhNKAAgAAT6L7pEXhY8pISiTvn4NBfP2kSqK1O8-LvsPZvV"</span>,</span><br><span class="line">      <span class="string">"kScrbEaUAAgAAROihYBn4DWiF1k-pin2LAi3l6QehnBgObYuzB2"</span>,</span><br><span class="line">      <span class="string">"l_t5JKsaAAgAAQQUNwEjxYD1CLACmoCe0lgm2QFLzsFTjxmJEeL"</span>,</span><br><span class="line">      <span class="string">"lbY0AYoKAAgAARcV18EkMEPRLdWQBYLYEe3Jymf3Qenkdnf2Kii"</span>,</span><br><span class="line">      <span class="string">"mEluiu10AAgAAStluSQiBEH4MJwp1Opert0LX0SqQVjn5NoCzuo"</span>,</span><br><span class="line">      <span class="string">"nGzMA6bSAAgAATsPrMQS3hO-Kp3JcxMptBxvCwil4ixZSfU0z3j"</span>,</span><br><span class="line">      <span class="string">"n_Iho9pSAAgAATbCVJEQGFS9FZS6J2mAww1sedHSMiuALETUDBK"</span>,</span><br><span class="line">      <span class="string">"oXbd1Qy-AAgAAQrWDHRMaygEdrZCc0fzYMBgcJ2LHTRbvD3lNij"</span>,</span><br><span class="line">      <span class="string">"q1L8AY10AAgAASRzsQhpscmj7RrPMcQhV6ns_WulrUh0QcocJf0"</span>,</span><br><span class="line">      <span class="string">"sQJwR3saAAgAAQ6OEbEXy9Wncv292_6kGKsvNGlgZBUspFW2y9A"</span>,</span><br><span class="line">      <span class="string">"t6YDLucMAAgAATDezxhu5rgyxkk0gGRivjVIzxHm9g5RIp655cX"</span>,</span><br><span class="line">      <span class="string">"uEMMe8M4AAgAAQlWmjk4hvweEQ6nKJGPSS0LpVHKV9yd4PnVgru"</span>,</span><br><span class="line">      <span class="string">"vlIqggKWAAgAAQuco_5dCQ8CKiF7Mt0qLP9aTeTfuQYB3CM_RiA"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"allowAdd"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">"dataType"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">"defaultValue"</span>: <span class="string">"2018-10-28 13:05:45"</span>,</span><br><span class="line">    <span class="attr">"propertyId"</span>: <span class="number">145</span>,</span><br><span class="line">    <span class="attr">"propertyName"</span>: <span class="string">"被爬虫扒窃的开始时间"</span>,</span><br><span class="line">    <span class="attr">"sortCode"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">"stageId"</span>: <span class="number">187</span>,</span><br><span class="line">    <span class="attr">"thickness"</span>: <span class="number">378</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>ps: 参数为测试使用的参数，部分是针对博文修改</em></p>
-<p>现在有一个头疼的事情是，boss想知道这个index下的的产品数量，因为products项是个数组，查官方聚合搜索文档，貌似没啥答案，只能求助万能的Stack Overflow。</p>
-<p><a href="https://stackoverflow.com/questions/49250267/how-to-get-array-count-of-nested-object-in-elastic-search" target="_blank" rel="noopener">https://stackoverflow.com/questions/49250267/how-to-get-array-count-of-nested-object-in-elastic-search</a></p>
-<p>抱歉我又搬砖了</p>
-<p>那么用这种方式的queryDSL的写法现在已经换了，用上述的document举个栗子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># kibana DEV Tools脚本</span><br><span class="line">GET test_index_8088/_doc/_search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;size&quot;:0,</span><br><span class="line">  &quot;aggs&quot;: &#123;</span><br><span class="line">    &quot;productNum&quot;: &#123;</span><br><span class="line">      &quot;sum&quot;: &#123;</span><br><span class="line">        &quot;script&quot;: &#123;</span><br><span class="line">          &quot;source&quot;: &quot;params._source.products.size()&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>对的，”inline” 换成了”source”，<br>这统计的是<code>test_index_8088</code> index下的所有product数量，针对特定的要求，可以添加query环节。后面我也会看看聚合，还有script脚本查询。有机会分享给各位。</p>
-<p>喜欢请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/p/3bc797dcfa62" target="_blank" rel="noopener">https://www.jianshu.com/p/3bc797dcfa62</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
+        <p><img src="https://upload-images.jianshu.io/upload_images/1112615-0ea66bc12f53d708.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>最早写安卓的应该知道，每个点击事件就是一个匿名内部类,例如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loginBtn = (Button) findViewById(BTN_ID);</span><br><span class="line">loginBtn.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        Login();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>后来，有了注解的自动调用方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@OnClick</span>(BTN_ID)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClickBtn</span><span class="params">(View view)</span></span>&#123;</span><br><span class="line">    Login()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再后来，支持了Lambda表达式，更方便阅读了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loginBtn.setOnClickListener(view -&gt; Login())</span><br></pre></td></tr></table></figure></p>
+<p>最近学了Scala，又发现了一种新的东西，有点像Lambda，但是又是一种新的思路<br>叫隐式转换<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首先定义好转换函数</span></span><br><span class="line"><span class="keyword">implicit</span> <span class="function"><span class="keyword">def</span> <span class="title">viewToListener</span></span>(f:(v <span class="type">View</span>)=&gt;<span class="type">Unit</span>):<span class="type">View</span>.<span class="type">OnClickListener</span>=&#123;</span><br><span class="line">    <span class="keyword">new</span> <span class="type">View</span>.<span class="type">OnClickListener</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        public void onClick(<span class="type">View</span> view) &#123;</span><br><span class="line">            f(view);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用处</span></span><br><span class="line">loginBtn.setOnClickListener(_:<span class="type">View</span> =&gt; <span class="type">Login</span>())</span><br></pre></td></tr></table></figure></p>
+<p>是不是傻眼了，调用几乎跟Lambda处一样，却多定义了一个函数。<br>没错，这样看是傻了吧唧的，但是要知道这是Scala啊，不是Java。如果你没有现成的setOnClickListener方法调用，没有封装好的API，这玩意儿就出奇的有意思。<br>再举个例子<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plus</span></span>(a:<span class="type">Int</span>, b:<span class="type">Int</span>)=&#123;</span><br><span class="line">    a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那调用的时候就是<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plus(<span class="number">1</span>,<span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+<p>如果你想让字符串”1” 和字符串”2”相加<br>那就的这样<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a = <span class="keyword">new</span> <span class="type">StringOps</span>(<span class="string">"1"</span>).toInt();</span><br><span class="line"><span class="keyword">val</span> b = <span class="keyword">new</span> <span class="type">StringOps</span>(<span class="string">"2"</span>).toInt();</span><br><span class="line">plus(a,b)</span><br><span class="line"></span><br><span class="line"><span class="comment">//搞成一行就是</span></span><br><span class="line">plus(<span class="keyword">new</span> <span class="type">StringOps</span>(<span class="string">"1"</span>).toInt() ,<span class="keyword">new</span> <span class="type">StringOps</span>(<span class="string">"2"</span>).toInt());</span><br></pre></td></tr></table></figure></p>
+<p>相当啰嗦<br>定义一个隐式函数做一个隐式转换<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">implicit</span> <span class="function"><span class="keyword">def</span> <span class="title">str2Int</span></span>(x: <span class="type">String</span>): <span class="type">Int</span> = <span class="keyword">new</span> <span class="type">StringOps</span>(x).toInt()</span><br></pre></td></tr></table></figure></p>
+<p>使用<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入包隐式转换工具函数（包名根据实际情况有变化）</span></span><br><span class="line"><span class="keyword">import</span> com.xxxxUtil._</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 实际使用</span></span><br><span class="line">    plus(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">    plus(<span class="string">"1"</span>,<span class="string">"2"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>如果你有IDEA，会显示成这样<br><img src="https://upload-images.jianshu.io/upload_images/1112615-92567a9cd095afa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不显示的话，参考链接里有调整方法"></p>
+<p>直接把String转换成了Int</p>
+<p>当然，虽然方便了，缺点也很明显，</p>
+<ol>
+<li>如果不开IDEA提示，你会看的很懵逼，甚至你会怀疑编译器坏了。</li>
+<li>如果str2Int转换出异常了，报错的信息对初学者来说，又是一个懵逼的存在</li>
+<li>如果存在另一个隐式转换，入参和出参一模一样。会报错</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-8368d2a96320786c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="这下编译器真的懵了，不知道怎么转了"></p>
+<p>我目前就实验了这么一点点，后面有时间继续看看这里面还有啥好玩的</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>调节IDEA显示隐式转换：<a href="https://blog.jetbrains.com/scala/2018/07/25/intellij-scala-plugin-2018-2-advanced-implicit-support-improved-patterns-autocompletion-semantic-highlighting-scalafmt-and-more/" target="_blank" rel="noopener">https://blog.jetbrains.com/scala/2018/07/25/intellij-scala-plugin-2018-2-advanced-implicit-support-improved-patterns-autocompletion-semantic-highlighting-scalafmt-and-more/</a></p>
+<p>工具书：《Scala编程 第三版》</p>
+<p>喜欢请点个赞<br>转载请注明出处：<a href="https://xzing.github.io/">https://xzing.github.io/</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
 
       
     </div>
@@ -449,7 +464,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+            <a href="/tags/Scala/" rel="tag"># Scala</a>
+          
+            <a href="/tags/隐式转换/" rel="tag"># 隐式转换</a>
           
         </div>
       
@@ -462,8 +479,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/11/byzantine-consensus-algorithm/" rel="next" title="拜占庭共识算法">
-                <i class="fa fa-chevron-left"></i> 拜占庭共识算法
+              <a href="/2019/01/14/elasticsearch-count-the-number-of-array/" rel="next" title="博客迁移">
+                <i class="fa fa-chevron-left"></i> 博客迁移
               </a>
             
           </div>
@@ -471,10 +488,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/14/scala-implicit-transfer/" rel="prev" title="Scala的隐式转换">
-                Scala的隐式转换 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -523,8 +536,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
           <p class="site-author-name" itemprop="name">zing</p>
@@ -575,6 +597,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">1.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
