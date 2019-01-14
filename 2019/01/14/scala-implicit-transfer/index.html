@@ -90,21 +90,18 @@
 
 
 
-<meta name="description" content="最早写安卓的应该知道，每个点击事件就是一个匿名内部类,例如1234567loginBtn = (Button) findViewById(BTN_ID);loginBtn.setOnClickListener(new View.OnClickListener() &amp;#123;    @Override    public void onClick(View view) &amp;#123;">
 <meta name="keywords" content="Scala,隐式转换">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scala的隐式转换">
 <meta property="og:url" content="http://xzing.github.io/2019/01/14/scala-implicit-transfer/index.html">
 <meta property="og:site_name" content="AIX Zing">
-<meta property="og:description" content="最早写安卓的应该知道，每个点击事件就是一个匿名内部类,例如1234567loginBtn = (Button) findViewById(BTN_ID);loginBtn.setOnClickListener(new View.OnClickListener() &amp;#123;    @Override    public void onClick(View view) &amp;#123;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-0ea66bc12f53d708.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-92567a9cd095afa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-8368d2a96320786c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-01-14T07:43:22.752Z">
+<meta property="og:updated_time" content="2019-01-14T07:51:29.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala的隐式转换">
-<meta name="twitter:description" content="最早写安卓的应该知道，每个点击事件就是一个匿名内部类,例如1234567loginBtn = (Button) findViewById(BTN_ID);loginBtn.setOnClickListener(new View.OnClickListener() &amp;#123;    @Override    public void onClick(View view) &amp;#123;">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1112615-0ea66bc12f53d708.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -413,6 +410,7 @@
 
       
         <p><img src="https://upload-images.jianshu.io/upload_images/1112615-0ea66bc12f53d708.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<a id="more"></a>
 <p>最早写安卓的应该知道，每个点击事件就是一个匿名内部类,例如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loginBtn = (Button) findViewById(BTN_ID);</span><br><span class="line">loginBtn.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        Login();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>后来，有了注解的自动调用方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@OnClick</span>(BTN_ID)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClickBtn</span><span class="params">(View view)</span></span>&#123;</span><br><span class="line">    Login()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>再后来，支持了Lambda表达式，更方便阅读了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loginBtn.setOnClickListener(view -&gt; Login())</span><br></pre></td></tr></table></figure></p>
