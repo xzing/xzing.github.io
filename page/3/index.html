@@ -312,6 +312,161 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/05/07/make-ubuntu-to-be-your-dev-system/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/07/make-ubuntu-to-be-your-dev-system/" itemprop="url">使用Ubuntu快速搭建Java Web开发环境</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-07T05:06:11+08:00">
+                2017-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/05/07/make-ubuntu-to-be-your-dev-system/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2017/05/07/make-ubuntu-to-be-your-dev-system/" class="cy_cmt_count" data-xid="2017/05/07/make-ubuntu-to-be-your-dev-system/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/05/07/make-ubuntu-to-be-your-dev-system/" class="leancloud_visitors" data-flag-title="使用Ubuntu快速搭建Java Web开发环境">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="0x00-从Windows安装"><a href="#0x00-从Windows安装" class="headerlink" title="0x00 从Windows安装"></a>0x00 从Windows安装</h2><p>我是Mac用户，新公司用PC，为了适应，决定用Linux做主力开发系统，首先需要安装系统</p>
+<p>有两种方式：</p>
+<blockquote>
+<ol>
+<li>使用EasyBCD 添加引导</li>
+<li>使用UltraISO制作安装U盘</li>
+</ol>
+</blockquote>
+<p>EasyBCD安装的坑：</p>
+<ol>
+<li>需要自己写ISO引导位置<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title Install Ubuntu 16.04</span><br><span class="line">root (hd0,1)</span><br><span class="line">kernel (hd0,1)/vmlinuz.efi boot=casper iso-scan/filename=/ubuntu-16.04-desktop-amd64.iso ro quiet </span><br><span class="line">splash locale=zh_CN.UTF-8</span><br><span class="line">initrd (hd0,1)/initrd.lz</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>hd(0,1)表示第一个物理分区的第二个盘，当然不一定是C盘。所以ISO文件的位置一定会坑到一堆人。<br>其实可以安装时更改hd位置，参考：<a href="http://www.jianshu.com/p/9b4e4137bc11" target="_blank" rel="noopener">http://www.jianshu.com/p/9b4e4137bc11</a></p>
+<ol start="2">
+<li>要将ISO文件解压，将其中 .disk 文件夹，initrd.lz，vmlinuz.efi 文件放到C盘中，不能少。</li>
+</ol>
+<p>UltraISO安装的坑<br>UltraISO版本一定要新版的，我用的是UltraISO 9，不然U盘启动会报错，老毛桃的刻录工具版本太低。建议自己下载一个。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/07/make-ubuntu-to-be-your-dev-system/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/04/29/2017-04-2823:53:23/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1588,145 +1743,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/02/06/my-batis-note/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/image/head_3.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AIX Zing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/06/my-batis-note/" itemprop="url">MyBatis使用笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-06T23:56:19+08:00">
-                2017-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/02/06/my-batis-note/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/02/06/my-batis-note/" class="cy_cmt_count" data-xid="2017/02/06/my-batis-note/" itemprop="commentsCount"></span>
-                </a>
-              
-            
-          
-
-          
-          
-             <span id="/2017/02/06/my-batis-note/" class="leancloud_visitors" data-flag-title="MyBatis使用笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </span></div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://upload-images.jianshu.io/upload_images/1112615-9f3500165cc54a1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h2 id="1-编写配置文件"><a href="#1-编写配置文件" class="headerlink" title="1. 编写配置文件"></a>1. 编写配置文件</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/06/my-batis-note/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1774,7 +1790,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
