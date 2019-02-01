@@ -401,35 +401,16 @@
 
       
         
-          
-            <h2 id="IDEA-你又挂了"><a href="#IDEA-你又挂了" class="headerlink" title="IDEA 你又挂了"></a>IDEA 你又挂了</h2><p>更新了Jetbrain新的IDEA，用来写Scala玩。然后令人痛不欲生的事情发生了.<br>刚写了不到3行代码</p>
+          <p><img src="https://upload-images.jianshu.io/upload_images/1112615-9153f43264895672.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="IDEA-你又挂了"><a href="#IDEA-你又挂了" class="headerlink" title="IDEA 你又挂了"></a>IDEA 你又挂了</h2><p>更新了Jetbrain新的IDEA，用来写Scala玩。然后令人痛不欲生的事情发生了.<br>刚写了不到3行代码</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/1112615-883dcd7a2bc7a47a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>我以为是偶发现象，于是杀掉了进程重启了IDEA<br><img src="https://upload-images.jianshu.io/upload_images/1112615-250d2ebaeabd7e78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>然后更过分的事情：<br><img src="https://upload-images.jianshu.io/upload_images/1112615-d3aafe003d58db55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>说实话，我从来没有经历过CPU 1000%以上的时候，这一血被IDEA夺了。</p>
-<p>然后我回退了版本，2018.3.3，依旧不行。写不了几行CPU风扇就蹭蹭转，IDEA假死。<br>只能上网找原因，搜了半小时都没结果</p>
-<p>那么重点来了，你起码得找到哪里出问题了，才能搞定假死的问题吧。</p>
-<h2 id="面向搜索引擎编程失败之后，只能面向日志编程了。"><a href="#面向搜索引擎编程失败之后，只能面向日志编程了。" class="headerlink" title="面向搜索引擎编程失败之后，只能面向日志编程了。"></a>面向搜索引擎编程失败之后，只能面向日志编程了。</h2><p>首先杀死IDEA，重启。然后一个字不动。立刻打开日志<br><img src="https://upload-images.jianshu.io/upload_images/1112615-1920187f9746c23a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="在这里"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-addc0da1182f7e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原来你躲在这里"></p>
-<p>然后回到IDEA继续写代码，等IDEA假死之后，立刻打开日志（双击就可以，Apple自带的日志浏览器还是很棒的）<br>打开之后一堆报错！</p>
-<h2 id="Scala-原来是你！"><a href="#Scala-原来是你！" class="headerlink" title="Scala 原来是你！"></a>Scala 原来是你！</h2><p><img src="https://upload-images.jianshu.io/upload_images/1112615-a60f0be2ad747120.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="抓到元凶"></p>
-<p>Scala plugin看来兼容3.4不是很好。去Plugins 删掉这个拖后腿的渣渣。然后查查有没有新的<br><a href="https://plugins.jetbrains.com/plugin/1347-scala" target="_blank" rel="noopener">去plugins网站找找有没有在3.4发布后更新的插件</a><br><img src="https://upload-images.jianshu.io/upload_images/1112615-63514d883a683a85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2019.1.1没什么卵用"></p>
-<p>有一个2019的，我下载下来发现安装不了，这货是给新的2019.1 EAP使用的。机智的我点了一下<br><img src="https://upload-images.jianshu.io/upload_images/1112615-7d5be311961c775e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>重新安装新版本的Scala插件，虽然不是稳定版，但是CPU终于不狂飙了！</p>
-<blockquote>
-<p>ps：2019-02-01 今天又更新了新的Scala插件 stable版</p>
-</blockquote>
-<h2 id="总结经验"><a href="#总结经验" class="headerlink" title="总结经验"></a>总结经验</h2><ol>
-<li>任何IDE崩溃都是可以也应该去看崩溃日志的。</li>
-<li>崩溃日志可以搜索错误，或者寻找出错的地方。一般都能查到原因</li>
-<li>升级新版本的软件时，要备份好旧版本，以备不时之需。</li>
-<li>新版本的软件如果有配套插件需要升级，务必及时升级。</li>
-</ol>
-<blockquote>
-<p>最后祝看官大爷们春节快乐</p>
-</blockquote>
-<p>喜欢请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/02/findout-ide-crash/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
