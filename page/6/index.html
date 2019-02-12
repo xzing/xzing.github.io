@@ -312,6 +312,155 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/07/10/How-Nginx-Reverse-Proxy-a-Blog/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/10/How-Nginx-Reverse-Proxy-a-Blog/" itemprop="url">如何用Nginx反向代理静态博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-10T19:56:07+08:00">
+                2016-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2016/07/10/How-Nginx-Reverse-Proxy-a-Blog/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2016/07/10/How-Nginx-Reverse-Proxy-a-Blog/" class="cy_cmt_count" data-xid="2016/07/10/How-Nginx-Reverse-Proxy-a-Blog/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2016/07/10/How-Nginx-Reverse-Proxy-a-Blog/" class="leancloud_visitors" data-flag-title="如何用Nginx反向代理静态博客">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>之前使用Hexo在各个平台搭建了一遍博客，最后发现，最好的办法是，本地搭建Hexo，编译文件后的文件放在git上，在克隆一个仓库到自己的服务器上，最后在自己的服务器上跑一个Nginx ，代理静态文件就行了。<br>折腾了老么久。</p>
+<p>至于Nginx是什么，我就一句话：老牛逼的反向代理了，还能做负载均衡啥的。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-62140cb11bcc3ed2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="博客方案"></p>
+<p>假设你在自己电脑上已经搭建好了Hexo 并且已经上传到了Github上。现在教你怎么让自己的服务器运行自己的博客</p>
+<blockquote>
+<p>步骤如下</p>
+<ul>
+<li>第一步：安装Nginx</li>
+<li>第二步：克隆Git仓库到服务器</li>
+<li>第三步：修改Nginx配置文件，重启Nginx</li>
+</ul>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/07/10/How-Nginx-Reverse-Proxy-a-Blog/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/06/11/mark-Install-Nginx-on-CentOS/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -800,7 +949,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
