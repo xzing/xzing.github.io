@@ -312,6 +312,188 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/07/28/How-The-IoC-Containder-Work/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/28/How-The-IoC-Containder-Work/" itemprop="url">(FS计划)SpringMVC的IoC容器对bean的管理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-28T08:03:50+08:00">
+                2016-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2016/07/28/How-The-IoC-Containder-Work/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2016/07/28/How-The-IoC-Containder-Work/" class="cy_cmt_count" data-xid="2016/07/28/How-The-IoC-Containder-Work/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2016/07/28/How-The-IoC-Containder-Work/" class="leancloud_visitors" data-flag-title="(FS计划)SpringMVC的IoC容器对bean的管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先，加载bean需要先写好配置文件（其实用注解也可以，只是不方便理解）</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--导入其他资源XML--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">”resource1.xml”/</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--Bean定义，class定义Bean的实现类，id称为标识符，其余id为别名--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">”bean1”class</span>=<span class="string">””</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">”bean2”class</span>=<span class="string">””</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--指定name，这样name就是“标识符”--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">”bean2”class</span>=<span class="string">””</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--alias为bean指定别名--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">alias</span> <span class="attr">alias</span>=<span class="string">"bean3"</span> <span class="attr">name</span>=<span class="string">"bean2"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--导入其他依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">”resource2.xml”/</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>多个配置文件是可以编制成数组，交给ApplicationContext加载的。<br>但是大家现在用习惯了注解</p>
+<p>SpringMVC的IoC容器中，管理的bean 内部表示为<a href="https://github.com/spring-projects/spring-framework/blob/master/spring-beans%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fbeans%2Ffactory%2Fconfig%2FBeanDefinition.java" target="_blank" rel="noopener">BeanDefinition</a></p>
+<blockquote>
+</blockquote>
+<p><strong>一个bean需要以下属性</strong></p>
+<ul>
+<li>全限定类名（FQN）：用于定义Bean的实现类;</li>
+<li>Bean行为定义：这些定义了Bean在容器中的行为；包括作用域（单例、原型创建）、是否惰性初始化及生命周期等；</li>
+<li>Bean创建方式定义：说明是通过构造器还是工厂方法创建Bean；</li>
+<li>Bean之间关系定义：即对其他bean的引用，也就是依赖关系定义，这些引用bean也可以称之为同事bean 或依赖bean，也就是依赖注入。</li>
+</ul>
+<p>bean使用时必须有一个唯一的指定：<br>id必须唯一不可重复，一个bean可以有多个id，其余的id是别名；<br>没有id可以用唯一不重复的name，若有需要可以使用alias来指定别名，或者用<code>,</code>隔开；<br>同时指定id和name，id就是标识符，而name就是别名，总之必须在IoC容器中唯一；<br>若id和name都没有指定，则bean在使用的时候会使用全限定的类名进行注入。</p>
+<h2 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h2><p>SpringMVC是通过反射来实例化bean的。<br><strong>1.通过构造器实例化bean：</strong><br>Spring IoC容器即能使用默认空构造器也能使用有参数构造器两种方式创建Bean，无参数的直接在XML文件中直接定义bean节点，带参数的可以在XML文件中bean节点下增加<code>constructor-arg</code>参数属性：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"test"</span> <span class="attr">class</span>=<span class="string">"com.zing.test.HelloMvc"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 指定构造器参数 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"0"</span> <span class="attr">value</span>=<span class="string">"第一个参数"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>index是参数所在的位置，value表示注入常量值，也可以指定引用，指定引用使用ref来引用另一个Bean定义，当然注入还可以根据参数类型和名字来配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 根据变量名注入 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"testIoC"</span> <span class="attr">value</span>=<span class="string">"第一个参数"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 根据参数类型注入--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span> <span class="attr">value</span>=<span class="string">"第一个参数"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--构造器里注入另一个bean--&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 通过构造器注入 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloApi"</span> <span class="attr">class</span>=<span class="string">"com.zing.test.NormalBean"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bean2"</span> <span class="attr">class</span>=<span class="string">"com.zing.test.TestProperty"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"helloApi"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">" helloApi"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>2.使用静态工厂来实例化bean</strong><br>需要编写工厂方法，这样实例化的时候即可使用工厂方法来实例化bean</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.test.factory_test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zing.test.hello.HelloImpl;</span><br><span class="line"><span class="comment">//工厂类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloIoCFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HelloImpl <span class="title">newInstance</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HelloImpl(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一种工厂配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--为bean配置工厂方法--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.zing.test.factory_test.HelloIoCFactory"</span> <span class="attr">id</span>=<span class="string">"helloIoC"</span> <span class="attr">factory-method</span>=<span class="string">"newInstance"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"0"</span> <span class="attr">value</span>=<span class="string">"哈哈"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>第二种工厂配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"instanceFactory"</span> <span class="attr">class</span>=<span class="string">"com.zing.test.factory_test.HelloIoCFactory"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"byIndex"</span> <span class="attr">factory-bean</span>=<span class="string">"instanceFactory"</span>  <span class="attr">factory-method</span>=<span class="string">"newInstance"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"0"</span> <span class="attr">value</span>=<span class="string">"Hello World!"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"1"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过工厂获取实例</span></span><br><span class="line">BeanFactory beanFactory = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"spring-config.xml"</span>);</span><br><span class="line">HelloInterface hello = beanFactory.getBean(<span class="string">"helloIoC"</span>,HelloImpl.class);</span><br><span class="line">hello.sayHello();</span><br></pre></td></tr></table></figure>
+<p><strong>3.通过setter方法进行注入</strong><br>个人觉得：有必要吗？都是用注解的好不好，就列一下，不详细记录了</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 通过setter方式进行依赖注入 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bean"</span> <span class="attr">class</span>=<span class="string">"com.zing.test.factory_test.HelloImpl4"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"message"</span> <span class="attr">value</span>=<span class="string">"Hello World!"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"index"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>4.延时实例化</strong><br>延时初始化又叫惰性初始化，作用是消除资源占用巨大的bean在程序初始化时的影响，防止因为这个bean，导致启动缓慢。延迟初始化的Bean通常会在第一次使用时被初始化；<br>配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 通过配置lazy-init="true"实现惰性初始化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloApi"</span> <span class="attr">class</span>=<span class="string">"com.zing.test.HelloImpl lazy-init="</span><span class="attr">true</span>"/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h2><p>自动装配就是指由Spring来自动地注入依赖对象，无需人工参与。</p>
+<p>目前Spring3.0支持<code>no</code>、<code>byName</code>、<code>byType</code>、<code>constructor</code>四种自动装配，默认是“no”指不支持自动装配的，其中Spring3.0已不推荐使用之前版本的<code>autodetect</code>自动装配，推荐使用Java 5+支持的（<code>@Autowired</code>）注解方式代替；</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloApi"</span> <span class="attr">class</span>=<span class="string">"com.zing.test.HelloImpl"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bean"</span> <span class="attr">class</span>=<span class="string">"com.zing.test.bean.HelloApiDecorator"</span> <span class="attr">autowire</span>=<span class="string">"byName"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>byName</code>使用setter方法根据参数名称注入</li>
+<li>根据类型注入，<strong>在根据类型注入时，将把当前自己排除在外！</strong>如果是<code>List</code>，<code>Map</code>这样的类型，用<code>autowire-candidate</code>属性为<code>false</code>来让指定的<code>Bean</code>放弃作为自动装配的候选者。使用<code>primary</code>属性为<code>true</code>来指定某个<code>Bean</code>为首选<code>Bean</code></li>
+<li><code>constructor</code>构造器注入，只用在构造器中。</li>
+<li><em><code>autodetect</code>自动匹配，不推荐使用！</em></li>
+</ul>
+<blockquote>
+<p>不是所有的类型都支持自动匹配，<strong><code>Object</code>、基本数据类型（<code>Date、CharSequence、Number、URI、URL、Class、int</code></strong>不支持<br><code>&lt;bean&gt;</code>标签的autowire-candidate属性可被设为false，这个bean将不能作为可依赖注入的参数<br><strong>数组类型、集合（<code>Set、Collection、List</code>）接口类型</strong>：将根据泛型获取匹配的所有候选者并注入到数组或集合中<br><strong>字典（Map）接口类型：</strong>同样根据泛型信息注入，键必须为<code>String</code>类型的<code>Bean</code>名字，值根据泛型信息获取</p>
+</blockquote>
+<p><strong>缺点</strong></p>
+<blockquote>
+<p>如果你用的是自动装配的话，出了问题会比较难找。不知道是哪里注入进来的，唉，这就是我等菜比为什么要先从配置开始看。现在流行用注解，会好不少。</p>
+</blockquote>
+<h2 id="依赖检查"><a href="#依赖检查" class="headerlink" title="依赖检查"></a>依赖检查</h2><p>用于检查Bean定义的属性都注入数据了，不管是自动装配的还是配置方式注入的都能检查，如果没有注入数据将报错，从而提前发现注入错误，只检查具有setter方法的属性。<br>对于注解来说没什么用，简单介绍一下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"test"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 注意我们没有注入，所以测试时会报错 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bean"</span> <span class="attr">dependency-check</span>=<span class="string">"objects"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"message"</span> <span class="attr">value</span>=<span class="string">"Haha"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong><code>dependency-check</code></strong>配置检查类型，一共有4种：<code>null，object，simple，all</code><br>null=不检查，为默认配置。<br>object=检查除基本类型外的依赖对象。<br>simple=对基本类型进行依赖检查，包括数组类型，其他依赖不报错；<br>all=所有类型都检查</p>
+<hr>
+<p><a href="https://micorochio.github.io/fs-plan/" target="_blank" rel="noopener">FS全栈计划目录：https://micorochio.github.io/fs-plan/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/07/10/How-Nginx-Reverse-Proxy-a-Blog/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -949,7 +1131,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
