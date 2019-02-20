@@ -93,7 +93,7 @@
 <meta name="description" content="Stream 中有两个操作比较繁琐，一个是reduce，另一个是collect其中，collect的理解相对难一些，所以先研究collect，（汇聚操作）">
 <meta name="keywords" content="Java,笔记,Java进阶,Stream,流">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java8  Stream 系列（二）Stream应当注意的点">
+<meta property="og:title" content="Java8  Stream 系列（三）深入源码之Collector">
 <meta property="og:url" content="http://xzing.github.io/2019/02/20/the-stream-in-java8-03/index.html">
 <meta property="og:site_name" content="AIX Zing">
 <meta property="og:description" content="Stream 中有两个操作比较繁琐，一个是reduce，另一个是collect其中，collect的理解相对难一些，所以先研究collect，（汇聚操作）">
@@ -105,9 +105,9 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-759548af52b5a516.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-da29f688e67dcfb4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-d136d2c96ddbd6f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-20T08:01:44.598Z">
+<meta property="og:updated_time" content="2019-02-20T08:04:40.960Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java8  Stream 系列（二）Stream应当注意的点">
+<meta name="twitter:title" content="Java8  Stream 系列（三）深入源码之Collector">
 <meta name="twitter:description" content="Stream 中有两个操作比较繁琐，一个是reduce，另一个是collect其中，collect的理解相对难一些，所以先研究collect，（汇聚操作）">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-a2e5ca22d61d710a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
@@ -143,7 +143,7 @@
 
 
 
-  <title>Java8  Stream 系列（二）Stream应当注意的点 | AIX Zing</title>
+  <title>Java8  Stream 系列（三）深入源码之Collector | AIX Zing</title>
 </head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -337,7 +337,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java8  Stream 系列（二）Stream应当注意的点</h1>
+          <h1 class="post-title" itemprop="name headline">Java8  Stream 系列（三）深入源码之Collector</h1>
         
 
         <div class="post-meta">
@@ -378,7 +378,7 @@
 
           
           
-             <span id="/2019/02/20/the-stream-in-java8-03/" class="leancloud_visitors" data-flag-title="Java8  Stream 系列（二）Stream应当注意的点">
+             <span id="/2019/02/20/the-stream-in-java8-03/" class="leancloud_visitors" data-flag-title="Java8  Stream 系列（三）深入源码之Collector">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
