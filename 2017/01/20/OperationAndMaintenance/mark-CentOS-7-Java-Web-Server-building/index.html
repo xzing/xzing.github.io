@@ -1,0 +1,1027 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,Linux,CentOS,Java Web,服务器,nginx,redis,jenkins,NodeJS,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="搭建Java服务器就是把JavaEE的Web部署环境和软件都安装好，这是我自己用旧的PC搭建的，所以只是单个服务器，不涉及分布式。这些安装步骤都可以单独找教程 0x00 前言  gcc gcc-c++ JDK Redis Nginx MySQL NodeJS Jenkins   可能需要的附加软件  git Python Python pip…">
+<meta name="keywords" content="Java,Linux,CentOS,Java Web,服务器,nginx,redis,jenkins,NodeJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7 搭建Java Web服务器笔记">
+<meta property="og:url" content="http://xzing.github.io/2017/01/20/OperationAndMaintenance/mark-CentOS-7-Java-Web-Server-building/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="搭建Java服务器就是把JavaEE的Web部署环境和软件都安装好，这是我自己用旧的PC搭建的，所以只是单个服务器，不涉及分布式。这些安装步骤都可以单独找教程 0x00 前言  gcc gcc-c++ JDK Redis Nginx MySQL NodeJS Jenkins   可能需要的附加软件  git Python Python pip…">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-01T06:32:18.052Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS7 搭建Java Web服务器笔记">
+<meta name="twitter:description" content="搭建Java服务器就是把JavaEE的Web部署环境和软件都安装好，这是我自己用旧的PC搭建的，所以只是单个服务器，不涉及分布式。这些安装步骤都可以单独找教程 0x00 前言  gcc gcc-c++ JDK Redis Nginx MySQL NodeJS Jenkins   可能需要的附加软件  git Python Python pip…">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2017/01/20/OperationAndMaintenance/mark-CentOS-7-Java-Web-Server-building/">
+
+
+
+
+
+  <title>CentOS7 搭建Java Web服务器笔记 | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-fs-plan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-plane"></i> <br>
+            
+            全栈计划
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/01/20/OperationAndMaintenance/mark-CentOS-7-Java-Web-Server-building/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CentOS7 搭建Java Web服务器笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-20T01:53:01+08:00">
+                2017-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/01/20/OperationAndMaintenance/mark-CentOS-7-Java-Web-Server-building/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/01/20/OperationAndMaintenance/mark-CentOS-7-Java-Web-Server-building/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/01/20/OperationAndMaintenance/mark-CentOS-7-Java-Web-Server-building/" class="leancloud_visitors" data-flag-title="CentOS7 搭建Java Web服务器笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>搭建Java服务器就是把JavaEE的Web部署环境和软件都安装好，这是我自己用旧的PC搭建的，所以只是单个服务器，不涉及分布式。这些安装步骤都可以单独找教程</p>
+<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><blockquote>
+<ul>
+<li>gcc gcc-c++</li>
+<li>JDK</li>
+<li>Redis</li>
+<li>Nginx</li>
+<li>MySQL</li>
+<li>NodeJS</li>
+<li>Jenkins</li>
+</ul>
+</blockquote>
+<p>可能需要的附加软件</p>
+<ul>
+<li>git</li>
+<li>Python</li>
+<li><p>Python pip<br>…</p>
+<a id="more"></a>
+<h2 id="0x01-JDK安装和配置"><a href="#0x01-JDK安装和配置" class="headerlink" title="0x01 JDK安装和配置"></a>0x01 JDK安装和配置</h2><p>其实CentOS 7 自带Java7 为了适应lambda ，更新到Java8</p>
+</li>
+<li><p>卸载之前的版本</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]#  rpm -qa | grep java</span><br><span class="line">javapackages-tools-3.4.1-6.el7_0.noarch</span><br><span class="line">tzdata-java-2014i-1.el7.noarch</span><br><span class="line">java-1.7.0-openjdk-headless-1.7.0.71-2.5.3.1.el7_0.x86_64</span><br><span class="line">java-1.7.0-openjdk-1.7.0.71-2.5.3.1.el7_0.x86_64</span><br><span class="line">python-javapackages-3.4.1-6.el7_0.noarch</span><br></pre></td></tr></table></figure>
+<p>根据列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# rpm -e --nodeps tzdata-java-2014i-1.el7.noarch</span><br><span class="line">[root@localhost ~]# rpm -e --nodeps java-1.7.0-openjdk-headless-1.7.0.71-2.5.3.1.el7_0.x86_64</span><br><span class="line">[root@localhost ~]# rpm -e --nodeps java-1.7.0-openjdk-1.7.0.71-2.5.3.1.el7_0.x86_64</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>下载JDK包</li>
+</ul>
+<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">下载地址：http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+<p>因为Oracle搞了cookie验证，所以下载完使用ftp上传到CentOS上也可以，或者，wget带上Cookie<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget --no-cookies --no-check-certificate --header &quot;Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie&quot; &quot;http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-i586.rpm&quot;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>安装rpm</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh jdk-8u102-linux-i586.rpm</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置JAVA_HOME</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br><span class="line"># 最末尾添加</span><br><span class="line">JAVA_HOME=/usr/local/jdk/jdk1.8.0_91</span><br><span class="line">JRE_HOME=$JAVA_HOME/jre</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">CLASSPATH=:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib/dt.jar</span><br><span class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH</span><br></pre></td></tr></table></figure>
+<p>保存 退出vi<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使环境变量生效</span></span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>验证安装成功</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# java -version</span><br><span class="line">java version &quot;1.8.0_92&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_92-b14)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.92-b14, mixed mode)</span><br></pre></td></tr></table></figure>
+<h2 id="0x02-安装Redis"><a href="#0x02-安装Redis" class="headerlink" title="0x02 安装Redis"></a>0x02 安装Redis</h2><p>因为Redis不大，可以使用yum工具安装</p>
+<ul>
+<li>yum 安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 系统应该安装了EPEL</span><br><span class="line">sudo yum -y install redis</span><br></pre></td></tr></table></figure>
+<p>如果不行</p>
+<ul>
+<li>编译安装</li>
+</ul>
+<p><a href="https://linux.cn/article-6719-1.html" target="_blank" rel="noopener">参考这篇文章：https://linux.cn/article-6719-1.html</a></p>
+<ul>
+<li>Redis 相关操作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> # 启动服务：</span><br><span class="line"> systemctl start redis.service</span><br><span class="line"> # 停止服务：</span><br><span class="line">systemctl stop redis.service</span><br><span class="line"> # 重启服务：</span><br><span class="line">systemctl restart redis.service</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://redis.io/" target="_blank" rel="noopener">Redis官网：https://redis.io/</a></li>
+</ul>
+<h2 id="0x03-安装Nginx"><a href="#0x03-安装Nginx" class="headerlink" title="0x03 安装Nginx"></a>0x03 安装Nginx</h2><ul>
+<li>yum 安装</li>
+</ul>
+<p>如果不是网络被限制的话，建议用这个方法安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install nginx</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>编译安装<br></p>
+</li>
+<li><p>检查依赖<br></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rpm -q gcc</span><br><span class="line">rpm -q openssl</span><br><span class="line">rpm -q zlib</span><br><span class="line">rpm -q pcre</span><br></pre></td></tr></table></figure>
+<p><code>package pcre is not installed</code>表示pcre未被安装，否则表示该项依赖已被安装<br></p>
+<ul>
+<li>安装依赖<br><br>选择没有安装的依赖，yum安装<br></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> # 建议使用root用户</span><br><span class="line">yum install -y gcc gcc-c++</span><br><span class="line">yum -y install openssl</span><br><span class="line">yum -y install zlib</span><br><span class="line">yum -y install pcre</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建目录，安装Nginx<br></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 请使用root或管理员用户</span><br><span class="line"># 创建安装目录</span><br><span class="line">cd /</span><br><span class="line">mkdir appHome</span><br><span class="line">cd appHome</span><br><span class="line"># 下载Nginx，解压</span><br><span class="line">wget http://nginx.org/download/nginx-1.11.8.tar.gz</span><br><span class="line">tar zxvf nginx-1.9.15.tar.gz</span><br><span class="line">cd nginx-1.9.15</span><br><span class="line"># 编译安装</span><br><span class="line">./configure</span><br><span class="line">make </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动Ngixn<br><br>如果是yum安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start nginx</span><br></pre></td></tr></table></figure>
+<p>如果是编译安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx/bin</span><br><span class="line">sudo  ./nginx</span><br></pre></td></tr></table></figure>
+<p>记得打开端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> # 查看端口是否开放</span><br><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
+<p>建议开放非80端口，修改一下Nginx配置，开80端口可能被查水表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 打开80端口</span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-service=http --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x04-安装MySQL"><a href="#0x04-安装MySQL" class="headerlink" title="0x04 安装MySQL"></a>0x04 安装MySQL</h2><p>这个老折腾了，CentOS 7 用MariaDB代替了MySQL，yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，不过由于服务器在国外，我的小水管4kb/s 安装了10个小时，所以我弄了个新笔记<br><a href="http://www.jianshu.com/p/e54ff5283f18" target="_blank" rel="noopener">CentOS 7 安装与卸载MySQL 5.7跳坑：http://www.jianshu.com/p/e54ff5283f18</a></p>
+<h2 id="0x05-安装NodeJS"><a href="#0x05-安装NodeJS" class="headerlink" title="0x05 安装NodeJS"></a>0x05 安装NodeJS</h2><p>下载安装并配置</p>
+<ul>
+<li><p>下载解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /appHome/</span><br><span class="line">wget https://nodejs.org/dist/v6.9.4/node-v6.9.4-linux-x64.tar.xz</span><br><span class="line">tar -zxvf node-v6.9.4-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd node-v6.9.4-linux-x64</span><br><span class="line">./configure </span><br><span class="line">make </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>末尾添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># NODE_HOME</span><br><span class="line">NODE_HOME =/appHome/node-v6.9.4-linux-x64</span><br><span class="line"> PATH=$PATH:$NODE_HOME/bin</span><br><span class="line">export PATH NODE_HOME</span><br></pre></td></tr></table></figure></p>
+<p>保存，编译<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x06-安装Jenkins"><a href="#0x06-安装Jenkins" class="headerlink" title="0x06 安装Jenkins"></a>0x06 安装Jenkins</h2><p>超级简单<br><a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Red+Hat+distributions" target="_blank" rel="noopener">https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Red+Hat+distributions</a></p>
+<p>我贴一下脚本</p>
+<ul>
+<li>安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo</span><br><span class="line">sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key</span><br><span class="line">sudo yum install jenkins</span><br></pre></td></tr></table></figure>
+<ul>
+<li>操作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 启动</span><br><span class="line">sudo service jenkins start</span><br><span class="line"># 停止</span><br><span class="line">sudo service jenkins stop</span><br><span class="line"># 重启</span><br><span class="line">sudo service jenkins restart</span><br><span class="line">sudo chkconfig jenkins on</span><br></pre></td></tr></table></figure>
+<ul>
+<li>开启端口访问</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 可访问端口列表</span><br><span class="line">firewall-cmd --list-all</span><br><span class="line"># 开启8080端口外网访问</span><br><span class="line">firewall-cmd --zone=public --add-port=8080/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-service=http --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<hr>
+<p>love&amp;peace</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/Java-Web/" rel="tag"># Java Web</a>
+          
+            <a href="/tags/服务器/" rel="tag"># 服务器</a>
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+            <a href="/tags/jenkins/" rel="tag"># jenkins</a>
+          
+            <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/16/OperationAndMaintenance/mark-CentOS-7-install-mysql-5-7/" rel="next" title="(笔记备份)CentOS 7 安装与卸载 MySQL 5.7">
+                <i class="fa fa-chevron-left"></i> (笔记备份)CentOS 7 安装与卸载 MySQL 5.7
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/23/JavaLan/functional-interface-note/" rel="prev" title="函数式接口功能笔记">
+                函数式接口功能笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-前言"><span class="nav-number">1.</span> <span class="nav-text">0x00 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-JDK安装和配置"><span class="nav-number">2.</span> <span class="nav-text">0x01 JDK安装和配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-安装Redis"><span class="nav-number">3.</span> <span class="nav-text">0x02 安装Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-安装Nginx"><span class="nav-number">4.</span> <span class="nav-text">0x03 安装Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-安装MySQL"><span class="nav-number">5.</span> <span class="nav-text">0x04 安装MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-安装NodeJS"><span class="nav-number">6.</span> <span class="nav-text">0x05 安装NodeJS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-安装Jenkins"><span class="nav-number">7.</span> <span class="nav-text">0x06 安装Jenkins</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  转载请注明出处:xzing.github.io
+</div>
+
+<div class="theme-info">
+  Hexo主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

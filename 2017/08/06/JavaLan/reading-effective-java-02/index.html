@@ -1,0 +1,994 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,笔记,Java基础,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了 0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
+<meta name="keywords" content="Java,笔记,Java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java 读书笔记-第三章">
+<meta property="og:url" content="http://xzing.github.io/2017/08/06/JavaLan/reading-effective-java-02/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了 0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-c5188e903a5f7e47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-01T06:23:04.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java 读书笔记-第三章">
+<meta name="twitter:description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了 0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2017/08/06/JavaLan/reading-effective-java-02/">
+
+
+
+
+
+  <title>Effective Java 读书笔记-第三章 | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-fs-plan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-plane"></i> <br>
+            
+            全栈计划
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/08/06/JavaLan/reading-effective-java-02/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Effective Java 读书笔记-第三章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T07:15:36+08:00">
+                2017-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/08/06/JavaLan/reading-effective-java-02/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/08/06/JavaLan/reading-effective-java-02/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/08/06/JavaLan/reading-effective-java-02/" class="leancloud_visitors" data-flag-title="Effective Java 读书笔记-第三章">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了<br><img src="http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="0x01-equals方法应该如何写"><a href="#0x01-equals方法应该如何写" class="headerlink" title="0x01 equals方法应该如何写"></a>0x01 equals方法应该如何写</h2><p>equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。</p>
+<p>除非：</p>
+<blockquote>
+<ul>
+<li>类的每个实例都是唯一的</li>
+<li>不关心实例是否逻辑上相等</li>
+<li>父类已经重写了equals </li>
+<li>类是私有的，equals方法永远不会被调用</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<p>如果不是以上条件，那就需要考虑对象是不是逻辑相等。那么判断相等的方法就应该具有以下特性：</p>
+<ol>
+<li><strong>reflexive</strong> :  对象自己与自己对比永远是true，<code>x.equals(x)</code> 返回一定是true</li>
+<li><strong>symmetric</strong> : <code>x.equals(y)</code>为true时，<code>y.equals(x)</code>一定为true</li>
+<li><strong>transitive</strong> :   如果 <code>x.equals(y)</code> 为true，且 <code>y.equals(z)</code>也为true，那么<code>x.equals(z)</code> 也必须为true</li>
+<li><strong>consistent</strong> :   如果 <code>x.equals(y)</code> 为true，再x和y没有修改的情况下，无论何时再调用equals方法都会返回true。</li>
+<li>任何对象equals <code>null</code>时，必须返回false<blockquote>
+<p>以上对象全部都是非空对象</p>
+</blockquote>
+</li>
+</ol>
+<p>有了这几个标准，于是就有了写equals方法的公式：</p>
+<ol>
+<li>使用==操作符检查“参数是否为这个对象的引用”。</li>
+<li>使用instanceof操作符检查“参数是否为正确的类型”</li>
+<li>把参数转换成正确的类型。</li>
+<li><p>对于该类中每个“关键（significant）域，检查参数中的域是否与该对象中对应的域相匹配”<br>比较域（类属性参数） 的方法可以参照下下面的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(field == o.field || (field != <span class="keyword">null</span> &amp;&amp; field.equals(o.field)))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写完成了equals方法之后，应该问自己三个问题：它是不是对称的、传递的、一致的</p>
+</li>
+</ol>
+<p>以上是写equals的公式</p>
+<blockquote>
+<p>另外，equals只做比较对象的工作，不要让equals过于智能，且不要将equals声明中的Object对象替换为其他的类型.</p>
+</blockquote>
+<h2 id="0x02-hashCode方法为什么也要覆写"><a href="#0x02-hashCode方法为什么也要覆写" class="headerlink" title="0x02 hashCode方法为什么也要覆写"></a>0x02 hashCode方法为什么也要覆写</h2><p>hashCode方法是需要和equals方法一起重新的，在使用HashMap，HashSet这样的散列集合时会大大提升效率</p>
+<p>Object规范里有一段话</p>
+<blockquote>
+<ul>
+<li>在应用程序的执行期间，只要对象的equlas方法的比较操作所用到的信息没有被修改，那么对同一个对象调用多次，hashCode方法都必须始终如一地返回同一个整数。在同一个应用程序的多次执行过程中，每次执行所返回的整数可以不一致。</li>
+<li>如果两个对象根据equlas(Object)方法比较是相等的，那么调用这两个对象中任意一个对象的hashCode方法都必须产生同样的整数结果。</li>
+<li>如果两个对象根据equlas(Object)方法比较是不相等的，那么调用这两个对象中任意一个对象的hashCode方法，则不一定要产生不同的整数结果。但是程序员应该知道，给不相等的对象产生截然不同的整数结果，有可能提高散列表（hash table）的性能。</li>
+</ul>
+</blockquote>
+<p>这段话第二条就明确了，重写equals方法之后就应该连同hashCode方法一起重写。</p>
+<p>举个例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">PhoneNumber</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> areaCode;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> prefix;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> lineNumber;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PhoneNumber</span><span class="params">(<span class="keyword">int</span> areaCode, <span class="keyword">int</span> prefix,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="keyword">int</span> lineNumber)</span> </span>&#123;</span><br><span class="line">        rangeCheck(areaCode, <span class="number">999</span>, <span class="string">"area code"</span>);</span><br><span class="line">        rangeCheck(prefix, <span class="number">999</span>, <span class="string">"prefix"</span>);</span><br><span class="line">        rangeCheck(lineNumber, <span class="number">9999</span>, <span class="string">"line number"</span>);</span><br><span class="line">        <span class="keyword">this</span>.areaCode = (<span class="keyword">short</span>) areaCode;</span><br><span class="line">        <span class="keyword">this</span>.prefix = (<span class="keyword">short</span>) prefix;</span><br><span class="line">        <span class="keyword">this</span>.lineNumber = (<span class="keyword">short</span>) lineNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">rangeCheck</span><span class="params">(<span class="keyword">int</span> arg, <span class="keyword">int</span> max,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (arg &lt; <span class="number">0</span> || arg &gt; max)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(name + <span class="string">": "</span> + arg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">this</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> PhoneNumber))</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        PhoneNumber pn = (PhoneNumber) o;</span><br><span class="line">        <span class="keyword">return</span> pn.lineNumber == lineNumber</span><br><span class="line">                &amp;&amp; pn.prefix == prefix</span><br><span class="line">                &amp;&amp; pn.areaCode == areaCode;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHashCode</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, String&gt; m = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        m.put(<span class="keyword">new</span> String(<span class="string">"HAHA"</span>), <span class="string">"Jenny"</span>);</span><br><span class="line">        System.out.println(m.get(<span class="keyword">new</span> String(<span class="string">"HAHA"</span>)));</span><br><span class="line"></span><br><span class="line">        Map&lt;PhoneNumber, String&gt; s = <span class="keyword">new</span> HashMap&lt;PhoneNumber, String&gt;();</span><br><span class="line">        s.put(<span class="keyword">new</span> PhoneNumber(<span class="number">707</span>, <span class="number">867</span>, <span class="number">5309</span>), <span class="string">"Jenny"</span>);</span><br><span class="line">        System.out.println(s.get(<span class="keyword">new</span> PhoneNumber(<span class="number">707</span>, <span class="number">867</span>, <span class="number">5309</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>TestHashCode 运行结果如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-c5188e903a5f7e47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>String对象重写了hashCode，所以没啥问题，但是后面就不一样了。<br>很明显两个PhoneNumber实例逻辑是相等的：第一个被用于插入到HashMap中，第二个实例用于（试图用于）获取。由于PhoneNumber类没有覆盖hashCode方法，从而导致两个相等的实例具有不相等的散列码，违反了hashCode的约定。这样，用第二个实例去取Value的时候，现在的hashCode不在HashMap的hash bucket中，没有办法找到存放的value，即使对象明明相等。</p>
+<p>那么如何写hashCode方法呢？<br>最好根据类的关键域（参与equals方法比较的属性）来写，书中给出了这样的建议：</p>
+<blockquote>
+<ol>
+<li>把某个非零的常数值，比如说17，保存在一个名为result的int类型的变量中。</li>
+<li>对于对象中每个关键域f（指equals方法中涉及的每个域），完成以下步骤：</li>
+</ol>
+<ul>
+<li>a. 为该域计算int类型的散列码c:<ul>
+<li>i. 如果该域是boolean类型，则计算(f ? 1 : 0).</li>
+<li>ii. 如果该域是byte、char、short或者int类型，则计算(int)f。</li>
+<li>iii. 如果该域是long类型，则计算(int)(f ^ (f &gt;&gt;&gt; 32))。</li>
+<li>iv. 如果该域是float类型，则计算Float.floatToIntBits(f)。</li>
+<li>v. 如果该域是double类型，则计算Double.doubleToLongBits(f)，然后按照步骤2.a.iii，为得到的long类型值计算散列值。</li>
+<li>vi. 如果该域是一个对象引用，并且该域的equlas方法通过递归地调用equlas的方式来比较这个域，则同样为这个域递归地调用hashCode。如果需要更复杂的比较，则为这个域计算一个“范式（canonical representation）”，然后针对这个范式调用hashCode。如果这个域的值为null，则返回0（或者其他某个常数，但通常是0）。</li>
+<li>vii. 如果该域是一个数组，则要把每一个元素当做单独的域来处理。也就是说，递归地应用上述规则，对每个重要的元素计算一个散列码，然后根据步骤2.b中的做法把这些散列值组合起来。如果数组域中的每个元素都很重要，可以利用发行版本1.5中增加的其中一个Arrays.hashCode方法。</li>
+</ul>
+</li>
+<li>b. 按照下面的公式，把步骤2.a中计算得到的散列码c合并到result中：<br>result = 31 * result + c;</li>
+</ul>
+<ol start="3">
+<li>返回result。</li>
+</ol>
+</blockquote>
+<h2 id="0x03-toString方法的好处"><a href="#0x03-toString方法的好处" class="headerlink" title="0x03 toString方法的好处"></a>0x03 toString方法的好处</h2><p>这条不多说了，这个方法可以让类在运行的时候具有更高的可读性，方便调试。</p>
+<h2 id="0x04-谨慎使用clone方法"><a href="#0x04-谨慎使用clone方法" class="headerlink" title="0x04 谨慎使用clone方法"></a>0x04 谨慎使用clone方法</h2><p>Object的clone方法是受保护的。如果不借助于反射（reflection）（见第53条），就不能仅仅因为一个对象实现了Cloneable，就可以调用clone方法。<br>而且目前JDK中对clone的约束非常弱。<br>一般情况下，良好的clone方法可以调用构造器来创建对象，构造之后再复制内部数据。如果这个类是final的，clone甚至可能会返回一个由构造器创建的对象。</p>
+<p>Cloneable接口并没有清楚地指明，一个类在实现这个接口时应该承担哪些责任。一个默认调用的是super.clone()，这样不能保证<code>x.clone().getClass() == x.getClass()</code> 返回true了。这不太合逻辑。</p>
+<p>另外，如果对象中的属性是个引用对象，那么Clone出来的东西就可能出现各种问题。操作源对象的属性将会影响克隆对象的属性，结果将是灾难性的。</p>
+<p>另外，也不可以在一个类中的构造函数中使用clone方法。<br>clone方法再线程安全的类中也需要谨慎使用，保证同步。</p>
+<p>因为Cloneable缺陷很多，所以非必要一般不使用。</p>
+<p>##0x05 考虑实现一下Comparable接口<br>实现Comparable就表示类的对象中存在大小先后关系，允许执行顺序比较。实现Comparable接口的对象数组进行排序<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(a);</span><br></pre></td></tr></table></figure></p>
+<p>实现这个接口和重新equals方法有点类似：</p>
+<blockquote>
+<p>符号sgn（表达式）表示数学中的signum函数，它根据表达式（expression）的值为负值、零和正值，分别返回-1、0或1。</p>
+<ul>
+<li>实现者必须确保所有的x和y都满足sgn(x.compareTo(y) == -sgn(y.compareTo(x)))。（这也暗示着，当且仅当y.compareTo(x)抛出异常时，x.compareTo(y)才必须抛出异常。）</li>
+<li>实现者还必须确保这个比较关系是可传递的：x.compareTo(y) &gt; 0 &amp;&amp; y.compareTo(z) &gt; 0暗示着x.compareTo(z) &gt; 0。</li>
+<li>最后，实现者必须确保x.compareTo(y) == 0暗示着所有的z都满足sgn(x.compareTo(z)) == sgn(y.compareTo(z))。</li>
+<li>强烈建议(x.compareTo(y) == 0) == (x.equals(y))，但这并非绝对必要。一般说来，任何实现了Comparable接口的类，若违反了这个条件，都应该明确予以说明。推荐使用这样的说法：“注意，该类具有内在的排序功能，但是与equals不一致。”</li>
+</ul>
+</blockquote>
+<p>另外，注意compareTo方法中最好不要有可能溢出的计算，会导致compareTo方法返回错误的结果</p>
+<p>love &amp; peace</p>
+<p>转载请注明出处：<a href="https://micorochio.github.io/2017/08/06/reading-effective-java-02/" target="_blank" rel="noopener">https://micorochio.github.io/2017/08/06/reading-effective-java-02/</a></p>
+<p>如若有误请帮忙指正，谢谢</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/Java基础/" rel="tag"># Java基础</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/28/JavaLan/reading-effective-java-01/" rel="next" title="Effective Java 读书笔记-第二章">
+                <i class="fa fa-chevron-left"></i> Effective Java 读书笔记-第二章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/07/JavaLan/reading-effective-java-03/" rel="prev" title="Effective Java 读书笔记-第四章">
+                Effective Java 读书笔记-第四章 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-equals方法应该如何写"><span class="nav-number">1.</span> <span class="nav-text">0x01 equals方法应该如何写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-hashCode方法为什么也要覆写"><span class="nav-number">2.</span> <span class="nav-text">0x02 hashCode方法为什么也要覆写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-toString方法的好处"><span class="nav-number">3.</span> <span class="nav-text">0x03 toString方法的好处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-谨慎使用clone方法"><span class="nav-number">4.</span> <span class="nav-text">0x04 谨慎使用clone方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  转载请注明出处:xzing.github.io
+</div>
+
+<div class="theme-info">
+  Hexo主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

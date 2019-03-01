@@ -1,0 +1,966 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,数据库,JDBC,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="JDBC是Java连接数据库的标准，为了兼容大部分数据库，Java提出了JDBC标准，通过这个标准，让各个数据库提供实现支持，这样实现一处编码，处处运行的Java特性。 习惯了ORM框架，却忘记了原本的JDBC，所以我觉得有必要复习来夯实一下基础。">
+<meta name="keywords" content="Java,数据库,JDBC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java基础之：JDBC">
+<meta property="og:url" content="http://xzing.github.io/2017/03/09/JavaLan/basic-of-java-JDBC/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="JDBC是Java连接数据库的标准，为了兼容大部分数据库，Java提出了JDBC标准，通过这个标准，让各个数据库提供实现支持，这样实现一处编码，处处运行的Java特性。 习惯了ORM框架，却忘记了原本的JDBC，所以我觉得有必要复习来夯实一下基础。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-719a927e4839a667.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-d0884440199c9cc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-1b51a004c32f21c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-01T06:23:04.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java基础之：JDBC">
+<meta name="twitter:description" content="JDBC是Java连接数据库的标准，为了兼容大部分数据库，Java提出了JDBC标准，通过这个标准，让各个数据库提供实现支持，这样实现一处编码，处处运行的Java特性。 习惯了ORM框架，却忘记了原本的JDBC，所以我觉得有必要复习来夯实一下基础。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-719a927e4839a667.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2017/03/09/JavaLan/basic-of-java-JDBC/">
+
+
+
+
+
+  <title>java基础之：JDBC | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-fs-plan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-plane"></i> <br>
+            
+            全栈计划
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/03/09/JavaLan/basic-of-java-JDBC/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java基础之：JDBC</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-09T22:50:13+08:00">
+                2017-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/03/09/JavaLan/basic-of-java-JDBC/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/03/09/JavaLan/basic-of-java-JDBC/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/03/09/JavaLan/basic-of-java-JDBC/" class="leancloud_visitors" data-flag-title="java基础之：JDBC">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JDBC是Java连接数据库的标准，为了兼容大部分数据库，Java提出了JDBC标准，通过这个标准，让各个数据库提供实现支持，这样实现一处编码，处处运行的Java特性。</p>
+<p>习惯了ORM框架，却忘记了原本的JDBC，所以我觉得有必要复习来夯实一下基础。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-719a927e4839a667.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<a id="more"></a>
+<h2 id="0x00-JDBC-历史"><a href="#0x00-JDBC-历史" class="headerlink" title="0x00 JDBC 历史"></a>0x00 JDBC 历史</h2><p>JDBC是Sun公司为了能够让SQL访问统一的一套纯JAVA API设计的一套接口，这种接口是遵循了微软的ODBC API模式。其驱动实现是各家数据库供应商编写的，通过JDBC API可以通过驱动实现数据库通信。</p>
+<h2 id="0x01-链接数据库回顾"><a href="#0x01-链接数据库回顾" class="headerlink" title="0x01 链接数据库回顾"></a>0x01 链接数据库回顾</h2><p>基本Web常用的数据库都是有供Java链接的驱动，</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-d0884440199c9cc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="三层结构"></p>
+<p>那么如何使用JDBC？<br>写个Demo<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by zing on 2017/3/7.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDBCDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span>  <span class="keyword">void</span> <span class="title">testJDBC</span><span class="params">()</span> <span class="keyword">throws</span> ClassNotFoundException, IOException, SQLException </span>&#123;</span><br><span class="line">        <span class="comment">//注册驱动</span></span><br><span class="line">        Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">        <span class="comment">//JDBC使用类似URL的数据源描述</span></span><br><span class="line">        String url = <span class="string">"jdbc:mysql://localhost:3306/demo"</span>;<span class="comment">//忽略</span></span><br><span class="line">        <span class="comment">//但是我们一般不会直接这样写死。而是使用配置来描述数据源，用户名，密码</span></span><br><span class="line">        Properties props = <span class="keyword">new</span> Properties();</span><br><span class="line">        FileInputStream propertiesFile = <span class="keyword">new</span> FileInputStream(<span class="string">"JDBC.properties"</span>);</span><br><span class="line">        props.load(propertiesFile);</span><br><span class="line">        propertiesFile.close();</span><br><span class="line"></span><br><span class="line">        String DriverStr = props.getProperty(<span class="string">"jdbc.Driver"</span>);</span><br><span class="line">        String urlStr = props.getProperty(<span class="string">"jdbc.url"</span>);</span><br><span class="line">        String userName = props.getProperty(<span class="string">"jdbc.name"</span>);</span><br><span class="line">        String passcode = props.getProperty(<span class="string">"jdbc.passworld"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//打开数据库链接</span></span><br><span class="line">        Connection connection = DriverManager.getConnection(urlStr,userName,passcode);</span><br><span class="line">        <span class="comment">//执行SQL</span></span><br><span class="line">        Statement sta = connection.createStatement();</span><br><span class="line">        <span class="comment">//executeUpdate可以返回数据库更新的行数</span></span><br><span class="line">        <span class="keyword">int</span> efactRow = sta.executeUpdate(<span class="string">"UPDATE USER SET Permition = 'admin' WHERE username = 'Zing'"</span>);</span><br><span class="line">        <span class="comment">//executeQuery可以返回一个查询的结果集，这个集合的迭代器略有不同Iterator,没有hasNext方法，初始是，指针在数据前，必须调用next方法才能读取第一行数据</span></span><br><span class="line">        ResultSet resultSet = sta.executeQuery(<span class="string">"SELECT * FROM USER ;"</span>);</span><br><span class="line">        <span class="keyword">while</span> (resultSet.next())&#123;</span><br><span class="line">            <span class="comment">//当前行获取第一栏的值，具体类型需要看数据库实现</span></span><br><span class="line">            resultSet.getString(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//关闭语句</span></span><br><span class="line">        sta.close();</span><br><span class="line">        <span class="comment">//关闭结果集</span></span><br><span class="line">        resultSet.close();</span><br><span class="line">        <span class="comment">//关闭数据库连接</span></span><br><span class="line">        connection.close();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        一般情况下，关闭的操作会放在catch语句的finally块中，catch处理数据库异常，finally来关闭连接</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面写的是大杂烩，一般会将获取连接抽取成一个方法，异常也会捕获，并在try/catch/finally中的finally块中，关闭数据库连接。</p>
+<p>API用法可以看看<code>java.sql.Connection</code>，<code>java.sql.Statement</code>，<code>java.sql.ResultSet</code>，这样，基本的操作就可以了然了。</p>
+<blockquote>
+<p><em><code>boolean execute(String sql) throws SQLException;</code>这个方法可以执行任何SQL，返回执行是否成功</em>。慎用。</p>
+</blockquote>
+<h2 id="0x02-预编译SQL"><a href="#0x02-预编译SQL" class="headerlink" title="0x02 预编译SQL"></a>0x02 预编译SQL</h2><p>PrepareStatement，一个可以让数据库预编译SQL的API。<br>并不是所有的SQL都是写死的，例如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> UserAccount <span class="keyword">Where</span> <span class="keyword">Name</span> =</span><br></pre></td></tr></table></figure></p>
+<p>根据名称来查找用户，这里的名字自然是用户自己定义的，如果用Statement，则应该这么写<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findUserByName</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">  Statement  sta = connection.createStatement();</span><br><span class="line">  String findByName = <span class="string">"SELECT * FROM USER WHERE Name=' "</span>+name+<span class="string">" ';"</span>;</span><br><span class="line">  ResultSet resultSet = sta.executeQuery(findByName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果将name交给普通用户来输入，则没什么问题，但是 如果交给黑客，name他会输入 <code>小明&#39; OR &#39;1&#39; = &#39;1</code>,这样语句拼接后就会变成<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">USER</span> <span class="keyword">WHERE</span> <span class="keyword">Name</span>=<span class="string">' 小明'</span> <span class="keyword">OR</span> <span class="string">'1'</span> = <span class="string">'1'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这一句就会把数据库所有的用户全部查出来了，很严重的注入漏洞，基本就会被脱库了。</p>
+<p>所以Java JDBC定义的预编译SQL的API。<br>上例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDBCDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">testJDBC</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Connection connection = <span class="keyword">null</span>;</span><br><span class="line">        Statement sta = <span class="keyword">null</span>;</span><br><span class="line">        ResultSet resultSet = <span class="keyword">null</span>;</span><br><span class="line">        PreparedStatement preSta = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            connection = getConnection();</span><br><span class="line">            <span class="comment">//执行SQL</span></span><br><span class="line">            </span><br><span class="line">            String findByName = <span class="string">"SELECT * FROM USER WHERE Name=?;"</span>;</span><br><span class="line">            preSta = connection.prepareStatement(findByName);</span><br><span class="line">            preSta.setString(<span class="number">1</span>,<span class="string">"Zing"</span>);</span><br><span class="line">            resultSet = preSta.executeQuery();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">                一般情况下，关闭的操作会放在catch语句的finally块中，catch处理数据库异常，finally来关闭连接</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            <span class="comment">//关闭语句</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                preSta.close();</span><br><span class="line">                <span class="comment">//关闭结果集</span></span><br><span class="line">                resultSet.close();</span><br><span class="line">                <span class="comment">//关闭数据库连接</span></span><br><span class="line">                connection.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> ClassNotFoundException, IOException, SQLException </span>&#123;</span><br><span class="line">        <span class="comment">//注册驱动</span></span><br><span class="line">        Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">        <span class="comment">//JDBC使用类似URL的数据源描述</span></span><br><span class="line">        <span class="comment">//但是我们一般不会直接这样写死。而是使用配置来描述数据源，用户名，密码</span></span><br><span class="line">        Properties props = <span class="keyword">new</span> Properties();</span><br><span class="line">        FileInputStream propertiesFile = <span class="keyword">new</span> FileInputStream(<span class="string">"JDBC.properties"</span>);</span><br><span class="line">        props.load(propertiesFile);</span><br><span class="line">        propertiesFile.close();</span><br><span class="line"></span><br><span class="line">        String DriverStr = props.getProperty(<span class="string">"jdbc.Driver"</span>);</span><br><span class="line">        String urlStr = props.getProperty(<span class="string">"jdbc.url"</span>);</span><br><span class="line">        String userName = props.getProperty(<span class="string">"jdbc.name"</span>);</span><br><span class="line">        String passcode = props.getProperty(<span class="string">"jdbc.passworld"</span>);</span><br><span class="line">        <span class="keyword">return</span> DriverManager.getConnection(urlStr, userName, passcode);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 顺便重构了之前的代码。<br>我们用 <code>?</code>占位，留下可变参数的位置，后来再用<code>setString(int parameterIndex, String x)</code>这个方法将数据填充进SQL，这样，如果参数含有SQL关键字时，就不能通过编译，查不到结果。可以避免SQL注入。</p>
+<p>preSta.setString(1,”Zing”);表示，在第一个<code>?</code>处设置参数为<code>Zing</code><br>当然参数是数字，日期时，可以使用，<br><code>void setDouble(int parameterIndex, double x) throws SQLException</code><br><code>setDate(int parameterIndex, java.sql.Date x)
+            throws SQLException;</code></p>
+<p>等方法，根据不同类型设置参数。</p>
+<h2 id="0x03-数据库类型与转义"><a href="#0x03-数据库类型与转义" class="headerlink" title="0x03 数据库类型与转义"></a>0x03 数据库类型与转义</h2><p>数据库类型和Java类型是有一点不一样的，但是JDBC定义了其中的大部分类型，这里不一一列举</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-1b51a004c32f21c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MySQL部分类型对照表，有兴趣可以查一查"></p>
+<p>JDBC中的转义是为了让Java访问数据库时，得到普遍的支持。一般用于下列特性</p>
+<ul>
+<li>时间日期的字面常亮</li>
+<li>标量函数调用</li>
+<li>存储过程调用</li>
+<li>外连接查询</li>
+<li>LIKE子句中转义字符</li>
+</ul>
+<p>数据库的日期转换成Java的日期，是通过ISO8601标准衡定并相互转换的</p>
+<blockquote>
+<p>d表示DATE、t表示TIME、ts表示TIMESTANP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;d &apos;2017-01-22&apos;&#125;</span><br><span class="line">&#123;t &apos;19:30:29&apos;&#125;</span><br><span class="line">&#123;ts &apos;2017-01-22 19:30:29.989&apos;&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>标量函数是获取一个数值的函数，一般调用时嵌入标准函数名和参数，这个很少见到有人使用的，就不举例了。</p>
+<p>存储过程，是数据库自建的存储方式，不同的数据库存储过程基本不一样，要调用存储过程，需要用call来进行转义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;call PROC01(?,?)&#125;</span><br><span class="line">&#123;call PROC02&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果你不明白什么存储过程，可以看看数据库相关的资料。</p>
+<p>外连接，就是Outter Join，借用核心卷II中的例子<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> &#123;oj Books <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Publishers <span class="keyword">ON</span> Books.Publish_ID = Publishers.Publish_ID &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这条语句表示查询找不到出版商的书，相反如果是<code>RIGHT OUTER JOIN</code>则会查询出没有出版书的出版商，如果需要查到全部，则用<code>FULL OUTER JOIN</code><br>。这里用转义是因为有些数据库实现不太统一。</p>
+<p>Like子句转义，是因为下划线和百分号在Like条件里是特殊的含义，需要用转义来表示<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">User</span> <span class="keyword">WHERE</span> <span class="keyword">Name</span> <span class="keyword">LIKE</span> %!_%ming &#123;escape <span class="string">'!'</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>{escape ‘!’}表示将！定义为转义符号，!_表示字面量下划线</p>
+<h2 id="0x04-事务"><a href="#0x04-事务" class="headerlink" title="0x04 事务"></a>0x04 事务</h2><p>为了保证数据和业务逻辑的完整性，我们可以将一系列的SQL语句构建成一个事物，当所有语句都顺利执行的时候，事务可以被提交。但是如果中途被阻碍，则数据会被回滚，将数据恢复成执行前的样子。</p>
+<p>首先需要关闭数据库自动提交<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connection.setAutoCommit(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure></p>
+<p>然后根据实际业务执行多条UPDATE INSERT DELETE语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">statement.executeUpdate(<span class="string">"SQL1"</span>);</span><br><span class="line">statement.executeUpdate(<span class="string">"SQL2"</span>);</span><br><span class="line">statement.executeUpdate(<span class="string">"SQL3"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>当所有语句顺利执行后，调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connection.commit();</span><br></pre></td></tr></table></figure></p>
+<p>如果遇到异常或错误，则可以调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connection.rollback();</span><br></pre></td></tr></table></figure></p>
+<p>其中JDBC支持事务保存点和批量更新<br>保存点：将事务的某一阶段设置为保存点后，可以控制回滚时，恢复到这个保存点的数据。从而更加精确的控制回滚操作<br>批量更新就是将大量数据一次性存入，或修改大量数据时使用的。两个🌰：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">statement.executeUpdate(<span class="string">"SQL1"</span>);</span><br><span class="line">Savepoint step1 = connection.setSavepoint();</span><br><span class="line">statement.executeUpdate(<span class="string">"SQL2"</span>);</span><br><span class="line"><span class="keyword">if</span>(something==<span class="keyword">false</span>)&#123;</span><br><span class="line">  connection.rollback(step1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String updateSQL = <span class="string">"……"</span>;</span><br><span class="line">statement.addBatch(updateSQL);</span><br><span class="line"><span class="keyword">while</span>(needUpdate)&#123;</span><br><span class="line">  command = <span class="string">"……"</span>+<span class="string">"updateSQL2"</span></span><br><span class="line">  statement.addBatch(updateSQL);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//批量执行</span></span><br><span class="line"><span class="keyword">int</span> effectRows = statement.executeBatch();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong><em>批量执行中一定不能有查询语句，否则会抛出异常。</em></strong></p>
+</blockquote>
+<h2 id="0x05-文件查询和存入数据库"><a href="#0x05-文件查询和存入数据库" class="headerlink" title="0x05 文件查询和存入数据库"></a>0x05 文件查询和存入数据库</h2><p>不建议这么搞，数据库存入太多大文件会导致数据库庞大，备份和恢复的成本将增加。<br>在数据库中，二进制大对象称为Blob，字符型大对象为Clob<br>这里演示一下查询和存储<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//读取</span></span><br><span class="line"> PreparedStatement preparedStatement01 = connection.prepareStatement(<span class="string">"SELECT picture FROM PictureTab WHERE picName=?;"</span>);</span><br><span class="line"> preparedStatement01.setString(<span class="number">1</span>,<span class="string">"superman"</span>);</span><br><span class="line"> ResultSet rs = preparedStatement01.executeQuery();</span><br><span class="line"> <span class="keyword">if</span>(rs.next())&#123;</span><br><span class="line">     Blob picBlob = rs.getBlob(<span class="number">1</span>);</span><br><span class="line">     Image pic = ImageIO.read(picBlob.getBinaryStream());</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//存储</span></span><br><span class="line"> Blob pictureBlob = connection.createBlob();</span><br><span class="line"> <span class="keyword">int</span> offset = <span class="number">0</span>;</span><br><span class="line"> OutputStream outStram = pictureBlob.setBinaryStream(offset);</span><br><span class="line"> ImageIO.write(pictureBlob,<span class="string">"PNG"</span>,outStram);</span><br><span class="line"> PreparedStatement preparedStatement02 = connection.prepareStatement(<span class="string">"INSERT INTO PictureTab VALUE (?,?);"</span>);</span><br><span class="line"> preparedStatement02.setString(<span class="number">1</span>, <span class="string">"SuperMan"</span>);</span><br><span class="line"> preparedStatement02.setBlob(<span class="number">2</span>,pictureBlob);</span><br><span class="line"> preparedStatement02.executeUpdate();</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x06-其他一些概念"><a href="#0x06-其他一些概念" class="headerlink" title="0x06 其他一些概念"></a>0x06 其他一些概念</h2><ul>
+<li>元数据：数据库的结构和表信息等描述数据库结构和组成部分的数据</li>
+<li>多结果集：一次查询，使用多个Select SQL语句是，会得到一个多结果集</li>
+<li>可滚动结果集：可以向前，向后查询的结果集，之前的只能用Next向后查询，使用<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Statement stat = Connection.createStatement(ResultSet.TYPE_SCROLL_INSENSTIVE , ResultSet.CONCUR_READ_ONLY )</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在获取结果集的时候，会变成一个可滚动集。</p>
+<ul>
+<li>获取数据库生成键值<code>statemwnt.getGeneratedKeys();</code></li>
+<li>行集 RowSet接口继承了ResultSet，但不需要长时间占用数据库链接。</li>
+</ul>
+<hr>
+<p>love&amp;peace<br>若有错误请不吝指出，谢谢。<br>我的博客：<a href="https://micorochio.github.io/" target="_blank" rel="noopener">https://micorochio.github.io/</a><br>转载请注明出处:<a href="https://micorochio.github.io/2017/03/10/basic-of-java-JDBC/。" target="_blank" rel="noopener">https://micorochio.github.io/2017/03/10/basic-of-java-JDBC/。</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/JDBC/" rel="tag"># JDBC</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/28/JavaLan/how-to-play-with-SpringAOP/" rel="next" title="(FS计划)理清楚Spring的AOP到底怎么玩">
+                <i class="fa fa-chevron-left"></i> (FS计划)理清楚Spring的AOP到底怎么玩
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/17/JavaLan/ten-kind-of-design-pattern/" rel="prev" title="(转载)Java设计模式：十篇">
+                (转载)Java设计模式：十篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-JDBC-历史"><span class="nav-number">1.</span> <span class="nav-text">0x00 JDBC 历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-链接数据库回顾"><span class="nav-number">2.</span> <span class="nav-text">0x01 链接数据库回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-预编译SQL"><span class="nav-number">3.</span> <span class="nav-text">0x02 预编译SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-数据库类型与转义"><span class="nav-number">4.</span> <span class="nav-text">0x03 数据库类型与转义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-事务"><span class="nav-number">5.</span> <span class="nav-text">0x04 事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-文件查询和存入数据库"><span class="nav-number">6.</span> <span class="nav-text">0x05 文件查询和存入数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-其他一些概念"><span class="nav-number">7.</span> <span class="nav-text">0x06 其他一些概念</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  转载请注明出处:xzing.github.io
+</div>
+
+<div class="theme-info">
+  Hexo主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,956 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="java,Elasticsearch,数据库,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="High Level Rest Clent到现在还不是完成版。我试了一下，5.6版本的RestHighLevelClient就这么些API  包含了基本的增删改查和批量操作">
+<meta name="keywords" content="java,Elasticsearch,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch Java Rest Client 上手指南（下）">
+<meta property="og:url" content="http://xzing.github.io/2018/07/23/Database/elasticsearch-rest-high-level-client/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="High Level Rest Clent到现在还不是完成版。我试了一下，5.6版本的RestHighLevelClient就这么些API  包含了基本的增删改查和批量操作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-76bb848d9bbcc97b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-4f1787f4951de6bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-01T06:28:10.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch Java Rest Client 上手指南（下）">
+<meta name="twitter:description" content="High Level Rest Clent到现在还不是完成版。我试了一下，5.6版本的RestHighLevelClient就这么些API  包含了基本的增删改查和批量操作">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1112615-76bb848d9bbcc97b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2018/07/23/Database/elasticsearch-rest-high-level-client/">
+
+
+
+
+
+  <title>Elasticsearch Java Rest Client 上手指南（下） | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-fs-plan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-plane"></i> <br>
+            
+            全栈计划
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2018/07/23/Database/elasticsearch-rest-high-level-client/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Elasticsearch Java Rest Client 上手指南（下）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-23T05:33:11+08:00">
+                2018-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/07/23/Database/elasticsearch-rest-high-level-client/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/07/23/Database/elasticsearch-rest-high-level-client/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2018/07/23/Database/elasticsearch-rest-high-level-client/" class="leancloud_visitors" data-flag-title="Elasticsearch Java Rest Client 上手指南（下）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>High Level Rest Clent到现在还不是完成版。我试了一下，5.6版本的<code>RestHighLevelClient</code>就这么些API</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-76bb848d9bbcc97b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br> 包含了基本的增删改查和批量操作</p>
+<a id="more"></a>
+<p>我翻了一下官方文档，凉凉。确实像官方文档说的那样，需要完善。虽然是High Level的Client，但是东西少的可怜。<br>增（index）删（delete）改（update）查（get）操作都是和Index，type，id严格绑定的。<br>不能跨Index操作</p>
+<p>目前几乎所有的High Level Rest Clent的中文介绍全部是照搬ES的文档啊。我懒得抄，而且我司用的Elasticsearch 5.6<br><img src="https://upload-images.jianshu.io/upload_images/1112615-4f1787f4951de6bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="API少的可怜"></p>
+<p>明显特性比版本6少了很多。所以，我倒是想填这个坑，但是太大了。还是拉倒吧。强烈建议直接去翻官方文档，这个API版本不同版本的差别很大，一定去看自己使用的版本！现有的中文博客参考价值有限。包括本篇。</p>
+<ul>
+<li><p><a href="https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high.html" target="_blank" rel="noopener">Java High Level REST Client</a></p>
+</li>
+<li><p><a href="https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high-supported-apis.html" target="_blank" rel="noopener">Document APIs</a></p>
+</li>
+</ul>
+<h2 id="0x1-基本增删改查"><a href="#0x1-基本增删改查" class="headerlink" title="0x1 基本增删改查"></a>0x1 基本增删改查</h2><ul>
+<li><p>第一步创建高级Client</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RestClient restClient = RestClient</span><br><span class="line">            .builder(<span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9200</span>, <span class="string">"http"</span>))</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">RestHighLevelClient highLevelClient = <span class="keyword">new</span> RestHighLevelClient(restClient);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一次演示增删改查</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//增, source 里对象创建方式可以是JSON字符串，或者Map，或者XContentBuilder 对象</span></span><br><span class="line">IndexRequest indexRequest = <span class="keyword">new</span> IndexRequest(<span class="string">"指定index"</span>, <span class="string">"指定type"</span>, <span class="string">"指定ID"</span>) .source(builder);</span><br><span class="line">highLevelClient.index(indexRequest);</span><br><span class="line"></span><br><span class="line"><span class="comment">//删</span></span><br><span class="line">DeleteRequest deleteRequest = <span class="keyword">new</span> DeleteRequest(<span class="string">"指定index"</span>, <span class="string">"指定type"</span>, <span class="string">"指定ID"</span>);</span><br><span class="line">highLevelClient.delete(deleteRequest);</span><br><span class="line"></span><br><span class="line"><span class="comment">//改, source 里对象创建方式可以是JSON字符串，或者Map，或者XContentBuilder 对象</span></span><br><span class="line">UpdateRequest updateRequest = <span class="keyword">new</span> UpdateRequest(<span class="string">"指定index"</span>, <span class="string">"指定type"</span>, <span class="string">"指定ID"</span>).doc(builder);</span><br><span class="line">highLevelClient.update(updateRequest);</span><br><span class="line"></span><br><span class="line"><span class="comment">//查</span></span><br><span class="line">GetRequest getRequest = <span class="keyword">new</span> GetRequest(<span class="string">"指定index"</span>, <span class="string">"指定type"</span>, <span class="string">"指定ID"</span>);</span><br><span class="line">highLevelClient.get(getRequest);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>以上四个方法都有一个***Async的方法是异步回调的，只需添加ActionListener对象即可</li>
+<li>Get查询不是唯一的查询方法，还有SearchRequest等， 但是这个GetRequest只支持单Index操作</li>
+<li>Get操作支持限定查询的字段，传入fetchSourceContext对象即可</li>
+<li>Update 操作演示的并不是全量替换，而是和现有文档作合并，除了doc操作还有使用Groovy script操作。</li>
+<li>upsert类似update操作，不过如果文档不存在会作为新的doc存入ES</li>
+</ul>
+</blockquote>
+<h2 id="0x2-Bulk批量操作"><a href="#0x2-Bulk批量操作" class="headerlink" title="0x2 Bulk批量操作"></a>0x2 Bulk批量操作</h2><p>其实就是把一大堆IndexRequest, UpdateRequest, DeleteRequest操作放在一起。<br>所以缺点就是必须指定Index，否则操作没戏。<br>简单示例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">BulkRequest request = <span class="keyword">new</span> BulkRequest();</span><br><span class="line">request.add(<span class="keyword">new</span> IndexRequest(<span class="string">"指定index"</span>, <span class="string">"指定type"</span>, <span class="string">"指定ID_1"</span>).source(XContentType.JSON,<span class="string">"field"</span>, <span class="string">"foo"</span>));</span><br><span class="line">request.add(<span class="keyword">new</span> DeleteRequest(<span class="string">"指定index"</span>, <span class="string">"指定type"</span>, <span class="string">"指定ID_2"</span>));</span><br><span class="line">request.add(<span class="keyword">new</span> UpdateRequest(<span class="string">"指定index"</span>, <span class="string">"指定type"</span>, <span class="string">"指定ID_3"</span>) .doc(XContentType.JSON,<span class="string">"other"</span>, <span class="string">"test"</span>));</span><br><span class="line"></span><br><span class="line">BulkResponse bulkResponse = client.bulk(request);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (BulkItemResponse bulkItemResponse : bulkResponse) &#123;</span><br><span class="line">    <span class="keyword">if</span> (bulkItemResponse.isFailed()) &#123;</span><br><span class="line">        BulkItemResponse.Failure failure = bulkItemResponse.getFailure();</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    DocWriteResponse itemResponse = bulkItemResponse.getResponse();</span><br><span class="line">    <span class="keyword">if</span> (bulkItemResponse.getOpType() == DocWriteRequest.OpType.INDEX</span><br><span class="line">            || bulkItemResponse.getOpType() == DocWriteRequest.OpType.CREATE) &#123;</span><br><span class="line">        IndexResponse indexResponse = (IndexResponse) itemResponse;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (bulkItemResponse.getOpType() == DocWriteRequest.OpType.UPDATE) &#123;</span><br><span class="line">        UpdateResponse updateResponse = (UpdateResponse) itemResponse;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (bulkItemResponse.getOpType() == DocWriteRequest.OpType.DELETE) &#123;</span><br><span class="line">        DeleteResponse deleteResponse = (DeleteResponse) itemResponse;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x3-SearchRequest高级查询"><a href="#0x3-SearchRequest高级查询" class="headerlink" title="0x3 SearchRequest高级查询"></a>0x3 SearchRequest高级查询</h2><p>支持多文档查询、聚合操作。可以完全取代GetRequest。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建</span></span><br><span class="line">SearchRequest searchRequest = <span class="keyword">new</span> SearchRequest(); </span><br><span class="line">SearchSourceBuilder builder = <span class="keyword">new</span> SearchSourceBuilder(); </span><br><span class="line">searchSourceBuilder.query(xxxQuery); </span><br><span class="line">searchRequest.source(builder);</span><br></pre></td></tr></table></figure></p>
+<p>可以在创建的时候指定index，<code>SearchRequest searchRequest = new SearchRequest(&quot;some_index*&quot;);</code>,支持带*号的模糊匹配</p>
+<p>当然，这并不是最厉害的地方，最NB的地方是，支持QueryBuilder，兼容之前TransportClient的代码</p>
+<ul>
+<li><p>我自己写的跨Index模糊查询</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">SearchRequest searchRequest = <span class="keyword">new</span> SearchRequest(<span class="string">"gdp_tops*"</span>);</span><br><span class="line">SearchSourceBuilder sourceBuilder = <span class="keyword">new</span> SearchSourceBuilder();</span><br><span class="line">sourceBuilder.query(QueryBuilders.termQuery(<span class="string">"city"</span>, <span class="string">"北京市"</span>));</span><br><span class="line">sourceBuilder.timeout(<span class="keyword">new</span> TimeValue(<span class="number">60</span>, TimeUnit.SECONDS));</span><br><span class="line"></span><br><span class="line">searchRequest.source(sourceBuilder);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    SearchResponse response = highLevelClient.search(searchRequest);</span><br><span class="line">    Arrays.stream(response.getHits().getHits())</span><br><span class="line">            .forEach(i -&gt; &#123;</span><br><span class="line">                System.out.println(i.getIndex());</span><br><span class="line">                System.out.println(i.getSource());</span><br><span class="line">                System.out.println(i.getType());</span><br><span class="line"></span><br><span class="line">            &#125;);</span><br><span class="line">    System.out.println(response.getHits().totalHits);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>官方给出的聚合查询</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SearchSourceBuilder searchSourceBuilder = <span class="keyword">new</span> SearchSourceBuilder();</span><br><span class="line">TermsAggregationBuilder aggregation = AggregationBuilders.terms(<span class="string">"by_company"</span>)</span><br><span class="line">        .field(<span class="string">"company.keyword"</span>);</span><br><span class="line">aggregation.subAggregation(AggregationBuilders.avg(<span class="string">"average_age"</span>)</span><br><span class="line">        .field(<span class="string">"age"</span>));</span><br><span class="line">searchSourceBuilder.aggregation(aggregation);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当然还支持异步查询<br>官方示例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">client.searchAsync(searchRequest, <span class="keyword">new</span> ActionListener&lt;SearchResponse&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(SearchResponse searchResponse)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Exception e)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询结果处理<br>查询结束后会得到一个SearchResponse对象，可以拿到查询状态，消耗时间，查询到的总条目数等参数，具体结果操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">SearchHit[] searchHits = hits.getHits();</span><br><span class="line"><span class="keyword">for</span> (SearchHit hit : searchHits) &#123;</span><br><span class="line"><span class="comment">// 结果的Index</span></span><br><span class="line">    String index = hit.getIndex();</span><br><span class="line"><span class="comment">// 结果的type</span></span><br><span class="line">    String type = hit.getType();</span><br><span class="line"><span class="comment">// 结果的ID</span></span><br><span class="line">    String id = hit.getId();</span><br><span class="line"><span class="comment">// 结果的评分</span></span><br><span class="line">    <span class="keyword">float</span> score = hit.getScore();</span><br><span class="line"><span class="comment">// 查询的结果 JSON字符串形式</span></span><br><span class="line">    String sourceAsString = hit.getSourceAsString();</span><br><span class="line"><span class="comment">// 查询的结果 Map的形式</span></span><br><span class="line">    Map&lt;String, Object&gt; sourceAsMap = hit.getSourceAsMap();</span><br><span class="line"><span class="comment">// Document的title</span></span><br><span class="line">    String documentTitle = (String) sourceAsMap.get(<span class="string">"title"</span>);</span><br><span class="line"><span class="comment">// 结果中的某个List</span></span><br><span class="line">    List&lt;Object&gt; users = (List&lt;Object&gt;) sourceAsMap.get(<span class="string">"user"</span>);</span><br><span class="line"><span class="comment">// 结果中的某个Map</span></span><br><span class="line">    Map&lt;String, Object&gt; innerObject = (Map&lt;String, Object&gt;) sourceAsMap.get(<span class="string">"innerObject"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>聚合查询<br>前面演示的是正常查询，聚合查询官方文档也有展示</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SearchSourceBuilder searchSourceBuilder = <span class="keyword">new</span> SearchSourceBuilder();</span><br><span class="line">TermsAggregationBuilder aggregation = AggregationBuilders.terms(<span class="string">"by_company"</span>)</span><br><span class="line">        .field(<span class="string">"company.keyword"</span>);</span><br><span class="line">aggregation.subAggregation(AggregationBuilders.avg(<span class="string">"average_age"</span>)</span><br><span class="line">        .field(<span class="string">"age"</span>));</span><br><span class="line">searchSourceBuilder.aggregation(aggregation);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>和query查询一样，<code>searchSourceBuilder</code>使用<code>aggregation()</code>方法即可<br>查询到的结果处理也跟普通查询类似，处理一下Bucket就可以展示到接口了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Aggregations aggregations = searchResponse.getAggregations();</span><br><span class="line">Terms byCompanyAggregation = aggregations.get(<span class="string">"by_company"</span>); </span><br><span class="line">Bucket elasticBucket = byCompanyAggregation.getBucketByKey(<span class="string">"Elastic"</span>); </span><br><span class="line">Avg averageAge = elasticBucket.getAggregations().get(<span class="string">"average_age"</span>); </span><br><span class="line"><span class="keyword">double</span> avg = averageAge.getValue();</span><br></pre></td></tr></table></figure></p>
+<p>0x4 分页和滚动搜索</p>
+<p>有时候结果需要分页查询，推荐使用<code>searchSourceBuilder</code>的<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceBuilder.from(<span class="number">0</span>); </span><br><span class="line">sourceBuilder.size(<span class="number">5</span>);</span><br></pre></td></tr></table></figure></p>
+<p>有时候需要查询的数据太多，可以考虑使用<code>SearchRequest.scroll()</code>方法拿到<code>scrollId</code>;之后再使用<code>SearchScrollRequest</code><br>其用法如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">SearchRequest searchRequest = <span class="keyword">new</span> SearchRequest(<span class="string">"posts"</span>);</span><br><span class="line">SearchSourceBuilder searchSourceBuilder = <span class="keyword">new</span> SearchSourceBuilder();</span><br><span class="line">searchSourceBuilder.query(matchQuery(<span class="string">"title"</span>, <span class="string">"Elasticsearch"</span>));</span><br><span class="line">searchSourceBuilder.size(size); </span><br><span class="line">searchRequest.source(searchSourceBuilder);</span><br><span class="line">searchRequest.scroll(TimeValue.timeValueMinutes(<span class="number">1L</span>)); </span><br><span class="line">SearchResponse searchResponse = client.search(searchRequest);</span><br><span class="line">String scrollId = searchResponse.getScrollId(); </span><br><span class="line">SearchScrollRequest scrollRequest = <span class="keyword">new</span> SearchScrollRequest(scrollId); </span><br><span class="line">scrollRequest.scroll(TimeValue.timeValueSeconds(<span class="number">30</span>));</span><br><span class="line">SearchResponse searchScrollResponse = client.searchScroll(scrollRequest);</span><br><span class="line">scrollId = searchScrollResponse.getScrollId();  </span><br><span class="line">hits = searchScrollResponse.getHits(); </span><br><span class="line">assertEquals(<span class="number">3</span>, hits.getTotalHits());</span><br><span class="line">assertEquals(<span class="number">1</span>, hits.getHits().length);</span><br><span class="line">assertNotNull(scrollId);</span><br></pre></td></tr></table></figure></p>
+<p>Scroll查询的使用场景是密集且前后有关联的查询。如果只是一般的分页，可以使用size from来处理</p>
+<p>官方还列出了查询构造的方式。可以根据自己的需要，详细翻阅。</p>
+<p>需要了解基础的，请查看：<a href="https://micorochio.github.io/2018/07/22/elasticsearch_rest_low_level_client/" target="_blank" rel="noopener">Elasticsearch Java Rest Client 上手指南（上）</a></p>
+<p>转载请注明出处：<a href="https://micorochio.github.io/2018/07/22/elasticsearch_rest_high_level_client/" target="_blank" rel="noopener">https://micorochio.github.io/2018/07/22/elasticsearch_rest_high_level_client/</a><br>如有错误，请不吝指正。谢谢</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/Elasticsearch/" rel="tag"># Elasticsearch</a>
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/22/Database/elasticsearch_rest_low_level_client/" rel="next" title="Elasticsearch Java Rest Client 上手指南（上）">
+                <i class="fa fa-chevron-left"></i> Elasticsearch Java Rest Client 上手指南（上）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/01/JavaLan/spring-boot-with-elasticsearch-rest-client/" rel="prev" title="SpringBoot整合Elasticsearch的Java Rest Client">
+                SpringBoot整合Elasticsearch的Java Rest Client <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x1-基本增删改查"><span class="nav-number">1.</span> <span class="nav-text">0x1 基本增删改查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x2-Bulk批量操作"><span class="nav-number">2.</span> <span class="nav-text">0x2 Bulk批量操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x3-SearchRequest高级查询"><span class="nav-number">3.</span> <span class="nav-text">0x3 SearchRequest高级查询</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  转载请注明出处:xzing.github.io
+</div>
+
+<div class="theme-info">
+  Hexo主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

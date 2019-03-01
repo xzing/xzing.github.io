@@ -1,0 +1,977 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CentOS,linux,Win,系统,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="0x00 血泪！一人装机到深夜淘来一个120G的固态，打算装个CentOS7，玩玩服务器，万万没想到遇到了一个神奇的坑。整到大半夜都没搞定都是因为百度来的东西大部分已经是二手货了，很多操作并不知道为什么。自己也是棵白菜。唉朕要把这个坑记住，以后以此为鉴。 0x01 准备 硬件 你需要一个PC或笔记本电脑（Mac建议别装双系统了，蛋疼，还是虚拟机去吧）、一个8GB的U盘，如果还有一台可以做U盘引导的">
+<meta name="keywords" content="CentOS,linux,Win,系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win10安装CentOS7填坑记">
+<meta property="og:url" content="http://xzing.github.io/2017/01/14/OperationAndMaintenance/add-centos-to-win10/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="0x00 血泪！一人装机到深夜淘来一个120G的固态，打算装个CentOS7，玩玩服务器，万万没想到遇到了一个神奇的坑。整到大半夜都没搞定都是因为百度来的东西大部分已经是二手货了，很多操作并不知道为什么。自己也是棵白菜。唉朕要把这个坑记住，以后以此为鉴。 0x01 准备 硬件 你需要一个PC或笔记本电脑（Mac建议别装双系统了，蛋疼，还是虚拟机去吧）、一个8GB的U盘，如果还有一台可以做U盘引导的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-5595612452c2483d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-e30a8e0d48faffa6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-e4e36782a4aba6e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-ef5c9ba13ebb3217.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-c8ce6b5682cff55b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-9282f15332802096.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-c8ce6b5682cff55b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-b8d102b42cbe6985.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-5a42ebe5c31d0621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-c8ce6b5682cff55b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-4317a823071e11c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-1f44bd5b1717e3f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-47b39586461a5717.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-27a2f33453da82cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-2b87b8ba2e8dcbac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-b877544eb23d452b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-5dec763ff017a640.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-02263eaf9cb57639.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-252d430e79cac200.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-f2ca5949e745e768.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-d4f513db27f8e347.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-735325e67c0e542f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-2c352de9826c0c9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-01T06:19:31.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Win10安装CentOS7填坑记">
+<meta name="twitter:description" content="0x00 血泪！一人装机到深夜淘来一个120G的固态，打算装个CentOS7，玩玩服务器，万万没想到遇到了一个神奇的坑。整到大半夜都没搞定都是因为百度来的东西大部分已经是二手货了，很多操作并不知道为什么。自己也是棵白菜。唉朕要把这个坑记住，以后以此为鉴。 0x01 准备 硬件 你需要一个PC或笔记本电脑（Mac建议别装双系统了，蛋疼，还是虚拟机去吧）、一个8GB的U盘，如果还有一台可以做U盘引导的">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-5595612452c2483d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2017/01/14/OperationAndMaintenance/add-centos-to-win10/">
+
+
+
+
+
+  <title>Win10安装CentOS7填坑记 | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-fs-plan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-plane"></i> <br>
+            
+            全栈计划
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/01/14/OperationAndMaintenance/add-centos-to-win10/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Win10安装CentOS7填坑记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-14T03:31:15+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/01/14/OperationAndMaintenance/add-centos-to-win10/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/01/14/OperationAndMaintenance/add-centos-to-win10/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/01/14/OperationAndMaintenance/add-centos-to-win10/" class="leancloud_visitors" data-flag-title="Win10安装CentOS7填坑记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-血泪！一人装机到深夜"><a href="#0x00-血泪！一人装机到深夜" class="headerlink" title="0x00 血泪！一人装机到深夜"></a>0x00 血泪！一人装机到深夜</h2><p>淘来一个120G的固态，打算装个CentOS7，玩玩服务器，万万没想到遇到了一个神奇的坑。整到大半夜都没搞定<br>都是因为百度来的东西大部分已经是二手货了，很多操作并不知道为什么。自己也是棵白菜。唉<br>朕要把这个坑记住，以后以此为鉴。</p>
+<h2 id="0x01-准备"><a href="#0x01-准备" class="headerlink" title="0x01 准备"></a>0x01 准备</h2><ul>
+<li><strong>硬件</strong> 你需要一个PC或笔记本电脑（Mac建议别装双系统了，蛋疼，还是虚拟机去吧）、一个8GB的U盘，如果还有一台可以做U盘引导的电脑更好，最好是Windows的系统</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-5595612452c2483d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="我的古董"></p>
+<ul>
+<li><strong>软件</strong>  <a href="https://www.centos.org/download/" target="_blank" rel="noopener">CentOS 7 x86_64的ISO文件</a>和<a href="http://www.laomaotao.net/down/" target="_blank" rel="noopener">老毛桃U盘装机软件最新版</a> </li>
+</ul>
+<p>ps:老毛桃会被windows误杀，装之前先关闭各种杀毒软件和电脑管家</p>
+<h2 id="0x02-第一步：准备制作U盘"><a href="#0x02-第一步：准备制作U盘" class="headerlink" title="0x02 第一步：准备制作U盘"></a>0x02 第一步：准备制作U盘</h2><a id="more"></a>
+<p>注意会格式化U盘请，务必将U盘数据做好备份，否则就没了。<br>管理员模式打开老毛桃，开始制作。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-e30a8e0d48faffa6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="使用老毛桃制作USB启动盘"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-e4e36782a4aba6e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="点击写入，等待大约2~12分钟，看U盘速度"><br>注意：写入方式：我选择的是USB-HDD+ v2，据说，兼容性更好。其他默认就行！但是建议不要隐藏启动分区。</p>
+<p>制作完成之后就可以装机了</p>
+<h2 id="0x03-第二步：装机"><a href="#0x03-第二步：装机" class="headerlink" title="0x03 第二步：装机"></a>0x03 第二步：装机</h2><p>这步可以参考百度了，但是百度这个贱人搜出来一大堆比人抄袭的东西，比人的坑也被抄了下来。唉。不多说了下面按照步骤，开始装机</p>
+<ul>
+<li>选择USB启动，有的电脑是按住F12有的是F10，有的是Delete键，请根据自己的电脑，按键选择boot顺序<br><img src="http://upload-images.jianshu.io/upload_images/1112615-ef5c9ba13ebb3217.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择U盘"></li>
+</ul>
+<p>如果你的U盘制作的没有问题的话，就会进入安装模式</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-c8ce6b5682cff55b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="界面"></p>
+<p><strong>这里有坑！</strong><br>到达这个界面的时候，先直接按enter键，如果运气好的话，会直接进入安装界面，运气不好的话，会找不到U盘挂载。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-9282f15332802096.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="像这样"></p>
+<p>这个时候不要随便改<br><code>vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 quiet</code><br>改为<br><code>vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdb4 quiet</code><br><strong>这是别人抄的，不能全抄！！！</strong></p>
+<h2 id="0x04-正确的填坑方式"><a href="#0x04-正确的填坑方式" class="headerlink" title="0x04 正确的填坑方式"></a>0x04 正确的填坑方式</h2><ul>
+<li><strong>1.</strong><br>强制关机！按住电源，直到PC关闭！然后重新启动，进入到下面的界面，立刻按Tab键（有的要按e,总之你看着按吧）<br><img src="http://upload-images.jianshu.io/upload_images/1112615-c8ce6b5682cff55b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="界面"></li>
+</ul>
+<p>然后最下面一行字出来了，用笔记下来！</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-b8d102b42cbe6985.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x88_64    rd.live.check quiet
+"><br>一定记下来！<br>现在先看看我们的U盘在这里叫什么名字，挂载在哪里<br>将下面的文字改成<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img linux dd rd.live.check quiet</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-5a42ebe5c31d0621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>会有一个列表，你会看到，一个格式为vfat的磁盘，挂载到sda4上，标签为<code>CentOS 7 x8</code><br>因为U盘是fat格式所以这货是sda4！不是百度到的sdb4！</p>
+<p><strong>那我换成sda4就好了啊</strong>，错！万一你重启，U盘挂载到sdb4上，或者sdc4上，你会崩溃的，我就这样折腾到了深夜，简直哔了狗！</p>
+<ul>
+<li><strong>2.</strong><br>现在记下红框里的一切，我们按住电源键再强制重启到<br><img src="http://upload-images.jianshu.io/upload_images/1112615-c8ce6b5682cff55b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="界面"><br>按一下Tab键（你看着改）<br>我们开始改最下面一行<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64   rd.live.check quiet</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>刚刚看到红框里的LABLE是<code>CentOS 7 x8</code>,现在将空格改为<code>\x20</code>，根据你自己的LABLE，看看名字，跟着改。<br>为什么改为<code>\x20</code>？你可以看看Lunix Unicode，ASCII编码,Url转码什么的，就懂了<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x8  rd.live.check quiet</span><br></pre></td></tr></table></figure></p>
+<p>然后回车就可以跳过这个坑了。</p>
+<h2 id="0x05-继续安装"><a href="#0x05-继续安装" class="headerlink" title="0x05 继续安装"></a>0x05 继续安装</h2><p>接下来我就不多说了，按照别人博客继续来就行了<br>比如：<a href="http://blog.sina.com.cn/s/blog_135027f480102uyug.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_135027f480102uyug.html</a><br>为了方便你们阅读，我搬个砖</p>
+<blockquote>
+<p><strong>2.3、修改后，按Ctrl+x执行修改，正常情况下，将进入安装界面，如下图：</strong><br><img src="http://upload-images.jianshu.io/upload_images/1112615-4317a823071e11c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>选择想要安装的语言，点继续，如下图：<br><img src="http://upload-images.jianshu.io/upload_images/1112615-1f44bd5b1717e3f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><strong>2.3.1、时区的选择</strong> <br><br>如果你安装的是英文版，需要将时区改为上海<br><br><strong>2.3.2、键盘</strong> <br><br>英文键盘和中文键盘布局是一样的！！<br><br><strong>2.3.3、语言支持</strong><br><br>可同时选择支持多种语言<br><strong>2.3.4、安装源（可以默认不动）</strong><br><br>程序将自动选择，进入可以手动制定，还可以直接指定为网络位置！！<br><br><strong>2.3.5、软件选择（注意）</strong><br><br>进入后，可以看到有多个选项，根据需要选择，如下图：<br><br><img src="http://upload-images.jianshu.io/upload_images/1112615-47b39586461a5717.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br>注意：<br>默认为最小安装，安装后是没有界面的哦！！！！<br><br><strong>2.3.6、安装位置（重要）</strong><br><br> 这里我没有截图，下图来自网络，与实际有些不同<br><br><img src="http://upload-images.jianshu.io/upload_images/1112615-27a2f33453da82cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br>1、<strong>本地标准磁盘</strong> 项中，应该为 本地磁盘 和 U盘 ，选择本地硬盘<br><br>2、<strong>其他存储选项</strong> 中，选择 我要配置分区<br><br>3、注意： 最下面的 完整磁盘摘要以及引导程序，打开，<br>选择不添加引导（后面再添加），<br><br><em>不知道是我这里的问题还是共性问题，先选择 安装引导 下一步将出错！！！，最后点击完成，进入如下界面</em><br><img src="http://upload-images.jianshu.io/upload_images/1112615-2b87b8ba2e8dcbac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><strong>注意：</strong><br>这里的分区最好选择 为标准分区。<br>因为：在用grub引导时，无法挂载LVMPV分区，根本不识别！！ <br><br>  <em>最好不要用自动创建</em><br><img src="http://upload-images.jianshu.io/upload_images/1112615-b877544eb23d452b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>1、点击 + 号，分别添加 swap 和 /  两个分区<br><br>大小 ： swap 一般为内存的两倍；<br>             /  为剩余的所有空间<br><br>这步需要格外注意：<br><br>（1）在选择自动创建分区时，分区信息将不能在更新，（这可能是我自己的问题，等待大家测试）<br><em>完成后，点完成，返回配置摘要界面</em><br><img src="http://upload-images.jianshu.io/upload_images/1112615-5dec763ff017a640.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1112615-02263eaf9cb57639.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br>注意：此时，我们再选择安装位置项，将上面没添加的分区引导一项选上，直接点完成，直到返回配置界面！！<br><br><strong>2.3.6、网络和主机名</strong><br>默认网络是关着的，可以再此处打开<br><br><strong>2.4、最后，点击开始安装，如下：</strong><br><img src="http://upload-images.jianshu.io/upload_images/1112615-252d430e79cac200.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br>在安装过程中，可以设置 root 密码 和 新的用户 （安装后半部分不能再修改了！！）等待安装即可！！<br><br><em>注意： 安装过程中，如果密码太简单，需要点击两次完成来确认！</em><br><img src="http://upload-images.jianshu.io/upload_images/1112615-f2ca5949e745e768.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1112615-d4f513db27f8e347.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1112615-735325e67c0e542f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br>至此，安装已完成，重启，就剩下引导了！！！！！！！！！！</p>
+</blockquote>
+<h2 id="0x06-恢复Windows引导-amp-amp-恢复CentOS引导"><a href="#0x06-恢复Windows引导-amp-amp-恢复CentOS引导" class="headerlink" title="0x06 恢复Windows引导&amp;&amp;恢复CentOS引导"></a>0x06 恢复Windows引导&amp;&amp;恢复CentOS引导</h2><ul>
+<li>在CentOS中恢复Windows<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 切换到root 用户</span><br><span class="line">su</span><br><span class="line"># 编辑引导</span><br><span class="line"> vim /etc/grub.d/40_custom</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在结尾处添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">menuentry &quot;Windows&quot; &#123;</span><br><span class="line">         set root=(hd0,1)</span><br><span class="line">         chainloader +1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>保存 esc，<code>:wq!</code>，<br>编译重新自动生成grub所需要的配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub2-mkconfig --output=/boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure></p>
+<p>好了，重启就能找到Windows了</p>
+<ul>
+<li>在Windows中恢复Linux<br>如果启动你只看到Windows，看不到Linux系统的，推荐你使用EasyBCD来恢复启动项</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-2c352de9826c0c9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>教程在：<a href="http://www.360doc.com/content/12/0828/15/6140124_232817242.shtml" target="_blank" rel="noopener">http://www.360doc.com/content/12/0828/15/6140124_232817242.shtml</a><br><br>我就不详细说了，目前还没找到其他靠谱的启动项恢复方法，EasyBCD下载地址的话，建议正版，否则的话，小心全家桶。</p>
+<p>##0x07参考</p>
+<p><br><a href="http://www.voidcn.com/blog/superbfly/article/p-5768790.html" target="_blank" rel="noopener">Win 10 + CentOS 7 双系统安装与CentOS美化小记</a><br><br><a href="http://blog.sina.com.cn/s/blog_135027f480102uyug.html" target="_blank" rel="noopener">Win8.1+CentOS7 双系统 U盘安装</a><br><br><a href="http://www.techweb.com.cn/network/system/2016-12-21/2456741.shtml" target="_blank" rel="noopener">安装 Windows 10 + Centos 7 双系统共存</a><br><br><a href="http://blog.sina.com.cn/s/blog_14a5924d30102w9pc.html" target="_blank" rel="noopener">win7/10+centOS7双系统，默认启动win10</a></p>
+<p>文章转载请标明出处！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Win/" rel="tag"># Win</a>
+          
+            <a href="/tags/系统/" rel="tag"># 系统</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/02/FrontEnd/build-an-angularJS-2-project/" rel="next" title="用WebStorm创建AngularJS 2项目">
+                <i class="fa fa-chevron-left"></i> 用WebStorm创建AngularJS 2项目
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/16/OperationAndMaintenance/change-linux-yum-repo/" rel="prev" title="(笔记备份)CentOS 7 换yum源">
+                (笔记备份)CentOS 7 换yum源 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-血泪！一人装机到深夜"><span class="nav-number">1.</span> <span class="nav-text">0x00 血泪！一人装机到深夜</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-准备"><span class="nav-number">2.</span> <span class="nav-text">0x01 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-第一步：准备制作U盘"><span class="nav-number">3.</span> <span class="nav-text">0x02 第一步：准备制作U盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-第二步：装机"><span class="nav-number">4.</span> <span class="nav-text">0x03 第二步：装机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-正确的填坑方式"><span class="nav-number">5.</span> <span class="nav-text">0x04 正确的填坑方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-继续安装"><span class="nav-number">6.</span> <span class="nav-text">0x05 继续安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-恢复Windows引导-amp-amp-恢复CentOS引导"><span class="nav-number">7.</span> <span class="nav-text">0x06 恢复Windows引导&amp;&amp;恢复CentOS引导</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  转载请注明出处:xzing.github.io
+</div>
+
+<div class="theme-info">
+  Hexo主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

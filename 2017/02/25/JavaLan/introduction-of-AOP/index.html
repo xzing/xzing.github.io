@@ -1,0 +1,952 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,Spring,AOP,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="0x00 AOP是什么AOP (Aspect Oriented Programming)面向切面编程，Spring是通过Java动态代理实现的。 AOP的目的是为了将组件和业务代码分离开，让日志、事务处理、缓存、性能统计、权限控制等等模块跟实际的业务模块解耦。 这么说还是很笼统，Java的类中，属性和方法才是主流，切面是什么，完全没这个概念。那么以拍电影举个栗子：123451.前期筹备，剧本确定">
+<meta name="keywords" content="Java,Spring,AOP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(FS计划)AOP和Spring中AOP的简单介绍">
+<meta property="og:url" content="http://xzing.github.io/2017/02/25/JavaLan/introduction-of-AOP/index.html">
+<meta property="og:site_name" content="AIX Zing">
+<meta property="og:description" content="0x00 AOP是什么AOP (Aspect Oriented Programming)面向切面编程，Spring是通过Java动态代理实现的。 AOP的目的是为了将组件和业务代码分离开，让日志、事务处理、缓存、性能统计、权限控制等等模块跟实际的业务模块解耦。 这么说还是很笼统，Java的类中，属性和方法才是主流，切面是什么，完全没这个概念。那么以拍电影举个栗子：123451.前期筹备，剧本确定">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-f513cbc11f698921.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-c3cc7c540bc86019.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-eeeff8cf57d0f994.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-f10097b73ad03a88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-01T06:23:04.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="(FS计划)AOP和Spring中AOP的简单介绍">
+<meta name="twitter:description" content="0x00 AOP是什么AOP (Aspect Oriented Programming)面向切面编程，Spring是通过Java动态代理实现的。 AOP的目的是为了将组件和业务代码分离开，让日志、事务处理、缓存、性能统计、权限控制等等模块跟实际的业务模块解耦。 这么说还是很笼统，Java的类中，属性和方法才是主流，切面是什么，完全没这个概念。那么以拍电影举个栗子：123451.前期筹备，剧本确定">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-f513cbc11f698921.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '67GQC0CBTX',
+      apiKey: 'c7cbdee3fb9a4a84e4e16302861d6ede',
+      indexName: 'zing',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xzing.github.io/2017/02/25/JavaLan/introduction-of-AOP/">
+
+
+
+
+
+  <title>(FS计划)AOP和Spring中AOP的简单介绍 | AIX Zing</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AIX Zing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-fs-plan">
+          <a href="/fs-plan" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-plane"></i> <br>
+            
+            全栈计划
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/02/25/JavaLan/introduction-of-AOP/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">(FS计划)AOP和Spring中AOP的简单介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-25T08:05:48+08:00">
+                2017-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/02/25/JavaLan/introduction-of-AOP/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/02/25/JavaLan/introduction-of-AOP/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/02/25/JavaLan/introduction-of-AOP/" class="leancloud_visitors" data-flag-title="(FS计划)AOP和Spring中AOP的简单介绍">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/1112615-f513cbc11f698921.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="0x00-AOP是什么"><a href="#0x00-AOP是什么" class="headerlink" title="0x00 AOP是什么"></a>0x00 AOP是什么</h2><p>AOP <em><code>(Aspect Oriented Programming)</code></em>面向切面编程，Spring是通过Java动态代理实现的。</p>
+<p>AOP的目的是为了将组件和业务代码分离开，让日志、事务处理、缓存、性能统计、权限控制等等模块跟实际的业务模块解耦。</p>
+<p>这么说还是很笼统，Java的类中，属性和方法才是主流，切面是什么，完全没这个概念。<br>那么以拍电影举个栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.前期筹备，剧本确定、演员试镜确定</span><br><span class="line">############分割线a</span><br><span class="line">2. 开拍、剪辑、制作</span><br><span class="line">############分割线b</span><br><span class="line">3. 营销、宣传、公映</span><br></pre></td></tr></table></figure></p>
+<p>1-&gt;2-&gt;3这个流程是拍电影的业务流程，但是如果我要拍花絮怎么办，这个流程不属于现在的电影业务流程，我们需要安排一个零时的业务，那我们就要在<code>############分割线a</code>分割线那里添加摄花絮的计划，分配一些人员。<br>那么分割线那里，就是切面。这些切面干什么，由切面代理去管理和运行，这就是AOP。<br><a id="more"></a></p>
+<h2 id="0x01-AOP的用途"><a href="#0x01-AOP的用途" class="headerlink" title="0x01 AOP的用途"></a>0x01 AOP的用途</h2><p>来说说为什么要用AOP：<br>AOP中面向切面编程的这个切面就是针对流程的。当某些服务与业务无关，比如日志系统，日志系统与现实业务应该是相互独立的，但是，在编写代码的时候我们需要这些日志来调试定位程序执行的位置。<br>这些日志代码如果直接写在程序里会扰乱原本的业务模块，会影响到系统的持续集成</p>
+<p>因此我们希望日志系统能够独立于业务代码，但是每当业务执行到某个位置时，日志又会输出。这就要借助于AOP了<em>（想象一下，业务代码被切开了，中间插入了日志执行的标记，走到标记时就会输出日志，这个标记就是切面）</em></p>
+<p>当然，还有业务中登录状态验证，权限检查，全局的事务处理，共用的某些模块，都可以用AOP来实现，这是OOP的进步</p>
+<h1 id="0x02-代理模式"><a href="#0x02-代理模式" class="headerlink" title="0x02 代理模式"></a>0x02 代理模式</h1><p>Java动态代理是基于代理模式的一种实现，可以查询一下代理模式，这里将动态代理的对应关系图贴一下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-c3cc7c540bc86019.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="java中的动态代理模式"></p>
+<p>我们通过代理接口Subject去执行RealSubject的subjectMethod()方法，而java的动态代理是，通过InvocationHandler中invoke()方法去调用Proxy事先生成好实例对象。说的有点绕口，配合看图。<br>再不明白：可以看我的：<a href="http://www.jianshu.com/p/893ffc0b7a73" target="_blank" rel="noopener">(FS计划)Java里的动态代理模式和代理方法增强</a><br>或者：<a href="http://www.cnblogs.com/xiaoluo501395377/p/3383130.html" target="_blank" rel="noopener">看别人的详细介绍</a></p>
+<h2 id="0x03-Spring里的动态代理"><a href="#0x03-Spring里的动态代理" class="headerlink" title="0x03 Spring里的动态代理"></a>0x03 Spring里的动态代理</h2><p>因为Spring中拥有了DI的高级特性，所以在Spring中实现动态代理是可以依靠配置Bean来实现的。Spring中的动态代理依赖下面几个接口和类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.aop.BeforeAdvice;<span class="comment">//前置通知</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.aop.AfterAdvice;<span class="comment">//后置通知</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.aop.ThrowsAdvice;<span class="comment">//异常通知</span></span><br><span class="line"><span class="keyword">import</span> org.aopalliance.intercept.MethodInterceptor;<span class="comment">//环绕通知</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.aop.IntroductionAdvisor;<span class="comment">//引介通知</span></span><br></pre></td></tr></table></figure></p>
+<p>可以写一个例子来看看</p>
+<ul>
+<li>接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.aoptest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IRocketLaunching</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">launch</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>目标对象 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.aoptest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RocketLaunchingImpl</span> <span class="keyword">implements</span> <span class="title">IRocketLaunching</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">launch</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"倒计时：987654321 发射！"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>织入类  </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.aoptest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> org.springframework.aop.MethodBeforeAdvice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrepareForLaunching</span> <span class="keyword">implements</span> <span class="title">MethodBeforeAdvice</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">(Method method, Object[] params, Object obj)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"给火箭家燃料\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代理对象 </li>
+</ul>
+<p>交给Spring 来做<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">&lt;!--前置增强类--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"beforeLaunch"</span>  <span class="attr">class</span>=<span class="string">"com.zing.aoptest.PrepareForLaunching"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--目标类--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"launchingControl"</span> <span class="attr">class</span>=<span class="string">"com.zing.aoptest.RocketLaunchingImpl"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--工厂--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--optimize为true表示使用CGLib，false为Java动态代理。默认为false--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--当织入对象需要使用单例模式的时候，optimize建议为true，这样比较节省资源--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--target表示需要代理的类，会为这个目标织入前置增强和后置增强--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"rocketProxy"</span> <span class="attr">class</span>=<span class="string">"org.springframework.aop.framework.ProxyFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"target"</span> <span class="attr">ref</span>=<span class="string">"launchingControl"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"proxyInterfaces"</span> <span class="attr">value</span>=<span class="string">"com.zing.aoptest.IRocketLaunching"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"interceptorNames"</span> <span class="attr">value</span>=<span class="string">"beforeLaunch"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"proxyTargetClass"</span> <span class="attr">value</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>测试一下 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package com.zing.aoptest;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line">import org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line">import org.testng.annotations.Test;</span><br><span class="line"></span><br><span class="line">public class AOPTest &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public  void AopTest() &#123;</span><br><span class="line">        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;classpath:spring/spring-dao.xml&quot;);</span><br><span class="line"></span><br><span class="line">        RocketLaunchingImpl rocketLaunching = (RocketLaunchingImpl) context.getBean(&quot;rocketProxy&quot;);</span><br><span class="line"></span><br><span class="line">        rocketLaunching.launch();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试结果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-eeeff8cf57d0f994.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="result"></p>
+<h2 id="0x04-Spring-里的AOP简单介绍"><a href="#0x04-Spring-里的AOP简单介绍" class="headerlink" title="0x04 Spring 里的AOP简单介绍"></a>0x04 Spring 里的AOP简单介绍</h2><p>Spring的AOP是基于JDK的代理模式和CGLib为技术基础，完成织入横切代码的一项功能。</p>
+<p>朕要去撸一个AOP的代码例子：</p>
+<hr>
+<p>例子好了，但是依旧没搞清楚AOP配置的语法，先不急</p>
+<p>放上例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package com.zing.aspect_oriented_test;</span><br><span class="line">/**</span><br><span class="line"> * 方法切面</span><br><span class="line"> */</span><br><span class="line">public class SubjectService implements InterfaceSubjectService &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void AspectMethod(String str) &#123;</span><br><span class="line">        System.out.println(&quot;yo yo yo!\t&quot; + str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.zing.aspect_oriented_test;</span><br><span class="line">/**</span><br><span class="line"> * 对切面的处理，之前与之后</span><br><span class="line"> */public class AspectTarget &#123;</span><br><span class="line">    public void beforeYouTalk() &#123;</span><br><span class="line">        System.out.println(&quot;************beforeYouTalk, I know everything,so do not lie!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    private void afterYouTalk() &#123;</span><br><span class="line">        System.out.println(&quot;************afterYouTalk, ha ha ha,good boy&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们知道了切面和切面处理方法，接下来告诉Spring，切面位置和处理方法<br>在XML配置文件中将两个bean配置到IoC容器中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;aspectService&quot; class=&quot;com.zing.aspect_oriented_test.SubjectService&quot;&gt;&lt;/bean&gt;</span><br><span class="line">&lt;bean id=&quot;aspect&quot; class=&quot;com.zing.aspect_oriented_test.AspectTarget&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>再配置切面和切面方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;aop:config&gt;</span><br><span class="line">    &lt;aop:pointcut id=&quot;pointCut&quot; expression=&quot;execution(* com.zing...*.*(..))&quot;&gt;&lt;/aop:pointcut&gt;</span><br><span class="line">    &lt;aop:aspect ref=&quot;aspect&quot;&gt;</span><br><span class="line">        &lt;aop:before pointcut-ref=&quot;pointCut&quot; method=&quot;beforeYouTalk&quot;&gt;&lt;/aop:before&gt;</span><br><span class="line">        &lt;aop:after pointcut=&quot;execution(* com.zing..*.*(..))&quot;  method=&quot;afterYouTalk&quot;&gt;&lt;/aop:after&gt;</span><br><span class="line">    &lt;/aop:aspect&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure></p>
+<p>上面的配置可能不太明白，因为用的是AspectJ语法，<code>* com.zing..*.*(..)</code>表示<code>com.zing</code>包下的所有子包的类与方法</p>
+<p>例子撸完，写个Junit测试一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package com.zing.aspect_oriented_test;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line">import org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line">/**</span><br><span class="line"> * Created by zing on 16/4/23.</span><br><span class="line"> */</span><br><span class="line">public class AspectJunitTest &#123;</span><br><span class="line">    @Test</span><br><span class="line">    public void AopTest()&#123;</span><br><span class="line">        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;spring-config.xml&quot;);</span><br><span class="line">        InterfaceSubjectService subjectService = applicationContext.getBean(&quot;aspectService&quot;,InterfaceSubjectService.class);</span><br><span class="line">        subjectService.AspectMethod(&quot;Monster&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">************beforeYouTalk, I know everything,so do not lie!</span><br><span class="line">yo yo yo!	Monster</span><br><span class="line">************afterYouTalk, ha ha ha,good boy</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-f10097b73ad03a88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="还是上图吧"></p>
+<p>代码没问题，<em>（全程注意你引得包不要出问题，可以参考我之前的小白文<a href="http://www.jianshu.com/p/2101d176555b" target="_blank" rel="noopener">IDEA 构建SpringMVC+MAVEN项目</a>）</em>下面聊一下AOP的配置</p>
+<p>吐槽：觉得XML配置好烦人<br>这篇再写就累赘了，算了，这个Spring的动态代理的写法并不常用，配置写起来也异常麻烦，后面会详细介绍AOP的常规使用方法，敬请期待</p>
+<p>如果有错误，麻烦留言告诉我。转载请注明出处：<a href="https://micorochio.github.io/2017/02/25/introduction-of-AOP/" target="_blank" rel="noopener">https://micorochio.github.io/2017/02/25/introduction-of-AOP/</a></p>
+<hr>
+<p><a href="https://micorochio.github.io/fs-plan/" target="_blank" rel="noopener">FS全栈计划目录：https://micorochio.github.io/fs-plan/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/AOP/" rel="tag"># AOP</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/23/diary/2017-02-2215-56-13/" rel="next" title="个人全栈计划开始">
+                <i class="fa fa-chevron-left"></i> 个人全栈计划开始
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/28/JavaLan/how-to-play-with-SpringAOP/" rel="prev" title="(FS计划)理清楚Spring的AOP到底怎么玩">
+                (FS计划)理清楚Spring的AOP到底怎么玩 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/image/head_3.png" alt="zing">
+          <p class="site-author-name" itemprop="name">zing</p>
+           
+              <p class="site-description motion-element" itemprop="description"><br>光荣在于平淡<br>艰巨在于漫长<br><br><br>无论我多早迎接这清晨<br>在路上<br>都会有人在<br>我以为别人还在梦乡<br>但无论什么时候<br>这个世界都比我快一步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-AOP是什么"><span class="nav-number">1.</span> <span class="nav-text">0x00 AOP是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-AOP的用途"><span class="nav-number">2.</span> <span class="nav-text">0x01 AOP的用途</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-代理模式"><span class="nav-number"></span> <span class="nav-text">0x02 代理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-Spring里的动态代理"><span class="nav-number">1.</span> <span class="nav-text">0x03 Spring里的动态代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-Spring-里的AOP简单介绍"><span class="nav-number">2.</span> <span class="nav-text">0x04 Spring 里的AOP简单介绍</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zing</span>
+</div>
+
+
+<div class="powered-by">
+  转载请注明出处:xzing.github.io
+</div>
+
+<div class="theme-info">
+  Hexo主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysYXx7FA';
+      var conf = 'e2355a388f5561a2ed245ad3c1a5d48c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("075L7uHacQltb04SleGNHG3G-gzGzoHsz", "s8bu3ivhYQbULV5pwlVel70f");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
