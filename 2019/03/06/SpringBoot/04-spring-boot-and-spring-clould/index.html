@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Linux,mysql,CentOS,">
+  <meta name="keywords" content="Spring,微服务,">
 
 
 
@@ -90,23 +90,18 @@
 
 
 
-<meta name="description" content="还挺麻烦的，老折腾了，CentOS 7 用MariaDB代替了MySQL，yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，不过由于服务器在国外，我的小水管4kb/s 安装了十几个小时。 0x00 先介绍卸载防止重装  yum方式  12 #查看yum是否安装过mysqlyum list installed mysql* 如或显示了列表，说明系统中有MySQL">
-<meta name="keywords" content="Linux,mysql,CentOS">
+<meta name="description" content="学习时的步骤1.了解来历，概念，定义2.使用方式3.底层实现，原理  微服务到底是什么首先 微服务 ≠ SpringBoot  “Microservices” became the hot term in 2014, attracting lots of attention as a new way to think about structuring applications. I’d com">
+<meta name="keywords" content="Spring,微服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="(笔记备份)CentOS 7 安装与卸载 MySQL 5.7">
-<meta property="og:url" content="http://xzing.github.io/2017/01/16/OperationAndMaintenance/mark-CentOS-7-install-mysql-5-7/index.html">
+<meta property="og:title" content="04- SpringBoot and Spring Clould">
+<meta property="og:url" content="http://xzing.github.io/2019/03/06/SpringBoot/04-spring-boot-and-spring-clould/index.html">
 <meta property="og:site_name" content="AIX Zing">
-<meta property="og:description" content="还挺麻烦的，老折腾了，CentOS 7 用MariaDB代替了MySQL，yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，不过由于服务器在国外，我的小水管4kb/s 安装了十几个小时。 0x00 先介绍卸载防止重装  yum方式  12 #查看yum是否安装过mysqlyum list installed mysql* 如或显示了列表，说明系统中有MySQL">
+<meta property="og:description" content="学习时的步骤1.了解来历，概念，定义2.使用方式3.底层实现，原理  微服务到底是什么首先 微服务 ≠ SpringBoot  “Microservices” became the hot term in 2014, attracting lots of attention as a new way to think about structuring applications. I’d com">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-bba6b2eec0c79a1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-2a22af8a7764a6e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-2f064863299d04d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-917573d14e0e88cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-03-01T06:32:18.052Z">
+<meta property="og:updated_time" content="2019-03-06T07:31:31.022Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="(笔记备份)CentOS 7 安装与卸载 MySQL 5.7">
-<meta name="twitter:description" content="还挺麻烦的，老折腾了，CentOS 7 用MariaDB代替了MySQL，yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，不过由于服务器在国外，我的小水管4kb/s 安装了十几个小时。 0x00 先介绍卸载防止重装  yum方式  12 #查看yum是否安装过mysqlyum list installed mysql* 如或显示了列表，说明系统中有MySQL">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-bba6b2eec0c79a1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="04- SpringBoot and Spring Clould">
+<meta name="twitter:description" content="学习时的步骤1.了解来历，概念，定义2.使用方式3.底层实现，原理  微服务到底是什么首先 微服务 ≠ SpringBoot  “Microservices” became the hot term in 2014, attracting lots of attention as a new way to think about structuring applications. I’d com">
 
 
 
@@ -134,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://xzing.github.io/2017/01/16/OperationAndMaintenance/mark-CentOS-7-install-mysql-5-7/">
+  <link rel="canonical" href="http://xzing.github.io/2019/03/06/SpringBoot/04-spring-boot-and-spring-clould/">
 
 
 
 
 
-  <title>(笔记备份)CentOS 7 安装与卸载 MySQL 5.7 | AIX Zing</title>
+  <title>04- SpringBoot and Spring Clould | AIX Zing</title>
 </head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -317,7 +312,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/01/16/OperationAndMaintenance/mark-CentOS-7-install-mysql-5-7/">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/06/SpringBoot/04-spring-boot-and-spring-clould/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -334,7 +329,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">(笔记备份)CentOS 7 安装与卸载 MySQL 5.7</h1>
+          <h1 class="post-title" itemprop="name headline">04- SpringBoot and Spring Clould</h1>
         
 
         <div class="post-meta">
@@ -346,8 +341,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-16T07:13:05+08:00">
-                2017-01-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T19:01:50+08:00">
+                2019-03-06
               </time>
             
 
@@ -366,8 +361,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/01/16/OperationAndMaintenance/mark-CentOS-7-install-mysql-5-7/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/01/16/OperationAndMaintenance/mark-CentOS-7-install-mysql-5-7/" itemprop="commentsCount"></span>
+                <a href="/2019/03/06/SpringBoot/04-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/03/06/SpringBoot/04-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -375,7 +370,7 @@
 
           
           
-             <span id="/2017/01/16/OperationAndMaintenance/mark-CentOS-7-install-mysql-5-7/" class="leancloud_visitors" data-flag-title="(笔记备份)CentOS 7 安装与卸载 MySQL 5.7">
+             <span id="/2019/03/06/SpringBoot/04-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="04- SpringBoot and Spring Clould">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -403,63 +398,21 @@
       
 
       
-        <p>还挺麻烦的，老折腾了，CentOS 7 用MariaDB代替了MySQL，<br>yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，<br>不过由于服务器在国外，我的小水管4kb/s 安装了十几个小时。</p>
-<h2 id="0x00-先介绍卸载"><a href="#0x00-先介绍卸载" class="headerlink" title="0x00 先介绍卸载"></a>0x00 先介绍卸载</h2><p>防止重装<br></p>
-<ul>
-<li>yum方式</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> #查看yum是否安装过mysql</span><br><span class="line">yum list installed mysql*</span><br></pre></td></tr></table></figure>
-<p>如或显示了列表，说明系统中有MySQL<br><img src="http://upload-images.jianshu.io/upload_images/1112615-bba6b2eec0c79a1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<a id="more"></a>
-<ul>
-<li>yum卸载</li>
-</ul>
-<p>根据列表上的名字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum remove mysql-community-client mysql-community-common mysql-community-libs mysql-community-libs-compat mysql-community-server mysql57-community-release</span><br><span class="line">rm -rf /var/lib/mysql  </span><br><span class="line">rm /etc/my.cnf</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>rpm查看安装</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i mysql</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-2a22af8a7764a6e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<ul>
-<li>rpm 卸载</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rpm -e mysql57-community-release-el7-9.noarch</span><br><span class="line">rpm -e mysql-community-server-5.7.17-1.el7.x86_64</span><br><span class="line">rpm -e mysql-community-libs-5.7.17-1.el7.x86_64</span><br><span class="line">rpm -e mysql-community-libs-compat-5.7.17-1.el7.x86_64</span><br><span class="line">rpm -e mysql-community-common-5.7.17-1.el7.x86_64</span><br><span class="line">rpm -e mysql-community-client-5.7.17-1.el7.x86_64</span><br><span class="line">cd /var/lib/  </span><br><span class="line">rm -rf mysql/</span><br></pre></td></tr></table></figure>
-<ul>
-<li>清除余项</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">whereis mysql</span><br><span class="line">mysql: /usr/bin/mysql /usr/lib64/mysql /usr/local/mysql /usr/share/mysql /usr/share/man/man1/mysql.1.gz</span><br><span class="line"> # 删除上面的文件夹</span><br><span class="line">rm -rf /usr/bin/mysql</span><br><span class="line">…</span><br><span class="line">…</span><br></pre></td></tr></table></figure>
-<p>我就省略了</p>
-<ul>
-<li>删除配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm –rf /usr/my.cnf</span><br><span class="line">rm -rf /root/.mysql_sercret</span><br></pre></td></tr></table></figure>
-<p>剩余配置检查<br><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --list | grep -i mysql</span><br><span class="line">chkconfig --del mysqld</span><br></pre></td></tr></table></figure></p>
-<p>根据上面的列表，删除 ,如：mysqld</p>
-<h2 id="0x01-再介绍安装"><a href="#0x01-再介绍安装" class="headerlink" title="0x01 再介绍安装"></a>0x01 再介绍安装</h2><ul>
-<li>注意</li>
-</ul>
-<p><em>yum源，阿里的CentOS7.repo是没有的，国外源相当慢，做好心理准备。</em></p>
-<ul>
-<li>下载地址</li>
-</ul>
-<p><a href="http://dev.mysql.com/downloads/" target="_blank" rel="noopener">http://dev.mysql.com/downloads/</a><br><img src="http://upload-images.jianshu.io/upload_images/1112615-2f064863299d04d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="下载页面"></p>
-<p>按照官方的文档进行安装<br><a href="http://dev.mysql.com/doc/refman/5.7/en/installing.html" target="_blank" rel="noopener">http://dev.mysql.com/doc/refman/5.7/en/installing.html</a><br><img src="http://upload-images.jianshu.io/upload_images/1112615-917573d14e0e88cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="http://dev.mysql.com/doc/refman/5.7/en/linux-installation.html"><br>文档地址：<a href="http://dev.mysql.com/doc/refman/5.7/en/linux-installation.html" target="_blank" rel="noopener">http://dev.mysql.com/doc/refman/5.7/en/linux-installation.html</a><br>3是各种安装方式列表<br>CentOS用yum安装相对省事，省去很多配置环节</p>
-<p>yum安装，先要搞到源<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://repo.mysql.com/mysql57-community-release-el7-9.noarch.rpm</span><br><span class="line">sudo rpm -ivh mysql57-community-release-el7-9.noarch.rpm</span><br></pre></td></tr></table></figure></p>
-<p>接下来使用yum安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  # 更新yum软件包</span><br><span class="line">yum check-update  </span><br><span class="line">  # 更新系统 </span><br><span class="line">yum update</span><br><span class="line">  # 安装mysql</span><br><span class="line">yum install mysql mysql-server</span><br></pre></td></tr></table></figure>
-<p>接下来是漫长的等待。如果中途关机，或者下载挂了，请执行卸载步骤后，再来一次。</p>
-<p>完成后</p>
-<p>记住要给root上密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/bin/mysqld_safe --skip-grant-tables --user=mysql &amp;</span><br><span class="line">systemctl start mysqld</span><br><span class="line">mysql -u root</span><br><span class="line">mysql&gt; update mysql.user set authentication_string=password(&apos;new_password&apos;) where user=&apos;root&apos; and Host =&apos;localhost&apos;;</span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line">mysql&gt; quit;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>启动与开放远程访问</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld</span><br><span class="line">mysql -u root -p</span><br><span class="line"> # 授权远程访问</span><br><span class="line">mysql&gt; use mysql;</span><br><span class="line">mysql&gt; rant all privileges  on *.* to root@&apos;%&apos; identified by &quot;root&quot;;</span><br><span class="line">mysql&gt; FLUSH RIVILEGES;</span><br></pre></td></tr></table></figure>
-<p>建议root不要授权远程访问，请创建新mysql用户</p>
-<h2 id="0x02-编译安装"><a href="#0x02-编译安装" class="headerlink" title="0x02 编译安装"></a>0x02 编译安装</h2><p>这个略坑，我按照官方文档安装，安好了不会配置，唉，吐槽自己太菜！导致没启动成功，后来换成了yum安装<br><a href="http://dev.mysql.com/doc/refman/5.7/en/installing-source-distribution.html" target="_blank" rel="noopener">http://dev.mysql.com/doc/refman/5.7/en/installing-source-distribution.html</a><br>我还是要把脚本贴出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> # 添加mysql用户</span><br><span class="line">shell&gt; groupadd mysql</span><br><span class="line">shell&gt; useradd -r -g mysql -s /bin/false mysql</span><br><span class="line">shell&gt; rpmbuild --rebuild --clean MySQL-VERSION.src.rpm</span><br><span class="line"> # 源码编译安装</span><br><span class="line">shell&gt; tar zxvf mysql-VERSION.tar.gz</span><br><span class="line">shell&gt; cd mysql-VERSION</span><br><span class="line">shell&gt; mkdir build</span><br><span class="line">shell&gt; cd build</span><br><span class="line">shell&gt; cmake ..</span><br><span class="line">shell&gt; make</span><br><span class="line">shell&gt; make install</span><br><span class="line"> # 结束 source-build specific instructions</span><br><span class="line"> # 权限步骤</span><br><span class="line">shell&gt; cd /usr/local/mysql</span><br><span class="line">shell&gt; chown -R mysql .</span><br><span class="line">shell&gt; chgrp -R mysql .</span><br><span class="line">shell&gt; bin/mysql_install_db --user=mysql    # MySQL 5.7.6执行</span><br><span class="line">shell&gt; bin/mysqld --initialize --user=mysql # MySQL 5.7.6 更高版本执行</span><br><span class="line">shell&gt; bin/mysql_ssl_rsa_setup              # MySQL 5.7.6 更高版本执行</span><br><span class="line">shell&gt; chown -R root .</span><br><span class="line">shell&gt; chown -R mysql data</span><br><span class="line">shell&gt; bin/mysqld_safe --user=mysql &amp;</span><br><span class="line"> # 配置命令</span><br><span class="line">shell&gt; cp support-files/mysql.server /etc/init.d/mysql.server</span><br></pre></td></tr></table></figure></p>
-<p>大致是以上的安装脚本，官网上有详细解释每一条的作用。可以参照一下。如果安装失败，可以参照最上面的卸载教程。<br>祝你好运。</p>
-<h2 id="0x03-参考"><a href="#0x03-参考" class="headerlink" title="0x03 参考"></a>0x03 参考</h2><p><a href="http://dev.mysql.com/doc/" target="_blank" rel="noopener">http://dev.mysql.com/doc/</a><br><a href="http://blog.csdn.net/typa01_kk/article/details/49057073" target="_blank" rel="noopener">http://blog.csdn.net/typa01_kk/article/details/49057073</a></p>
-<hr>
-<p>*如果有错别字或者其他错误，请告知我修改。<br>转载请务必注明出处！</p>
+        <blockquote>
+<p>学习时的步骤<br>1.了解来历，概念，定义<br>2.使用方式<br>3.底层实现，原理</p>
+</blockquote>
+<h1 id="微服务到底是什么"><a href="#微服务到底是什么" class="headerlink" title="微服务到底是什么"></a>微服务到底是什么</h1><p>首先 微服务 ≠ SpringBoot</p>
+<blockquote>
+<p>“Microservices” became the hot term in 2014, attracting lots of attention as a new way to think about structuring applications. I’d come across this style several years earlier, talking with my contacts both in ThoughtWorks and beyond. It’s a style that many good people find is an effective way to work with a significant class of systems. But to gain any benefit from microservice thinking, you have to understand what it is, how to do it, and why you should usually do something else.</p>
+<p>In short, the microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. These services are built around business capabilities and independently deployable by fully automated deployment machinery. There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies.</p>
+<p>– James Lewis and Martin Fowler<br><a href="https://www.martinfowler.com/microservices/" target="_blank" rel="noopener">https://www.martinfowler.com/microservices/</a></p>
+</blockquote>
+<h1 id="译："><a href="#译：" class="headerlink" title="译："></a>译：</h1><blockquote>
+<p>“微服务”成为2014年的热门词汇，吸引了大量关注，成为构建应用程序的新的参考方式之一。<br>几年前我遇到这种架构方式，并与ThoughtWorks及其他人交流过。<br>许多优秀的人发现,微服务的方式是架构核心级别服务的有效风格。<br>但是从微服务思维中受益前，你必须了解它是什么，如何构建，以及为什么应该使用这种方式做系统架构。</p>
+<p>简而言之：微服务架构是一种将程序分成多个小的子服务，每个服务运行在各自不同的进程中，服务之间通过轻量级通讯机制进行通信，通常是HTTP资源API。<br>这些服务通过围绕业务进行构建，并且可以通过某些自动部署机制进行独立部署。<br>这些服务可以使用不同的语言编写，使用各自的存储技术，并且只需要极少的中心化管理。</p>
+</blockquote>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>微服务是一种架构风格，广泛用于拆分模、业务。并且能够自动部署</p>
+<p>————微服务课程学习笔记</p>
 
       
     </div>
@@ -489,11 +442,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
           
-            <a href="/tags/mysql/" rel="tag"># mysql</a>
-          
-            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
           
         </div>
       
@@ -506,8 +457,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/16/OperationAndMaintenance/change-linux-yum-repo/" rel="next" title="(笔记备份)CentOS 7 换yum源">
-                <i class="fa fa-chevron-left"></i> (笔记备份)CentOS 7 换yum源
+              <a href="/2019/03/06/SpringBoot/03-spring-boot-and-spring-clould/" rel="next" title="03- SpringBoot and Spring Clould">
+                <i class="fa fa-chevron-left"></i> 03- SpringBoot and Spring Clould
               </a>
             
           </div>
@@ -515,10 +466,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/20/OperationAndMaintenance/mark-CentOS-7-Java-Web-Server-building/" rel="prev" title="CentOS7 搭建Java Web服务器笔记">
-                CentOS7 搭建Java Web服务器笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -638,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-先介绍卸载"><span class="nav-number">1.</span> <span class="nav-text">0x00 先介绍卸载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-再介绍安装"><span class="nav-number">2.</span> <span class="nav-text">0x01 再介绍安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-编译安装"><span class="nav-number">3.</span> <span class="nav-text">0x02 编译安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-参考"><span class="nav-number">4.</span> <span class="nav-text">0x03 参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#微服务到底是什么"><span class="nav-number">1.</span> <span class="nav-text">微服务到底是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#译："><span class="nav-number">2.</span> <span class="nav-text">译：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结："><span class="nav-number">3.</span> <span class="nav-text">总结：</span></a></li></ol></div>
             
 
           </div>
