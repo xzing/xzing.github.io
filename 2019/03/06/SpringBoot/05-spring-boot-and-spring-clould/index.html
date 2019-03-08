@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Java,笔记,Java基础,多线程,">
+  <meta name="keywords" content="Spring,微服务,">
 
 
 
@@ -90,23 +90,18 @@
 
 
 
-<meta name="description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。">
-<meta name="keywords" content="Java,笔记,Java基础,多线程">
+<meta name="description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
+<meta name="keywords" content="Spring,微服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java线程的内存模型基础知识">
-<meta property="og:url" content="http://xzing.github.io/2017/11/10/jvm/the_thread_RAM_modle_in_jvm/index.html">
+<meta property="og:title" content="05- SpringBoot and Spring Clould">
+<meta property="og:url" content="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/index.html">
 <meta property="og:site_name" content="AIX Zing">
-<meta property="og:description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。">
+<meta property="og:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-d799c8032ee4ef56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-ddfdd6dce25a2f0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-428914974fcf30ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-03-01T07:18:20.006Z">
+<meta property="og:updated_time" content="2019-03-08T10:30:06.763Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java线程的内存模型基础知识">
-<meta name="twitter:description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="05- SpringBoot and Spring Clould">
+<meta name="twitter:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
 
 
 
@@ -134,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://xzing.github.io/2017/11/10/jvm/the_thread_RAM_modle_in_jvm/">
+  <link rel="canonical" href="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/">
 
 
 
 
 
-  <title>Java线程的内存模型基础知识 | AIX Zing</title>
+  <title>05- SpringBoot and Spring Clould | AIX Zing</title>
 </head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -317,7 +312,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/11/10/jvm/the_thread_RAM_modle_in_jvm/">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -334,7 +329,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java线程的内存模型基础知识</h1>
+          <h1 class="post-title" itemprop="name headline">05- SpringBoot and Spring Clould</h1>
         
 
         <div class="post-meta">
@@ -346,8 +341,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-10T09:17:45+08:00">
-                2017-11-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T23:34:07+08:00">
+                2019-03-06
               </time>
             
 
@@ -366,8 +361,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/11/10/jvm/the_thread_RAM_modle_in_jvm/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/11/10/jvm/the_thread_RAM_modle_in_jvm/" itemprop="commentsCount"></span>
+                <a href="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -375,7 +370,7 @@
 
           
           
-             <span id="/2017/11/10/jvm/the_thread_RAM_modle_in_jvm/" class="leancloud_visitors" data-flag-title="Java线程的内存模型基础知识">
+             <span id="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="05- SpringBoot and Spring Clould">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -403,74 +398,25 @@
       
 
       
-        <p><img src="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。</p>
-<a id="more"></a>
-<h2 id="0x01-内存模型图的思维转换"><a href="#0x01-内存模型图的思维转换" class="headerlink" title="0x01 内存模型图的思维转换"></a>0x01 内存模型图的思维转换</h2><p><img src="http://upload-images.jianshu.io/upload_images/1112615-d799c8032ee4ef56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。</p>
-<p>笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。</p>
-<p>但是如果从线程的角度，内存模型会变成下图的样子</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-ddfdd6dce25a2f0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="线程内存模型"></p>
-<p>在这个模型中，变量是在主内存中的，线程各自有各自的工作内存，不会出现相互干扰。</p>
-<p>工作内存通过跟主内存之间的操作，实现变量数据的交换共享。而线程工作内存是相互隔离的。这样各线程工作的时候不会对其他线程的工作数据产生影响</p>
-<h2 id="0x02-工作内存和主内存之间的操作（单个线程）"><a href="#0x02-工作内存和主内存之间的操作（单个线程）" class="headerlink" title="0x02 工作内存和主内存之间的操作（单个线程）"></a>0x02 工作内存和主内存之间的操作（单个线程）</h2><p>两块内存有8种操作。</p>
-<ol>
-<li><strong>（lock - unlock）</strong> lock将一个主内存变量标记成线程独占，unlock将独占的变量释放</li>
-<li><strong>（read - load）</strong>read 将主内存的变量读取到CPU中，load操作将read到的变量存入到工作内存中,一定会成对出现</li>
-<li><strong>（use - assign）</strong> use将工作内存中的变量传递给执行的代码中，当代码需要使用变量值的字节码时，需要这个操作。 assign 赋值操作，将代码中赋值指令出现时，把收到的变量赋值到工作内存中</li>
-<li><strong>(store - write)</strong>  store 将工作内存的变量传送回主内存，但是只是传送，write操作才会将值写入到主内存。而且这两个一定会成对出现</li>
-</ol>
-<blockquote>
-<ul>
-<li>read load ; store write只能成对操作，不能出现只读不用，只返回不存储 </li>
-<li>不允许线程丢弃assign操作，用完的变量一定会传回主内存，也不允许将未assign的变量从工作内存写回主内存</li>
-<li>变量只能从主内存中创建，未初始化的变量线程不能load 或 assign</li>
-<li>变量只能被一条线程lock，而且可以lock很多次，必须执行相应条数的unlock才会被释放</li>
-<li>线程只能unlock自己lock的变量，未被lock的变量不能执行unlock，不允许unlock其他线程lock的变量</li>
-<li>lock变量操作会将工作内存的变量清空，使用这个变量时，相应使用这个变量时，需要重新load 和assign</li>
-<li>unlock 前，变量会被重新写入主内存</li>
-</ul>
+        <h1 id="Microservice"><a href="#Microservice" class="headerlink" title="Microservice"></a>Microservice</h1><blockquote>
+<p>将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。</p>
 </blockquote>
-<p>正如上面4条说明，每两对操作基本都是对应的，成对出现的。（不是绝对）</p>
-<h2 id="0x03-特殊的内存操作"><a href="#0x03-特殊的内存操作" class="headerlink" title="0x03 特殊的内存操作"></a>0x03 特殊的内存操作</h2><p>下面说一下特例情况</p>
-<p>###synchronized对内存可见性的影响<br>首先synchronized关键字在线程同步上，安全性几乎是万能的，导致被滥用的一塌糊涂。<br>其次synchronized关键字保证了两条线程遵循happens-before的设计原则，两个线程必须一先一后执行。</p>
-<blockquote>
-<pre><code>它会阻止其它线程获取当前对象锁，这样就使得当前对象中被synchronized关键字保护的代码块无法被其它线程访问，也就无法并发执行。
-</code></pre><p><a href="http://blog.csdn.net/suifeng3051/article/details/52611233" target="_blank" rel="noopener">volatile和synchronized的区别</a></p>
-</blockquote>
-<p>最后synchronized关键字对内存的影响是，当一个线程从一个synchronized块出来时，内存一定会刷新成最新的数据，保证变量的可见性。</p>
-<h3 id="接着是volatile关键字"><a href="#接着是volatile关键字" class="headerlink" title="接着是volatile关键字"></a>接着是volatile关键字</h3><p>volatile 修饰的变量。面试容易被问，因为大家喜欢用synchronized 来进行同步，忽略了了volatile这个关键字</p>
-<p>那么他们的区别是什么？<br><strong>“可见性”！</strong>但是一定要记住，这里的可见性不是绝对的立即可见，虽然volatile变量会将变量的变化及时的反应到其他线程的工作内存中去，但是并不表示被修饰的变量在各线程中会一致，只是使用的时候会被刷新，所以执行引擎不会发现不一致的情况，而实际上，被修饰的变量也会有不同的工作内存中值不一致的情况</p>
-<p>volatile 关键字只能保证线程取值的时候，是一致的，等取到工作内存中进行操作时，如果变量被其他线程存回去的话，这时候工作内存的变量就会出现不一致。<br>下面一段代码会出现比预期值小的情况<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestVolatail</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> added = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">increase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        added++;<span class="comment">//++ 操作是先取出来，然后再加一，如果想线程安全，试试juc里面的atomic包下的类</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ADD_ACCOUNTER = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread t[] = <span class="keyword">new</span> Thread[ADD_ACCOUNTER];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ADD_ACCOUNTER; i++) &#123;</span><br><span class="line">            t[i] = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; <span class="number">10000</span>; m++) &#123;</span><br><span class="line">                    increase();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            t[i].start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (Thread.activeCount() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"最终累加值："</span> + added);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>输出结果：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-428914974fcf30ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>10个线程，每个对变量做10000次累加，并不是100000，变小了是因为某些线程正在累加的时候，新的较小的值已经覆盖了正在使用的变量，别的线程来取会以这个较小的值为准。</p>
-<blockquote>
-<p><strong>所以volatile只能保证可见性，不能保证一致性</strong></p>
-</blockquote>
-<blockquote>
-<p>面试的时候最好提一下volatile会禁止jvm做指令重排序，java1.5之后才变成这样的，本篇暂且不表，坑后面再填</p>
-</blockquote>
-<h3 id="long-和-double的特殊性"><a href="#long-和-double的特殊性" class="headerlink" title="long 和 double的特殊性"></a>long 和 double的特殊性</h3><p>首先 long 和 double是64位的，这一点是毋庸置疑的。</p>
-<p>所以上述8种操作，在面对long类型和double类型的时候，有4种操作<code>read load  store write</code>是需要连续执行两次的。虽然JVM中，虽然是允许读取64位数据不是原子操作，但是在商用的JVM中，这些操作都是原子的</p>
-<p>而且JVM规范里，强烈“建议”将读取和存放 64位数据的操作做成原子操作的。所以……<br>另外，多核心处理器中的同一个变量缓存也不是及时同步的，即使有个byte，使用时也会加锁。</p>
-<p><strong><em>附上JVM规范和R大在知乎上的回答：</em></strong></p>
-<blockquote>
-<p><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.7" target="_blank" rel="noopener">JVM规范：17.7. Non-atomic Treatment of double and long</a></p>
-</blockquote>
-<blockquote>
-<p>R大的回答截取：   <em>简单说就是规范说的是：</em></p>
-<blockquote>
-<ul>
-<li>实现对普通long与double的读写不要求是原子的（但如果实现为原子操作也OK）</li>
-<li>实现对volatile long与volatile double的读写必须是原子的（没有选择余地）</li>
-</ul>
-</blockquote>
-<p>(<em>64位JVM的long和double读写也不是原子操作么？ - RednaxelaFX的回答 - 知乎<br><a href="https://www.zhihu.com/question/38816432/answer/78944479" target="_blank" rel="noopener">https://www.zhihu.com/question/38816432/answer/78944479</a></em>)</p>
-</blockquote>
-<p>如果想亲自试一试，可以看看：<a href="https://my.oschina.net/u/1047640/blog/510397" target="_blank" rel="noopener">证明32位java对long和double的写操作不是原子性的</a></p>
-<p>0x04 总结<br>以上只是对内存结构和部分读写规则的总结笔记，线程是java必过的硬指标，后面再更新新的学习笔记。</p>
-<p>by：zing<br>转载请注明出处：<a href="https://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/" target="_blank" rel="noopener">https://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/</a></p>
+<h2 id="新的架构名词"><a href="#新的架构名词" class="headerlink" title="新的架构名词"></a>新的架构名词</h2><p>【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但是这个小小的词却描述了一种被发现越来越具有吸引力的软件架构风格。在过去的几年中，我们已经看到许多个项目使用了这种风格，目前为止这些项目的结果都是积极的，以至于对我的许多同事而言这已成为构建企业应用的默认风格。然而，令人沮丧的是，没有大量的信息明确指出微服务是什么以及我们如何实现它。</p>
+<p>简而言之，微服务架构风格是以一组小服务来开发单个应用程序的方法，每一个服务运行在自己独立的进程中并且使用轻量级的方法通信，通常是一个HTTP API接口。这些服务围绕相关业务范围构建并且由全自动化部署机器独立部署。这些服务只需要最低限度的管理，可以用不同的编程语言去编写并且使用不同的数据存储技术。</p>
+<p>若要解释清楚微服务风格，将它与单体风格（一个单个应用程序作为一个独立单元构建）对比将会很有帮助。企业应用程序通常由三个主要部分组成：一个客户端用户界面（由运行在用户机器上的浏览器中的HTML页面和javscript代码组合成），一个数据库（由多个插入到一种常见的，通常是关系型数据库管理系统中的数据表组合成），以及一个服务端应用程序。这个服务端应用程序将会处理HTTP请求，执行领域逻辑，从数据库获取和更新数据，并且选择和填充发送给浏览器的HTML视图。这个服务器端的应用程序就是单体——一个单一的可执行的逻辑。任何对这个系统的改动都需要重新构建和部署一个服务器端应用程序的新版本。</p>
+<p>很自然地，这样的单体服务器是构建这样一个系统的一种方式。处理一条请求的所有逻辑都在一个单一的进程中运行，这允许你使用编程语言的基本功能将应用程序拆分成类、函数和命名空间。更谨慎的做法是，你可以在一个开发者的笔记本上运行和测试这个应用程序，并且使用一个部署管道来确保改动都被正确的测试并且部署到了生产环境中。你可以通过在一个负载均衡器后运行多个实例的方式来横向缩放这个单体应用。</p>
+<p>单体应用可以被成功运用，但是渐渐地人们对单体应用感到不满——尤其是当越来越多的应用程序被部署到云端。任何改动都会牵一发动全身——哪怕是对应用程序一个小地方的改变都需要整个单体应用被重新构建和部署。随着时间的推移通常会很难保持一个良好的模块结构，使得控制变更仅影响模块内部变得越加困难。如要实现可伸缩，需要变动整个应用程序而不是应用程序的某一部分，这要求更多的资源。</p>
+<h1 id="微服务架构的特征"><a href="#微服务架构的特征" class="headerlink" title="微服务架构的特征"></a>微服务架构的特征</h1><p>我们不能够说微服务有着一个正式地定义，但是我们可以尝试着描述那些被标上“微服务”标签架构的共同特征。尽管可以列出共同特征，但并非所有的微服务架构都具备所有的特征，但是我们猜想绝大多数的微服务架构都显现出多数特征。尽管我们两位作者已经成为微服务这个相当松散的社区的活跃成员，但我们的意愿是试图描述我们在自己和我们所知的团队的工作中所了解的情况。特别要指出，我们不会给出教条式的微服务的定义。</p>
+<h2 id="通过服务实现组件化"><a href="#通过服务实现组件化" class="headerlink" title="通过服务实现组件化"></a>通过服务实现组件化</h2><p>自软件工程诞生伊始，人们就期望有着通过将软件模块组合在一起来构建系统，就如同我们在现实生活中看到的制造东西的方法。在过去的几十年里，我们在公共组件库方面取得了长足的进展，这些大量的公共组件库已经成为多数编程语言平台的一部分。</p>
+<p>当我们讨论组件时，我们首先得回答“什么是组件”。我们的定义是：一个组件就是一个可以被独立替换和升级的软件单元。</p>
+<p>微服务架构也会使用软件库，但是用来实现软件组件化的主要方式是将软件拆分成服务。我们将被连接到一个程序并且通过内存函数调用的组件称为<strong>库</strong>，而<strong>服务</strong>却是进程外加载的组件，它通过例如web服务请求或者远程过程调用的方式通信。（各种<code>OO</code>语言程序中服务又是另一个概念了[3]）</p>
+<p>选择使用服务作为组件（而不是库）的一个主要原因是服务是可以独立部署的。假设你有一个包含多个库的应用程序[4]跑在一个单一的进程里，对任何单一组件的变更都将导致整个应用程序的重新部署。但是如果这个应用程序被分解成多个服务，那么你可以期望对单一服务的多项变更只需要重新部署那个服务。这不是绝对的，某些变更可能会改变服务接口从而导致某些内容协商问题，但是微服务架构的目的就是要通过明确的服务边界和演进设计的服务契约来最小化这些变更。</p>
+<p>使用服务作为组件的另一个好处是更加明确的组件接口。许多语言在定义明确的<a href="https://www.martinfowler.com/bliki/PublishedInterface.html" target="_blank" rel="noopener">公共接口</a>方面表现得不好。通常它只有一些文档来描述如何阻止客户端破坏组件的封装，这将导致组件间过度的耦合。服务通过使用明确的远程调用方法轻松地避免了这个问题。</p>
+<p>像这样使用服务也会带来副作用。远程调用比起进程内调用要花更多代价，因此远程API需要是粗粒度的，通常更加不便于使用。如果你需要更改两个组件的职责分配，在跨流程边界的情形下这种操作将会更加困难。</p>
+<p>我们经常将各个Service近似比作运行中的进程（process），但这只是近似的类比方式。一个Service可以包含很多个一起开发、部署的进程。例如一个应用服务和一个只在该服务中被使用的数据库</p>
+<h2 id="围绕业务的组合"><a href="#围绕业务的组合" class="headerlink" title="围绕业务的组合"></a>围绕业务的组合</h2><p>When looking to split a large application into parts, often management focuses on the technology layer, leading to UI teams, server-side logic teams, and database teams. When teams are separated along these lines, even simple changes can lead to a cross-team project taking time and budgetary approval. A smart team will optimise around this and plump for the lesser of two evils - just force the logic into whichever application they have access to. Logic everywhere in other words. This is an example of Conway’s Law[5] in action.</p>
+<p>未完待续</p>
+<p>————微服务课程学习笔记</p>
 
       
     </div>
@@ -500,13 +446,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
           
-            <a href="/tags/笔记/" rel="tag"># 笔记</a>
-          
-            <a href="/tags/Java基础/" rel="tag"># Java基础</a>
-          
-            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
           
         </div>
       
@@ -519,8 +461,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/07/JavaLan/reading-effective-java-03/" rel="next" title="Effective Java 读书笔记-第四章">
-                <i class="fa fa-chevron-left"></i> Effective Java 读书笔记-第四章
+              <a href="/2019/03/06/SpringBoot/04-spring-boot-and-spring-clould/" rel="next" title="04- SpringBoot and Spring Clould">
+                <i class="fa fa-chevron-left"></i> 04- SpringBoot and Spring Clould
               </a>
             
           </div>
@@ -528,10 +470,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/10/JavaLan/learning-thread-note-01/" rel="prev" title="Java线程学习笔记">
-                Java线程学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -651,7 +589,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-内存模型图的思维转换"><span class="nav-number">1.</span> <span class="nav-text">0x01 内存模型图的思维转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-工作内存和主内存之间的操作（单个线程）"><span class="nav-number">2.</span> <span class="nav-text">0x02 工作内存和主内存之间的操作（单个线程）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-特殊的内存操作"><span class="nav-number">3.</span> <span class="nav-text">0x03 特殊的内存操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接着是volatile关键字"><span class="nav-number">3.1.</span> <span class="nav-text">接着是volatile关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#long-和-double的特殊性"><span class="nav-number">3.2.</span> <span class="nav-text">long 和 double的特殊性</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Microservice"><span class="nav-number">1.</span> <span class="nav-text">Microservice</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#新的架构名词"><span class="nav-number">1.1.</span> <span class="nav-text">新的架构名词</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微服务架构的特征"><span class="nav-number">2.</span> <span class="nav-text">微服务架构的特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过服务实现组件化"><span class="nav-number">2.1.</span> <span class="nav-text">通过服务实现组件化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#围绕业务的组合"><span class="nav-number">2.2.</span> <span class="nav-text">围绕业务的组合</span></a></li></ol></li></ol></div>
             
 
           </div>
