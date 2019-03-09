@@ -93,15 +93,17 @@
 <meta name="description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
 <meta name="keywords" content="Spring,微服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="05- SpringBoot and Spring Clould">
+<meta property="og:title" content="(译)微服务——martinfowler">
 <meta property="og:url" content="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/index.html">
 <meta property="og:site_name" content="AIX Zing">
 <meta property="og:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-08T10:31:38.099Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-09T07:58:15.884Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="05- SpringBoot and Spring Clould">
+<meta name="twitter:title" content="(译)微服务——martinfowler">
 <meta name="twitter:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -135,7 +137,7 @@
 
 
 
-  <title>05- SpringBoot and Spring Clould | AIX Zing</title>
+  <title>(译)微服务——martinfowler | AIX Zing</title>
 </head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -329,7 +331,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">05- SpringBoot and Spring Clould</h1>
+          <h1 class="post-title" itemprop="name headline">(译)微服务——martinfowler</h1>
         
 
         <div class="post-meta">
@@ -370,7 +372,7 @@
 
           
           
-             <span id="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="05- SpringBoot and Spring Clould">
+             <span id="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="(译)微服务——martinfowler">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -414,7 +416,13 @@
 <p>使用服务作为组件的另一个好处是更加明确的组件接口。许多语言在定义明确的<a href="https://www.martinfowler.com/bliki/PublishedInterface.html" target="_blank" rel="noopener">公共接口</a>方面表现得不好。通常它只有一些文档来描述如何阻止客户端破坏组件的封装，这将导致组件间过度的耦合。服务通过使用明确的远程调用方法轻松地避免了这个问题。</p>
 <p>像这样使用服务也会带来副作用。远程调用比起进程内调用要花更多代价，因此远程API需要是粗粒度的，通常更加不便于使用。如果你需要更改两个组件的职责分配，在跨流程边界的情形下这种操作将会更加困难。</p>
 <p>我们经常将各个Service近似比作运行中的进程（process），但这只是近似的类比方式。一个Service可以包含很多个一起开发、部署的进程。例如一个应用服务和一个只在该服务中被使用的数据库</p>
-<h2 id="围绕业务的组合"><a href="#围绕业务的组合" class="headerlink" title="围绕业务的组合"></a>围绕业务的组合</h2><p>When looking to split a large application into parts, often management focuses on the technology layer, leading to UI teams, server-side logic teams, and database teams. When teams are separated along these lines, even simple changes can lead to a cross-team project taking time and budgetary approval. A smart team will optimise around this and plump for the lesser of two evils - just force the logic into whichever application they have access to. Logic everywhere in other words. This is an example of Conway’s Law[5] in action.</p>
+<h2 id="围绕业务的组合"><a href="#围绕业务的组合" class="headerlink" title="围绕业务的组合"></a>围绕业务的组合</h2><p>当大型应用程序拆分成多个部分时，通常情况是在技术层面上分开管理，就有了UI团队，服务端逻辑开发团队，数据库团队。按这种分工模式，即使简单的小改动也会导致跨团队协商和预算评估。敏捷团队会围绕这些问题进行优化，在两个坏处中选择一个代价较小的来解决问题——强制把逻辑塞到所有可以访问的程序中。每个模块都有处理逻辑。这就是Conway’s Law[5] 的实践示例</p>
+<blockquote>
+<p>设计系统(广义上)的组织，其产生的设计等同于组织之内、组织之间的沟通结构。</p>
+<p>– Melvyn Conway, 1967</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2: Conway法则的实际应用"></p>
+<p>微服务架构拆分方式不同之处在于，按照业务能力划分服务团队。这些服务需要采取该业务领域软件的最宽泛（broad-stack）配置，包括用户界面、持久化存储和其他外部协作。因此这样的团队是跨职能的，其内部需要完整的开发技能：用户体验，数据库和项目管理</p>
 <p>未完待续</p>
 <p>————微服务课程学习笔记</p>
 <p>喜欢请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
