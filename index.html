@@ -312,7 +312,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/13/JavaLan/01-learning-thread-note/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -331,7 +331,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="url">(译)微服务——martinfowler</a></h1>
+                <a class="post-title-link" href="/2019/03/13/JavaLan/01-learning-thread-note/" itemprop="url">从0开始学Java并发（一）</a></h1>
         
 
         <div class="post-meta">
@@ -343,8 +343,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T23:34:07+08:00">
-                2019-03-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T00:25:45+08:00">
+                2019-03-13
               </time>
             
 
@@ -363,8 +363,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="cy_cmt_count" data-xid="2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
+                <a href="/2019/03/13/JavaLan/01-learning-thread-note/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2019/03/13/JavaLan/01-learning-thread-note/" class="cy_cmt_count" data-xid="2019/03/13/JavaLan/01-learning-thread-note/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -372,7 +372,7 @@
 
           
           
-             <span id="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="(译)微服务——martinfowler">
+             <span id="/2019/03/13/JavaLan/01-learning-thread-note/" class="leancloud_visitors" data-flag-title="从0开始学Java并发（一）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,38 +402,70 @@
       
         
           
-            <h1 id="Microservice"><a href="#Microservice" class="headerlink" title="Microservice"></a>Microservice</h1><blockquote>
-<p>将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。</p>
-</blockquote>
-<h2 id="新的架构名词"><a href="#新的架构名词" class="headerlink" title="新的架构名词"></a>新的架构名词</h2><p>【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但是这个小小的词却描述了一种被发现越来越具有吸引力的软件架构风格。在过去的几年中，我们已经看到许多个项目使用了这种风格，目前为止这些项目的结果都是积极的，以至于对我的许多同事而言这已成为构建企业应用的默认风格。然而，令人沮丧的是，没有大量的信息明确指出微服务是什么以及我们如何实现它。</p>
-<p>简而言之，微服务架构风格是以一组小服务来开发单个应用程序的方法，每一个服务运行在自己独立的进程中并且使用轻量级的方法通信，通常是一个HTTP API接口。这些服务围绕相关业务范围构建并且由全自动化部署机器独立部署。这些服务只需要最低限度的管理，可以用不同的编程语言去编写并且使用不同的数据存储技术。</p>
-<p>若要解释清楚微服务风格，将它与单体风格（一个单个应用程序作为一个独立单元构建）对比将会很有帮助。企业应用程序通常由三个主要部分组成：一个客户端用户界面（由运行在用户机器上的浏览器中的HTML页面和javscript代码组合成），一个数据库（由多个插入到一种常见的，通常是关系型数据库管理系统中的数据表组合成），以及一个服务端应用程序。这个服务端应用程序将会处理HTTP请求，执行领域逻辑，从数据库获取和更新数据，并且选择和填充发送给浏览器的HTML视图。这个服务器端的应用程序就是单体——一个单一的可执行的逻辑。任何对这个系统的改动都需要重新构建和部署一个服务器端应用程序的新版本。</p>
-<p>很自然地，这样的单体服务器是构建这样一个系统的一种方式。处理一条请求的所有逻辑都在一个单一的进程中运行，这允许你使用编程语言的基本功能将应用程序拆分成类、函数和命名空间。更谨慎的做法是，你可以在一个开发者的笔记本上运行和测试这个应用程序，并且使用一个部署管道来确保改动都被正确的测试并且部署到了生产环境中。你可以通过在一个负载均衡器后运行多个实例的方式来横向缩放这个单体应用。</p>
-<p>单体应用可以被成功运用，但是渐渐地人们对单体应用感到不满——尤其是当越来越多的应用程序被部署到云端。任何改动都会牵一发动全身——哪怕是对应用程序一个小地方的改变都需要整个单体应用被重新构建和部署。随着时间的推移通常会很难保持一个良好的模块结构，使得控制变更仅影响模块内部变得越加困难。如要实现可伸缩，需要变动整个应用程序而不是应用程序的某一部分，这要求更多的资源。</p>
-<h1 id="微服务架构的特征"><a href="#微服务架构的特征" class="headerlink" title="微服务架构的特征"></a>微服务架构的特征</h1><p>我们不能够说微服务有着一个正式地定义，但是我们可以尝试着描述那些被标上“微服务”标签架构的共同特征。尽管可以列出共同特征，但并非所有的微服务架构都具备所有的特征，但是我们猜想绝大多数的微服务架构都显现出多数特征。尽管我们两位作者已经成为微服务这个相当松散的社区的活跃成员，但我们的意愿是试图描述我们在自己和我们所知的团队的工作中所了解的情况。特别要指出，我们不会给出教条式的微服务的定义。</p>
-<h2 id="通过服务实现组件化"><a href="#通过服务实现组件化" class="headerlink" title="通过服务实现组件化"></a>通过服务实现组件化</h2><p>自软件工程诞生伊始，人们就期望有着通过将软件模块组合在一起来构建系统，就如同我们在现实生活中看到的制造东西的方法。在过去的几十年里，我们在公共组件库方面取得了长足的进展，这些大量的公共组件库已经成为多数编程语言平台的一部分。</p>
-<p>当我们讨论组件时，我们首先得回答“什么是组件”。我们的定义是：一个组件就是一个可以被独立替换和升级的软件单元。</p>
-<p>微服务架构也会使用软件库，但是用来实现软件组件化的主要方式是将软件拆分成服务。我们将被连接到一个程序并且通过内存函数调用的组件称为<strong>库</strong>，而<strong>服务</strong>却是进程外加载的组件，它通过例如web服务请求或者远程过程调用的方式通信。（各种<code>OO</code>语言程序中服务又是另一个概念了[3]）</p>
-<p>选择使用服务作为组件（而不是库）的一个主要原因是服务是可以独立部署的。假设你有一个包含多个库的应用程序[4]跑在一个单一的进程里，对任何单一组件的变更都将导致整个应用程序的重新部署。但是如果这个应用程序被分解成多个服务，那么你可以期望对单一服务的多项变更只需要重新部署那个服务。这不是绝对的，某些变更可能会改变服务接口从而导致某些内容协商问题，但是微服务架构的目的就是要通过明确的服务边界和演进设计的服务契约来最小化这些变更。</p>
-<p>使用服务作为组件的另一个好处是更加明确的组件接口。许多语言在定义明确的<a href="https://www.martinfowler.com/bliki/PublishedInterface.html" target="_blank" rel="noopener">公共接口</a>方面表现得不好。通常它只有一些文档来描述如何阻止客户端破坏组件的封装，这将导致组件间过度的耦合。服务通过使用明确的远程调用方法轻松地避免了这个问题。</p>
-<p>像这样使用服务也会带来副作用。远程调用比起进程内调用要花更多代价，因此远程API需要是粗粒度的，通常更加不便于使用。如果你需要更改两个组件的职责分配，在跨流程边界的情形下这种操作将会更加困难。</p>
-<p>我们经常将各个Service近似比作运行中的进程（process），但这只是近似的类比方式。一个Service可以包含很多个一起开发、部署的进程。例如一个应用服务和一个只在该服务中被使用的数据库</p>
-<h2 id="围绕业务的组合"><a href="#围绕业务的组合" class="headerlink" title="围绕业务的组合"></a>围绕业务的组合</h2><p>当大型应用程序拆分成多个部分时，通常情况是在技术层面上分开管理，就有了UI团队，服务端逻辑开发团队，数据库团队。按这种分工模式，即使简单的小改动也会导致跨团队协商和预算评估。敏捷团队会围绕这些问题进行优化，在两个坏处中选择一个代价较小的来解决问题——强制把逻辑塞到所有可以访问的程序中。每个模块都有处理逻辑。这就是Conway’s Law[5] 的实践示例</p>
+            <p>#</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-28ab40e63049473c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="什么是多线程"><a href="#什么是多线程" class="headerlink" title="什么是多线程"></a>什么是多线程</h2><p>进程：Process，系统级别的资源调度单位。相当于一个程序实例</p>
+<p>线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。</p>
+<h2 id="多线程的好处"><a href="#多线程的好处" class="headerlink" title="多线程的好处"></a>多线程的好处</h2><ol>
+<li>多核处理器资源利用更加充分</li>
+<li>使程序响应时间更快</li>
+<li>构建更好的编程模型</li>
+</ol>
+<h2 id="一个线程的生命周期"><a href="#一个线程的生命周期" class="headerlink" title="一个线程的生命周期"></a>一个线程的生命周期</h2><p>下图一共7个状态，<code>创建</code>，<code>预备</code>，<code>运行</code>，<code>定时等待</code>，<code>等待</code>，<code>阻塞</code>，<code>终止</code><br>而其他书上有简略版的，如：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-5cd05fb3e0163cdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>这些生命周期的状态在Java里就是对应线程的六个状态</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-702ec9944c206c42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="摘自《Java并发编程的艺术》"></p>
+<h3 id="线程从创建到结束"><a href="#线程从创建到结束" class="headerlink" title="线程从创建到结束"></a>线程从创建到结束</h3><p><strong>1. 线程的创建</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接new，或者创建Thread的子类（我用匿名方式替代了一下）</span></span><br><span class="line">Thread t = <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">t.start();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 Runnable （我用lambda替代了一下）</span></span><br><span class="line">Thread t = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">"new t"</span>));</span><br><span class="line">t.start();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用Timmer（其实是定时任务，在另一个线程中）</span></span><br><span class="line">Timer t = <span class="keyword">new</span> Timer();</span><br><span class="line">t.schedule(<span class="keyword">new</span> TimerTask() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Instant.now());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="number">1000</span>, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Future来包装Callable</span></span><br><span class="line">ThreadPoolExecutor executorService = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1L</span>, TimeUnit.MINUTES,</span><br><span class="line">        <span class="keyword">new</span> ArrayBlockingQueue&lt;Runnable&gt;(<span class="number">1</span>), <span class="keyword">new</span> ThreadPoolExecutor.DiscardPolicy());</span><br><span class="line">System.out.println(Thread.currentThread().getName());</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Future t = executorService.submit(() -&gt; Thread.currentThread().getName());</span><br><span class="line">    System.out.println(t.get());</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有线程池，上面Future就是使用线程池的，线程池一般很少创建单线程的，除非业务需要，所以下回再说，写个demo</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService executor = Executors.newSingleThreadExecutor();</span><br><span class="line">executor.execute(() -&gt; System.out.println(Thread.currentThread().getName()));</span><br></pre></td></tr></table></figure>
+<p>最为传统的方法就是new Thread，但是这种用法在大型软件开发中几乎不用，而是根据线程模型选择Future或者线程池去执行异步任务。这里的例子仅为展示线程的创建方法</p>
+<p><strong>2. 线程的终止</strong></p>
+<p>当线程逻辑运行完成后会自动退出。<br>但是如果线程执行过程中，某些条件不满足，导致线程等待或者阻塞，就可能会导致异常终止。</p>
 <blockquote>
-<p>设计系统(广义上)的组织，其产生的设计等同于组织之内、组织之间的沟通结构。</p>
-<p>– Melvyn Conway, 1967</p>
+<p><code>suspend</code>，<code>resume</code>，<code>stop</code>被废弃了，原因是可能造成死锁，数据异常等问题。想要安全退出线程，可以使用中断请求标记来检查线程状态，检查到中断信号后，处理完数据、释放锁，再退出线程即可。</p>
 </blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2: Conway法则的实际应用"></p>
-<p>微服务架构拆分方式不同之处在于，按照业务能力划分服务团队。这些服务需要采取该业务领域软件的最宽泛（broad-stack）配置，包括用户界面、持久化存储和其他外部协作。因此这样的团队是跨职能的，其内部需要完整的开发技能：用户体验，数据库和项目管理</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-df630018c87b303a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3: 团队职能范围增强的服务范围增强"></p>
-<blockquote>
-<p><strong>How big is a microservice?</strong><br>虽然，”微服务”已流行成为了这种风格架构的代名词，不幸的是这个名字会导致大家关注和争论服务的大小和”微”应该由什么组成。跟其他微服务实践者讨论过各种大小的”服务”,最大的团队差不多跟亚马逊双比萨团队一样（整个团队可以吃掉两面比萨），意味着最多不超过12个人。我们也曾经见过更小的团队编制，6个人支撑了6个”服务”</p>
-<p>这导致了一个问题：团队下12个人每个人负责的范围，和整个团队负责的范围差异较大，从而不能叫一个”微服务”团队。这种情况下我们认为最好将这俩范围组合在一起，但是当我们深入这种架构风格的时候，一定会改变这个主意</p>
-</blockquote>
-<p>未完待续</p>
-<p>————微服务课程学习笔记</p>
-<p>喜欢请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
-<p><a href="http://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">原文[英]： http://martinfowler<em>.com</em>/articles/microservices.html</a><br><a href="http://martinfowler.cn/articles/microservices.html" target="_blank" rel="noopener">翻译前半部分参考： http://martinfowler<em>.cn</em>/articles/microservices.html</a></p>
+<p><strong>3. 中断</strong></p>
+<p>当线程的interrupt方法被其他线程调用的时候，这个线程就会接收到中断请求，如果线程自己检查<code>isInterruted</code>检查中断状态，也可以使用<code>Thread.interrupted()</code>静态方法恢复中断状态。<br>许多抛InterruptedException的方法就是接受到中断请求，一般情况下会清除该线程中断标记，再抛出异常。</p>
+<h3 id="线程的类别、属性等参数（优先级，状态）"><a href="#线程的类别、属性等参数（优先级，状态）" class="headerlink" title="线程的类别、属性等参数（优先级，状态）"></a>线程的类别、属性等参数（优先级，状态）</h3><p><code>创建</code>，<code>预备</code>，<code>运行</code>，<code>定时等待</code>，<code>等待</code>，<code>阻塞</code>，<code>终止</code>。其中预备和运行都被Java定义为RUNABLE状态</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-26082742cbfc60e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="线程的生命周期"></p>
+<table>
+<thead>
+<tr>
+<th>状态名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEW</td>
+<td>初始状态，线程被构建，但是还没有调用 <code>start()</code> 方法</td>
+</tr>
+<tr>
+<td>RUNABLE</td>
+<td>运行状态，Java线程将操作系统中的就绪和运行两种状态笼统地称作“运行中”</td>
+</tr>
+<tr>
+<td>BLOCKED</td>
+<td>阻塞状态，表示线程阻塞于锁</td>
+</tr>
+<tr>
+<td>WAITING</td>
+<td>等待状态，表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出一些特定动作（通知或中断）</td>
+</tr>
+<tr>
+<td>TIME_WAITING</td>
+<td>超时等待状态，不同于WAITING，它是可以在指定时间内自行返回的</td>
+</tr>
+<tr>
+<td>TERMINATED</td>
+<td>终止状态，表示当前线程已经执行完毕</td>
+</tr>
+</tbody>
+</table>
+<p>线程分类方式有很多种，除了前面创建方式分类其实还有一种分类方式</p>
+<p>Daemon线程和非Daemon线程(守护线程，非守护线程)<br>Thread直接new的线程可以直接调用<code>setDaemon (true)</code>将这个线程设为守护线程。设置为守护线程后线程将会随虚拟机一直在幕后工作，前台是基本观察不到的。除非手动关闭，否则直到JVM准备关闭时，这个线程才会随之一同终止。</p>
+<p>喜欢请点个赞，<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正！谢谢！<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
 
           
         
@@ -582,6 +614,239 @@
 </blockquote>
 <h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>微服务是一种架构风格，广泛用于拆分模、业务。并且能够自动部署</p>
 <p>————微服务课程学习笔记</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="url">(译)微服务——martinfowler</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T23:34:07+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="cy_cmt_count" data-xid="2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="(译)微服务——martinfowler">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Microservice"><a href="#Microservice" class="headerlink" title="Microservice"></a>Microservice</h1><blockquote>
+<p>将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。</p>
+</blockquote>
+<h2 id="新的架构名词"><a href="#新的架构名词" class="headerlink" title="新的架构名词"></a>新的架构名词</h2><p>【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但是这个小小的词却描述了一种被发现越来越具有吸引力的软件架构风格。在过去的几年中，我们已经看到许多个项目使用了这种风格，目前为止这些项目的结果都是积极的，以至于对我的许多同事而言这已成为构建企业应用的默认风格。然而，令人沮丧的是，没有大量的信息明确指出微服务是什么以及我们如何实现它。</p>
+<p>简而言之，微服务架构风格是以一组小服务来开发单个应用程序的方法，每一个服务运行在自己独立的进程中并且使用轻量级的方法通信，通常是一个HTTP API接口。这些服务围绕相关业务范围构建并且由全自动化部署机器独立部署。这些服务只需要最低限度的管理，可以用不同的编程语言去编写并且使用不同的数据存储技术。</p>
+<p>若要解释清楚微服务风格，将它与单体风格（一个单个应用程序作为一个独立单元构建）对比将会很有帮助。企业应用程序通常由三个主要部分组成：一个客户端用户界面（由运行在用户机器上的浏览器中的HTML页面和javscript代码组合成），一个数据库（由多个插入到一种常见的，通常是关系型数据库管理系统中的数据表组合成），以及一个服务端应用程序。这个服务端应用程序将会处理HTTP请求，执行领域逻辑，从数据库获取和更新数据，并且选择和填充发送给浏览器的HTML视图。这个服务器端的应用程序就是单体——一个单一的可执行的逻辑。任何对这个系统的改动都需要重新构建和部署一个服务器端应用程序的新版本。</p>
+<p>很自然地，这样的单体服务器是构建这样一个系统的一种方式。处理一条请求的所有逻辑都在一个单一的进程中运行，这允许你使用编程语言的基本功能将应用程序拆分成类、函数和命名空间。更谨慎的做法是，你可以在一个开发者的笔记本上运行和测试这个应用程序，并且使用一个部署管道来确保改动都被正确的测试并且部署到了生产环境中。你可以通过在一个负载均衡器后运行多个实例的方式来横向缩放这个单体应用。</p>
+<p>单体应用可以被成功运用，但是渐渐地人们对单体应用感到不满——尤其是当越来越多的应用程序被部署到云端。任何改动都会牵一发动全身——哪怕是对应用程序一个小地方的改变都需要整个单体应用被重新构建和部署。随着时间的推移通常会很难保持一个良好的模块结构，使得控制变更仅影响模块内部变得越加困难。如要实现可伸缩，需要变动整个应用程序而不是应用程序的某一部分，这要求更多的资源。</p>
+<h1 id="微服务架构的特征"><a href="#微服务架构的特征" class="headerlink" title="微服务架构的特征"></a>微服务架构的特征</h1><p>我们不能够说微服务有着一个正式地定义，但是我们可以尝试着描述那些被标上“微服务”标签架构的共同特征。尽管可以列出共同特征，但并非所有的微服务架构都具备所有的特征，但是我们猜想绝大多数的微服务架构都显现出多数特征。尽管我们两位作者已经成为微服务这个相当松散的社区的活跃成员，但我们的意愿是试图描述我们在自己和我们所知的团队的工作中所了解的情况。特别要指出，我们不会给出教条式的微服务的定义。</p>
+<h2 id="通过服务实现组件化"><a href="#通过服务实现组件化" class="headerlink" title="通过服务实现组件化"></a>通过服务实现组件化</h2><p>自软件工程诞生伊始，人们就期望有着通过将软件模块组合在一起来构建系统，就如同我们在现实生活中看到的制造东西的方法。在过去的几十年里，我们在公共组件库方面取得了长足的进展，这些大量的公共组件库已经成为多数编程语言平台的一部分。</p>
+<p>当我们讨论组件时，我们首先得回答“什么是组件”。我们的定义是：一个组件就是一个可以被独立替换和升级的软件单元。</p>
+<p>微服务架构也会使用软件库，但是用来实现软件组件化的主要方式是将软件拆分成服务。我们将被连接到一个程序并且通过内存函数调用的组件称为<strong>库</strong>，而<strong>服务</strong>却是进程外加载的组件，它通过例如web服务请求或者远程过程调用的方式通信。（各种<code>OO</code>语言程序中服务又是另一个概念了[3]）</p>
+<p>选择使用服务作为组件（而不是库）的一个主要原因是服务是可以独立部署的。假设你有一个包含多个库的应用程序[4]跑在一个单一的进程里，对任何单一组件的变更都将导致整个应用程序的重新部署。但是如果这个应用程序被分解成多个服务，那么你可以期望对单一服务的多项变更只需要重新部署那个服务。这不是绝对的，某些变更可能会改变服务接口从而导致某些内容协商问题，但是微服务架构的目的就是要通过明确的服务边界和演进设计的服务契约来最小化这些变更。</p>
+<p>使用服务作为组件的另一个好处是更加明确的组件接口。许多语言在定义明确的<a href="https://www.martinfowler.com/bliki/PublishedInterface.html" target="_blank" rel="noopener">公共接口</a>方面表现得不好。通常它只有一些文档来描述如何阻止客户端破坏组件的封装，这将导致组件间过度的耦合。服务通过使用明确的远程调用方法轻松地避免了这个问题。</p>
+<p>像这样使用服务也会带来副作用。远程调用比起进程内调用要花更多代价，因此远程API需要是粗粒度的，通常更加不便于使用。如果你需要更改两个组件的职责分配，在跨流程边界的情形下这种操作将会更加困难。</p>
+<p>我们经常将各个Service近似比作运行中的进程（process），但这只是近似的类比方式。一个Service可以包含很多个一起开发、部署的进程。例如一个应用服务和一个只在该服务中被使用的数据库</p>
+<h2 id="围绕业务的组合"><a href="#围绕业务的组合" class="headerlink" title="围绕业务的组合"></a>围绕业务的组合</h2><p>当大型应用程序拆分成多个部分时，通常情况是在技术层面上分开管理，就有了UI团队，服务端逻辑开发团队，数据库团队。按这种分工模式，即使简单的小改动也会导致跨团队协商和预算评估。敏捷团队会围绕这些问题进行优化，在两个坏处中选择一个代价较小的来解决问题——强制把逻辑塞到所有可以访问的程序中。每个模块都有处理逻辑。这就是Conway’s Law[5] 的实践示例</p>
+<blockquote>
+<p>设计系统(广义上)的组织，其产生的设计等同于组织之内、组织之间的沟通结构。</p>
+<p>– Melvyn Conway, 1967</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2: Conway法则的实际应用"></p>
+<p>微服务架构拆分方式不同之处在于，按照业务能力划分服务团队。这些服务需要采取该业务领域软件的最宽泛（broad-stack）配置，包括用户界面、持久化存储和其他外部协作。因此这样的团队是跨职能的，其内部需要完整的开发技能：用户体验，数据库和项目管理</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-df630018c87b303a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3: 团队职能范围增强的服务范围增强"></p>
+<blockquote>
+<p><strong>How big is a microservice?</strong><br>虽然，”微服务”已流行成为了这种风格架构的代名词，不幸的是这个名字会导致大家关注和争论服务的大小和”微”应该由什么组成。跟其他微服务实践者讨论过各种大小的”服务”,最大的团队差不多跟亚马逊双比萨团队一样（整个团队可以吃掉两面比萨），意味着最多不超过12个人。我们也曾经见过更小的团队编制，6个人支撑了6个”服务”。</p>
+<p>这导致了一个问题：团队下12个人每个人负责的范围，和整个团队负责的范围差异较大，从而不能叫一个”微服务”团队。这种情况下我们认为最好将这俩范围组合在一起，但是当我们深入这种架构风格的时候，一定会改变这个看法</p>
+</blockquote>
+<p><a href="http://www.comparethemarket.com就是按照这种方式组件的一家公司。跨职能团队负责构建与运营每个产品，每个产品拆分成多个服务，并通过一个消息总线（message" target="_blank" rel="noopener">www.comparethemarket.com就是按照这种方式组件的一家公司。跨职能团队负责构建与运营每个产品，每个产品拆分成多个服务，并通过一个消息总线（message</a> bus）通信联系起来</p>
+<p>大型单体应用程序通常也可以围绕业务进行模块化拆分，尽管这种情况不常见。通常我们会组建一个大型团队来打造一个单体程序，好让其在业务线单独划分出来。但有太多的关联关系需要考虑是这种组织面临的主要问题。如果项目整体上跨越了多个模块边界，团队成员可能很难再短期内记住掌握这些关系。此外，还需要大量的强制规范来划分模块范围。组件分割的越明细，团队职责范围越清楚明确。<br>未完待续</p>
+<h2 id="产品不是工程"><a href="#产品不是工程" class="headerlink" title="产品不是工程"></a>产品不是工程</h2><p>Most application development efforts that we see use a project model: where the aim is to deliver some piece of software which is then considered to be completed. On completion the software is handed over to a maintenance organization and the project team that built it is disbanded.</p>
+<p>Microservice proponents tend to avoid this model, preferring instead the notion that a team should own a product over its full lifetime. A common inspiration for this is Amazon’s notion of “you build, you run it” where a development team takes full responsibility for the software in production. This brings developers into day-to-day contact with how their software behaves in production and increases contact with their users, as they have to take on at least some of the support burden.</p>
+<p>The product mentality, ties in with the linkage to business capabilities. Rather than looking at the software as a set of functionality to be completed, there is an on-going relationship where the question is how can software assist its users to enhance the business capability.</p>
+<p>There’s no reason why this same approach can’t be taken with monolithic applications, but the smaller granularity of services can make it easier to create the personal relationships between service developers and their users.</p>
+<h2 id="Smart-endpoints-and-dumb-pipes"><a href="#Smart-endpoints-and-dumb-pipes" class="headerlink" title="Smart endpoints and dumb pipes"></a>Smart endpoints and dumb pipes</h2><p>When building communication structures between different processes, we’ve seen many products and approaches that stress putting significant smarts into the communication mechanism itself. A good example of this is the Enterprise Service Bus (ESB), where ESB products often include sophisticated facilities for message routing, choreography, transformation, and applying business rules.</p>
+<blockquote>
+<p><strong>Microservices and SOA</strong><br>When we’ve talked about microservices a common question is whether this is just Service Oriented Architecture (SOA) that we saw a decade ago. There is merit to this point, because the microservice style is very similar to what some advocates of SOA have been in favor of. The problem, however, is that SOA means too many different things, and that most of the time that we come across something called “SOA” it’s significantly different to the style we’re describing here, usually due to a focus on ESBs used to integrate monolithic applications.</p>
+<p>In particular we have seen so many botched implementations of service orientation - from the tendency to hide complexity away in ESB’s [6], to failed multi-year initiatives that cost millions and deliver no value, to centralised governance models that actively inhibit change, that it is sometimes difficult to see past these problems.</p>
+<p>Certainly, many of the techniques in use in the microservice community have grown from the experiences of developers integrating services in large organisations. The Tolerant Reader pattern is an example of this. Efforts to use the web have contributed, using simple protocols is another approach derived from these experiences - a reaction away from central standards that have reached a complexity that is, frankly, breathtaking. (Any time you need an ontology to manage your ontologies you know you are in deep trouble.)</p>
+<p>This common manifestation of SOA has led some microservice advocates to reject the SOA label entirely, although others consider microservices to be one form of SOA [7], perhaps service orientation done right. Either way, the fact that SOA means such different things means it’s valuable to have a term that more crisply defines this architectural style.</p>
+</blockquote>
+<p>The microservice community favours an alternative approach: smart endpoints and dumb pipes. Applications built from microservices aim to be as decoupled and as cohesive as possible - they own their own domain logic and act more as filters in the classical Unix sense - receiving a request, applying logic as appropriate and producing a response. These are choreographed using simple RESTish protocols rather than complex protocols such as WS-Choreography or BPEL or orchestration by a central tool.</p>
+<p>The two protocols used most commonly are HTTP request-response with resource API’s and lightweight messaging[8]. The best expression of the first is</p>
+<blockquote>
+<p>Be of the web, not behind the web</p>
+<p>– Ian Robinson</p>
+</blockquote>
+<p>Microservice teams use the principles and protocols that the world wide web (and to a large extent, Unix) is built on. Often used resources can be cached with very little effort on the part of developers or operations folk.</p>
+<p>The second approach in common use is messaging over a lightweight message bus. The infrastructure chosen is typically dumb (dumb as in acts as a message router only) - simple implementations such as RabbitMQ or ZeroMQ don’t do much more than provide a reliable asynchronous fabric - the smarts still live in the end points that are producing and consuming messages; in the services.</p>
+<p>In a monolith, the components are executing in-process and communication between them is via either method invocation or function call. The biggest issue in changing a monolith into microservices lies in changing the communication pattern. A naive conversion from in-memory method calls to RPC leads to chatty communications which don’t perform well. Instead you need to replace the fine-grained communication with a coarser -grained approach.</p>
+<h2 id="Decentralized-Governance"><a href="#Decentralized-Governance" class="headerlink" title="Decentralized Governance"></a>Decentralized Governance</h2><p>One of the consequences of centralised governance is the tendency to standardise on single technology platforms. Experience shows that this approach is constricting - not every problem is a nail and not every solution a hammer. We prefer using the right tool for the job and while monolithic applications can take advantage of different languages to a certain extent, it isn’t that common.</p>
+<p>Splitting the monolith’s components out into services we have a choice when building each of them. You want to use Node.js to standup a simple reports page? Go for it. C++ for a particularly gnarly near-real-time component? Fine. You want to swap in a different flavour of database that better suits the read behaviour of one component? We have the technology to rebuild him.</p>
+<p>Of course, just because you can do something, doesn’t mean you should - but partitioning your system in this way means you have the option.</p>
+<p>Teams building microservices prefer a different approach to standards too. Rather than use a set of defined standards written down somewhere on paper they prefer the idea of producing useful tools that other developers can use to solve similar problems to the ones they are facing. These tools are usually harvested from implementations and shared with a wider group, sometimes, but not exclusively using an internal open source model. Now that git and github have become the de facto version control system of choice, open source practices are becoming more and more common in-house .</p>
+<p>Netflix is a good example of an organisation that follows this philosophy. Sharing useful and, above all, battle-tested code as libraries encourages other developers to solve similar problems in similar ways yet leaves the door open to picking a different approach if required. Shared libraries tend to be focused on common problems of data storage, inter-process communication and as we discuss further below, infrastructure automation.</p>
+<p>For the microservice community, overheads are particularly unattractive. That isn’t to say that the community doesn’t value service contracts. Quite the opposite, since there tend to be many more of them. It’s just that they are looking at different ways of managing those contracts. Patterns like Tolerant Reader and Consumer-Driven Contracts are often applied to microservices. These aid service contracts in evolving independently. Executing consumer driven contracts as part of your build increases confidence and provides fast feedback on whether your services are functioning. Indeed we know of a team in Australia who drive the build of new services with consumer driven contracts. They use simple tools that allow them to define the contract for a service. This becomes part of the automated build before code for the new service is even written. The service is then built out only to the point where it satisfies the contract - an elegant approach to avoid the ‘YAGNI’[9] dilemma when building new software. These techniques and the tooling growing up around them, limit the need for central contract management by decreasing the temporal coupling between services.</p>
+<blockquote>
+<p><strong>Many languages, many options</strong><br>The growth of JVM as a platform is just the latest example of mixing languages within a common platform. It’s been common practice to shell-out to a higher level language to take advantage of higher level abstractions for decades. As is dropping down to the metal and writing performance sensitive code in a lower level one. However, many monoliths don’t need this level of performance optimisation nor are DSL’s and higher level abstractions that common (to our dismay). Instead monoliths are usually single language and the tendency is to limit the number of technologies in use [10].</p>
+</blockquote>
+<p>Perhaps the apogee of decentralised governance is the build it / run it ethos popularised by Amazon. Teams are responsible for all aspects of the software they build including operating the software 24/7. Devolution of this level of responsibility is definitely not the norm but we do see more and more companies pushing responsibility to the development teams. Netflix is another organisation that has adopted this ethos[11]. Being woken up at 3am every night by your pager is certainly a powerful incentive to focus on quality when writing your code. These ideas are about as far away from the traditional centralized governance model as it is possible to be.</p>
+<h2 id="Decentralized-Data-Management"><a href="#Decentralized-Data-Management" class="headerlink" title="Decentralized Data Management"></a>Decentralized Data Management</h2><p>Decentralization of data management presents in a number of different ways. At the most abstract level, it means that the conceptual model of the world will differ between systems. This is a common issue when integrating across a large enterprise, the sales view of a customer will differ from the support view. Some things that are called customers in the sales view may not appear at all in the support view. Those that do may have different attributes and (worse) common attributes with subtly different semantics.</p>
+<blockquote>
+<p><strong>Battle-tested standards and enforced standards</strong><br>It’s a bit of a dichotomy that microservice teams tend to eschew the kind of rigid enforced standards laid down by enterprise architecture groups but will happily use and even evangelise the use of open standards such as HTTP, ATOM and other microformats.</p>
+<p>The key difference is how the standards are developed and how they are enforced. Standards managed by groups such as the IETF only become standards when there are several live implementations of them in the wider world and which often grow from successful open-source projects.</p>
+<p>These standards are a world apart from many in a corporate world, which are often developed by groups that have little recent programming experience or overly influenced by vendors.</p>
+</blockquote>
+<p>This issue is common between applications, but can also occur within applications, particular when that application is divided into separate components. A useful way of thinking about this is the Domain-Driven Design notion of Bounded Context. DDD divides a complex domain up into multiple bounded contexts and maps out the relationships between them. This process is useful for both monolithic and microservice architectures, but there is a natural correlation between service and context boundaries that helps clarify, and as we describe in the section on business capabilities, reinforce the separations.</p>
+<p>As well as decentralizing decisions about conceptual models, microservices also decentralize data storage decisions. While monolithic applications prefer a single logical database for persistant data, enterprises often prefer a single database across a range of applications - many of these decisions driven through vendor’s commercial models around licensing. Microservices prefer letting each service manage its own database, either different instances of the same database technology, or entirely different database systems - an approach called Polyglot Persistence. You can use polyglot persistence in a monolith, but it appears more frequently with microservices.</p>
+<p><img src="https://www.martinfowler.com/articles/microservices/images/decentralised-data.png" alt=""></p>
+<p>Decentralizing responsibility for data across microservices has implications for managing updates. The common approach to dealing with updates has been to use transactions to guarantee consistency when updating multiple resources. This approach is often used within monoliths.</p>
+<p>Using transactions like this helps with consistency, but imposes significant temporal coupling, which is problematic across multiple services. Distributed transactions are notoriously difficult to implement and as a consequence microservice architectures emphasize transactionless coordination between services, with explicit recognition that consistency may only be eventual consistency and problems are dealt with by compensating operations.</p>
+<p>Choosing to manage inconsistencies in this way is a new challenge for many development teams, but it is one that often matches business practice. Often businesses handle a degree of inconsistency in order to respond quickly to demand, while having some kind of reversal process to deal with mistakes. The trade-off is worth it as long as the cost of fixing mistakes is less than the cost of lost business under greater consistency.</p>
+<h2 id="Infrastructure-Automation"><a href="#Infrastructure-Automation" class="headerlink" title="Infrastructure Automation"></a>Infrastructure Automation</h2><p>Infrastructure automation techniques have evolved enormously over the last few years - the evolution of the cloud and AWS in particular has reduced the operational complexity of building, deploying and operating microservices.</p>
+<p>Many of the products or systems being build with microservices are being built by teams with extensive experience of Continuous Delivery and it’s precursor, Continuous Integration. Teams building software this way make extensive use of infrastructure automation techniques. This is illustrated in the build pipeline shown below.</p>
+<p><img src="https://www.martinfowler.com/articles/microservices/images/basic-pipeline.png" alt=""></p>
+<p>Since this isn’t an article on Continuous Delivery we will call attention to just a couple of key features here. We want as much confidence as possible that our software is working, so we run lots of automated tests. Promotion of working software ‘up’ the pipeline means we automate deployment to each new environment.</p>
+<blockquote>
+<p><strong>Make it easy to do the right thing</strong></p>
+<p>One side effect we have found of increased automation as a consequence of continuous delivery and deployment is the creation of useful tools to help developers and operations folk. Tooling for creating artefacts, managing codebases, standing up simple services or for adding standard monitoring and logging are pretty common now. The best example on the web is probably Netflix’s set of open source tools, but there are others including Dropwizard which we have used extensively.</p>
+</blockquote>
+<p>A monolithic application will be built, tested and pushed through these environments quite happlily. It turns out that once you have invested in automating the path to production for a monolith, then deploying more applications doesn’t seem so scary any more. Remember, one of the aims of CD is to make deployment boring, so whether its one or three applications, as long as its still boring it doesn’t matter[12].</p>
+<p>Another area where we see teams using extensive infrastructure automation is when managing microservices in production. In contrast to our assertion above that as long as deployment is boring there isn’t that much difference between monoliths and microservices, the operational landscape for each can be strikingly different.</p>
+<p><img src="https://www.martinfowler.com/articles/microservices/images/micro-deployment.png" alt=""></p>
+<h2 id="Design-for-failure"><a href="#Design-for-failure" class="headerlink" title="Design for failure"></a>Design for failure</h2><p>A consequence of using services as components, is that applications need to be designed so that they can tolerate the failure of services. Any service call could fail due to unavailability of the supplier, the client has to respond to this as gracefully as possible. This is a disadvantage compared to a monolithic design as it introduces additional complexity to handle it. The consequence is that microservice teams constantly reflect on how service failures affect the user experience. Netflix’s Simian Army induces failures of services and even datacenters during the working day to test both the application’s resilience and monitoring.</p>
+<blockquote>
+<p><strong>The circuit breaker and production ready code</strong></p>
+<p>Circuit Breaker appears in Release It! alongside other patterns such as Bulkhead and Timeout. Implemented together, these patterns are crucially important when building communicating applications. This Netflix blog entry does a great job of explaining their application of them.</p>
+</blockquote>
+<p>This kind of automated testing in production would be enough to give most operation groups the kind of shivers usually preceding a week off work. This isn’t to say that monolithic architectural styles aren’t capable of sophisticated monitoring setups - it’s just less common in our experience.</p>
+<p>Since services can fail at any time, it’s important to be able to detect the failures quickly and, if possible, automatically restore service. Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received). Semantic monitoring can provide an early warning system of something going wrong that triggers development teams to follow up and investigate.</p>
+<p>This is particularly important to a microservices architecture because the microservice preference towards choreography and event collaboration leads to emergent behavior. While many pundits praise the value of serendipitous emergence, the truth is that emergent behavior can sometimes be a bad thing. Monitoring is vital to spot bad emergent behavior quickly so it can be fixed.</p>
+<blockquote>
+<p><strong>Synchronous calls considered harmful</strong></p>
+<p>Any time you have a number of synchronous calls between services you will encounter the multiplicative effect of downtime. Simply, this is when the downtime of your system becomes the product of the downtimes of the individual components. You face a choice, making your calls asynchronous or managing the downtime. At <a href="http://www.guardian.co.uk" target="_blank" rel="noopener">www.guardian.co.uk</a> they have implemented a simple rule on the new platform - one synchronous call per user request while at Netflix, their platform API redesign has built asynchronicity into the API fabric.</p>
+</blockquote>
+<p>Monoliths can be built to be as transparent as a microservice - in fact, they should be. The difference is that you absolutely need to know when services running in different processes are disconnected. With libraries within the same process this kind of transparency is less likely to be useful.</p>
+<p>Microservice teams would expect to see sophisticated monitoring and logging setups for each individual service such as dashboards showing up/down status and a variety of operational and business relevant metrics. Details on circuit breaker status, current throughput and latency are other examples we often encounter in the wild.</p>
+<p>————微服务课程学习笔记</p>
+<p>喜欢请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
+<p><a href="http://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">原文[英]： http://martinfowler<em>.com</em>/articles/microservices.html</a><br><a href="http://martinfowler.cn/articles/microservices.html" target="_blank" rel="noopener">翻译前半部分参考： http://martinfowler<em>.cn</em>/articles/microservices.html</a></p>
 
           
         
@@ -1660,150 +1925,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/image/head_3.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AIX Zing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/" itemprop="url">macOS Mojave如何为蓝牙耳机开启AAC、aptX</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-29T00:58:58+08:00">
-                2019-01-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/" class="cy_cmt_count" data-xid="2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/" itemprop="commentsCount"></span>
-                </a>
-              
-            
-          
-
-          
-          
-             <span id="/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/" class="leancloud_visitors" data-flag-title="macOS Mojave如何为蓝牙耳机开启AAC、aptX">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </span></div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://upload-images.jianshu.io/upload_images/1112615-28e1d5e5b0632dc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>SBC协议音质不好，虽然我耳朵不是很灵敏，但是没有对比就没有伤害，换成AAC明显能感受到音质的提升。<br>步骤如下<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1846,7 +1972,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
