@@ -401,73 +401,16 @@
 
       
         
-          
-            <p>#</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-28ab40e63049473c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+          <p><img src="https://upload-images.jianshu.io/upload_images/1112615-28ab40e63049473c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h2 id="什么是多线程"><a href="#什么是多线程" class="headerlink" title="什么是多线程"></a>什么是多线程</h2><p>进程：Process，系统级别的资源调度单位。相当于一个程序实例</p>
 <p>线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。</p>
-<h2 id="多线程的好处"><a href="#多线程的好处" class="headerlink" title="多线程的好处"></a>多线程的好处</h2><ol>
-<li>多核处理器资源利用更加充分</li>
-<li>使程序响应时间更快</li>
-<li>构建更好的编程模型</li>
-</ol>
-<h2 id="一个线程的生命周期"><a href="#一个线程的生命周期" class="headerlink" title="一个线程的生命周期"></a>一个线程的生命周期</h2><p>下图一共7个状态，<code>创建</code>，<code>预备</code>，<code>运行</code>，<code>定时等待</code>，<code>等待</code>，<code>阻塞</code>，<code>终止</code><br>而其他书上有简略版的，如：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-5cd05fb3e0163cdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>这些生命周期的状态在Java里就是对应线程的六个状态</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-702ec9944c206c42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="摘自《Java并发编程的艺术》"></p>
-<h3 id="线程从创建到结束"><a href="#线程从创建到结束" class="headerlink" title="线程从创建到结束"></a>线程从创建到结束</h3><p><strong>1. 线程的创建</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接new，或者创建Thread的子类（我用匿名方式替代了一下）</span></span><br><span class="line">Thread t = <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">t.start();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 Runnable （我用lambda替代了一下）</span></span><br><span class="line">Thread t = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">"new t"</span>));</span><br><span class="line">t.start();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用Timmer（其实是定时任务，在另一个线程中）</span></span><br><span class="line">Timer t = <span class="keyword">new</span> Timer();</span><br><span class="line">t.schedule(<span class="keyword">new</span> TimerTask() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Instant.now());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="number">1000</span>, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Future来包装Callable</span></span><br><span class="line">ThreadPoolExecutor executorService = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1L</span>, TimeUnit.MINUTES,</span><br><span class="line">        <span class="keyword">new</span> ArrayBlockingQueue&lt;Runnable&gt;(<span class="number">1</span>), <span class="keyword">new</span> ThreadPoolExecutor.DiscardPolicy());</span><br><span class="line">System.out.println(Thread.currentThread().getName());</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Future t = executorService.submit(() -&gt; Thread.currentThread().getName());</span><br><span class="line">    System.out.println(t.get());</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>还有线程池，上面Future就是使用线程池的，线程池一般很少创建单线程的，除非业务需要，所以下回再说，写个demo</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService executor = Executors.newSingleThreadExecutor();</span><br><span class="line">executor.execute(() -&gt; System.out.println(Thread.currentThread().getName()));</span><br></pre></td></tr></table></figure>
-<p>最为传统的方法就是new Thread，但是这种用法在大型软件开发中几乎不用，而是根据线程模型选择Future或者线程池去执行异步任务。这里的例子仅为展示线程的创建方法</p>
-<p><strong>2. 线程的终止</strong></p>
-<p>当线程逻辑运行完成后会自动退出。<br>但是如果线程执行过程中，某些条件不满足，导致线程等待或者阻塞，就可能会导致异常终止。</p>
-<blockquote>
-<p><code>suspend</code>，<code>resume</code>，<code>stop</code>被废弃了，原因是可能造成死锁，数据异常等问题。想要安全退出线程，可以使用中断请求标记来检查线程状态，检查到中断信号后，处理完数据、释放锁，再退出线程即可。</p>
-</blockquote>
-<p><strong>3. 中断</strong></p>
-<p>当线程的interrupt方法被其他线程调用的时候，这个线程就会接收到中断请求，如果线程自己检查<code>isInterruted</code>检查中断状态，也可以使用<code>Thread.interrupted()</code>静态方法恢复中断状态。<br>许多抛InterruptedException的方法就是接受到中断请求，一般情况下会清除该线程中断标记，再抛出异常。</p>
-<h3 id="线程的类别、属性等参数（优先级，状态）"><a href="#线程的类别、属性等参数（优先级，状态）" class="headerlink" title="线程的类别、属性等参数（优先级，状态）"></a>线程的类别、属性等参数（优先级，状态）</h3><p><code>创建</code>，<code>预备</code>，<code>运行</code>，<code>定时等待</code>，<code>等待</code>，<code>阻塞</code>，<code>终止</code>。其中预备和运行都被Java定义为RUNABLE状态</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-26082742cbfc60e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="线程的生命周期"></p>
-<table>
-<thead>
-<tr>
-<th>状态名称</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>NEW</td>
-<td>初始状态，线程被构建，但是还没有调用 <code>start()</code> 方法</td>
-</tr>
-<tr>
-<td>RUNABLE</td>
-<td>运行状态，Java线程将操作系统中的就绪和运行两种状态笼统地称作“运行中”</td>
-</tr>
-<tr>
-<td>BLOCKED</td>
-<td>阻塞状态，表示线程阻塞于锁</td>
-</tr>
-<tr>
-<td>WAITING</td>
-<td>等待状态，表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出一些特定动作（通知或中断）</td>
-</tr>
-<tr>
-<td>TIME_WAITING</td>
-<td>超时等待状态，不同于WAITING，它是可以在指定时间内自行返回的</td>
-</tr>
-<tr>
-<td>TERMINATED</td>
-<td>终止状态，表示当前线程已经执行完毕</td>
-</tr>
-</tbody>
-</table>
-<p>线程分类方式有很多种，除了前面创建方式分类其实还有一种分类方式</p>
-<p>Daemon线程和非Daemon线程(守护线程，非守护线程)<br>Thread直接new的线程可以直接调用<code>setDaemon (true)</code>将这个线程设为守护线程。设置为守护线程后线程将会随虚拟机一直在幕后工作，前台是基本观察不到的。除非手动关闭，否则直到JVM准备关闭时，这个线程才会随之一同终止。</p>
-<p>喜欢请点个赞，<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正！谢谢！<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/13/JavaLan/01-learning-thread-note/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

@@ -90,22 +90,22 @@
 
 
 
-<meta name="description" content="#  什么是多线程进程：Process，系统级别的资源调度单位。相当于一个程序实例 线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。 多线程的好处 多核处理器资源利用更加充分 使程序响应时间更快 构建更好的编程模型  一个线程的生命周期下图一共7个状态，创建，预备，运行，定时等待，等待，阻塞，终止而其他书上有简略版的，如：  这些生命周期的状态在Ja">
+<meta name="description" content="什么是多线程进程：Process，系统级别的资源调度单位。相当于一个程序实例 线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。">
 <meta name="keywords" content="Java,笔记,Java基础,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从0开始学Java并发（一）">
 <meta property="og:url" content="http://xzing.github.io/2019/03/13/JavaLan/01-learning-thread-note/index.html">
 <meta property="og:site_name" content="AIX Zing">
-<meta property="og:description" content="#  什么是多线程进程：Process，系统级别的资源调度单位。相当于一个程序实例 线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。 多线程的好处 多核处理器资源利用更加充分 使程序响应时间更快 构建更好的编程模型  一个线程的生命周期下图一共7个状态，创建，预备，运行，定时等待，等待，阻塞，终止而其他书上有简略版的，如：  这些生命周期的状态在Ja">
+<meta property="og:description" content="什么是多线程进程：Process，系统级别的资源调度单位。相当于一个程序实例 线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-28ab40e63049473c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-5cd05fb3e0163cdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-702ec9944c206c42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-26082742cbfc60e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-03-12T08:33:24.760Z">
+<meta property="og:updated_time" content="2019-03-12T09:16:27.066Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从0开始学Java并发（一）">
-<meta name="twitter:description" content="#  什么是多线程进程：Process，系统级别的资源调度单位。相当于一个程序实例 线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。 多线程的好处 多核处理器资源利用更加充分 使程序响应时间更快 构建更好的编程模型  一个线程的生命周期下图一共7个状态，创建，预备，运行，定时等待，等待，阻塞，终止而其他书上有简略版的，如：  这些生命周期的状态在Ja">
+<meta name="twitter:description" content="什么是多线程进程：Process，系统级别的资源调度单位。相当于一个程序实例 线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1112615-28ab40e63049473c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -403,10 +403,10 @@
       
 
       
-        <p>#</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-28ab40e63049473c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+        <p><img src="https://upload-images.jianshu.io/upload_images/1112615-28ab40e63049473c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h2 id="什么是多线程"><a href="#什么是多线程" class="headerlink" title="什么是多线程"></a>什么是多线程</h2><p>进程：Process，系统级别的资源调度单位。相当于一个程序实例</p>
 <p>线程：Thread，进程内的资源调度单位，在进程内运行的最小单位，有自己的计数器和内存堆栈结构。</p>
+<a id="more"></a>
 <h2 id="多线程的好处"><a href="#多线程的好处" class="headerlink" title="多线程的好处"></a>多线程的好处</h2><ol>
 <li>多核处理器资源利用更加充分</li>
 <li>使程序响应时间更快</li>
