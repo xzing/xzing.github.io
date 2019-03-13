@@ -729,8 +729,8 @@
 <p><strong>微服务和 SOA</strong></p>
 <p>谈起微服务就会有个常见的问题：这个架构不就是十年前的面向服务架构（SOA）么。这么说的根据是SAO的一些特征和微服务的风格非常相似，但是，SOA代表了一系列不同的东西。我们称之为SOA的大部分东西和我们描述的（”微服务”）的风格有很大区别，通常SOA专注于ESBs来整合单体程序。</p>
 <p>特别是, 我们已经看到了（SOA）如此多的糟糕的服务导向实施的结果 - 从隐藏ESB [6]中的复杂性的趋势，到耗资数百万研发多年却没有提供任何价值的失败计划，再到积极抑制变化的集中治理模型，有时候很难看出这些问题。</p>
-<p>Certainly, many of the techniques in use in the microservice community have grown from the experiences of developers integrating services in large organisations. The Tolerant Reader pattern is an example of this. Efforts to use the web have contributed, using simple protocols is another approach derived from these experiences - a reaction away from central standards that have reached a complexity that is, frankly, breathtaking. (Any time you need an ontology to manage your ontologies you know you are in deep trouble.)</p>
-<p>This common manifestation of SOA has led some microservice advocates to reject the SOA label entirely, although others consider microservices to be one form of SOA [7], perhaps service orientation done right. Either way, the fact that SOA means such different things means it’s valuable to have a term that more crisply defines this architectural style.</p>
+<p>当然，微服务社区使用的许多技术都是从开发人员将服务集成到大型组织中的经验中发展起来的。”olerant Reader”(容错读取)技术就是其中的一个例子。最大限度的利用网络资源，使用简单协议通讯是也是从这些经验中获取的方法——脱离中心化也能具备需要的复杂度标准。坦白说：真是让人叹为观止（任何时候你需要通过增加一个管理个体来管理其他个体，都会让你陷入一个大麻烦）</p>
+<p>SOA这种表现使微服务倡导者竭力反对给微服务加上SOA的标签。尽管微服务是SOA的一种形式。但微服务的倡导是正确的。无论哪种方式，SOA都意味着更多不同的东西，而（微服务）这是一个更能清晰定义这种架构风格的术语</p>
 </blockquote>
 <p>The microservice community favours an alternative approach: smart endpoints and dumb pipes. Applications built from microservices aim to be as decoupled and as cohesive as possible - they own their own domain logic and act more as filters in the classical Unix sense - receiving a request, applying logic as appropriate and producing a response. These are choreographed using simple RESTish protocols rather than complex protocols such as WS-Choreography or BPEL or orchestration by a central tool.</p>
 <p>The two protocols used most commonly are HTTP request-response with resource API’s and lightweight messaging[8]. The best expression of the first is</p>
