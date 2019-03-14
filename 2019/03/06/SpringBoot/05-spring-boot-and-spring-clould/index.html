@@ -103,7 +103,7 @@
 <meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/decentralised-data.png">
 <meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/basic-pipeline.png">
 <meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/micro-deployment.png">
-<meta property="og:updated_time" content="2019-03-13T03:02:19.671Z">
+<meta property="og:updated_time" content="2019-03-14T03:36:27.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(译)微服务——martinfowler">
 <meta name="twitter:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
@@ -438,23 +438,23 @@
 <p>而微服务支持者是倾向于避免这个模式的，他们更倾向于让团队负责整个软件的生命周期。亚马逊有个共同的认知：”you build, you run it”。让开发团队负责产品的整个生命周期。这使开发者能时时刻刻接触软件在生产环境的表现，并增加他们和用户之间的联系。因为他们至少得为支持（用户使用软件）负责。</p>
 <p>对产品的理解应联系在产品业务能力上，而不是将将软件视为一堆需要完善的功能的组合。这里面临的问题是软件如何辅助用户提高业务能力</p>
 <p>不是说相同的这套架构不能适应单体应用，但是粒度更小的服务可以更简单的将开发者和用户联系起来。</p>
-<h2 id="灵活的终端和笨拙的通道"><a href="#灵活的终端和笨拙的通道" class="headerlink" title="灵活的终端和笨拙的通道"></a>灵活的终端和笨拙的通道</h2><p>在跨进程中通信方面，我们已经有不少产品和方法，这些方法多在本身强加了一些敏捷通信的机制。一个很好的例子就是企业服务总线（ESB），其中ESB产品通常包括用于消息路由，编排，转换和应用业务规则的复杂工具</p>
+<h2 id="灵活的终端和笨拙的通道"><a href="#灵活的终端和笨拙的通道" class="headerlink" title="灵活的终端和笨拙的通道"></a>灵活的终端和笨拙的通道</h2><p>在跨进程中通信方面，我们已经有了不少产品和方法，这些方法多在本身强加了一些敏捷通信的机制。一个很好的例子就是企业服务总线（ESB），其中ESB产品通常包括用于消息路由，编排，转换和应用业务规则的复杂工具</p>
 <blockquote>
 <p><strong>微服务和 SOA</strong></p>
 <p>谈起微服务就会有个常见的问题：这个架构不就是十年前的面向服务架构（SOA）么。这么说的根据是SAO的一些特征和微服务的风格非常相似，但是，SOA代表了一系列不同的东西。我们称之为SOA的大部分东西和我们描述的（”微服务”）的风格有很大区别，通常SOA专注于ESBs来整合单体程序。</p>
 <p>特别是, 我们已经看到了（SOA）如此多的糟糕的服务导向实施的结果 - 从隐藏ESB [6]中的复杂性的趋势，到耗资数百万研发多年却没有提供任何价值的失败计划，再到积极抑制变化的集中治理模型，有时候很难看出这些问题。</p>
 <p>当然，微服务社区使用的许多技术都是从开发人员将服务集成到大型组织中的经验中发展起来的。”olerant Reader”(容错读取)技术就是其中的一个例子。最大限度的利用网络资源，使用简单协议通讯是也是从这些经验中获取的方法——脱离中心化也能具备需要的复杂度标准。坦白说：真是让人叹为观止（任何时候你需要通过增加一个管理个体来管理其他个体，都会让你陷入一个大麻烦）</p>
-<p>SOA这种表现使微服务倡导者竭力反对给微服务加上SOA的标签。尽管微服务是SOA的一种形式。但微服务的倡导是正确的。无论哪种方式，SOA都意味着更多不同的东西，而（微服务）这是一个更能清晰定义这种架构风格的术语</p>
+<p>SOA这种表现使微服务倡导者竭力反对给微服务加上SOA的标签。尽管微服务是SOA的一种形式，但微服务的倡导是正确的。无论哪种方式，SOA都意味着更多不同的东西，而（微服务）这是一个更能清晰定义这种架构风格的术语</p>
 </blockquote>
-<p>The microservice community favours an alternative approach: smart endpoints and dumb pipes. Applications built from microservices aim to be as decoupled and as cohesive as possible - they own their own domain logic and act more as filters in the classical Unix sense - receiving a request, applying logic as appropriate and producing a response. These are choreographed using simple RESTish protocols rather than complex protocols such as WS-Choreography or BPEL or orchestration by a central tool.</p>
-<p>The two protocols used most commonly are HTTP request-response with resource API’s and lightweight messaging[8]. The best expression of the first is</p>
+<p>而微服务社区主张另一种方法：灵活的终端和笨拙的通道（重点放在终端而不是通讯）。微服务构建的应用应该致力于高内聚，低耦合。每个服务有自己的领域逻辑，像UNIX理念中的过滤器一样工作：接受请求，执行适当的逻辑处理数据。这些服务使用简单的RESTish协议做编排工具而不是其他复杂的协议如：WS-Choreography 或 BPEL</p>
+<p>最常用的两种协议是使用资源型API的HTTP请求-响应和轻量级消息传送[8]。对第一种协议最好的表述是</p>
 <blockquote>
 <p>Be of the web, not behind the web</p>
 <p>– Ian Robinson</p>
 </blockquote>
-<p>Microservice teams use the principles and protocols that the world wide web (and to a large extent, Unix) is built on. Often used resources can be cached with very little effort on the part of developers or operations folk.</p>
-<p>The second approach in common use is messaging over a lightweight message bus. The infrastructure chosen is typically dumb (dumb as in acts as a message router only) - simple implementations such as RabbitMQ or ZeroMQ don’t do much more than provide a reliable asynchronous fabric - the smarts still live in the end points that are producing and consuming messages; in the services.</p>
-<p>In a monolith, the components are executing in-process and communication between them is via either method invocation or function call. The biggest issue in changing a monolith into microservices lies in changing the communication pattern. A naive conversion from in-memory method calls to RPC leads to chatty communications which don’t perform well. Instead you need to replace the fine-grained communication with a coarser -grained approach.</p>
+<p>微服务团队用的协议和规范都是构建互联网（更大程度上来说：是Unix）的协议和规范。从开发者和运营者上来说，通常使用的资源都是易于保存的。</p>
+<p>第二种轻量级消息传递是在消息总线上传递消息。这种基础设施通常是笨拙的（只能作为消息传输路由）。——像RabbitMQ和ZeroMQ这种实现简单，又支持可靠的异步通讯的。而服务中的智能灵活的终端去通过这些生产，消费消息。</p>
+<p>整体来说，组件在进程中的通讯是通过函数调用的方式。而将其拆分为微服务后，最大的问题就在于通讯方式的变化。原先从内存中方法调用变成RPC服务间通讯，而RPC的方式性能不及前者。但是，你必须使用这种粗粒度的方式来代替之前细粒度的通讯。</p>
 <h2 id="Decentralized-Governance"><a href="#Decentralized-Governance" class="headerlink" title="Decentralized Governance"></a>Decentralized Governance</h2><p>One of the consequences of centralised governance is the tendency to standardise on single technology platforms. Experience shows that this approach is constricting - not every problem is a nail and not every solution a hammer. We prefer using the right tool for the job and while monolithic applications can take advantage of different languages to a certain extent, it isn’t that common.</p>
 <p>Splitting the monolith’s components out into services we have a choice when building each of them. You want to use Node.js to standup a simple reports page? Go for it. C++ for a particularly gnarly near-real-time component? Fine. You want to swap in a different flavour of database that better suits the read behaviour of one component? We have the technology to rebuild him.</p>
 <p>Of course, just because you can do something, doesn’t mean you should - but partitioning your system in this way means you have the option.</p>
