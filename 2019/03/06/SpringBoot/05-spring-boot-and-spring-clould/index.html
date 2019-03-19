@@ -100,10 +100,10 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-df630018c87b303a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/decentralised-data.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-0e3d7b58eff73be4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/basic-pipeline.png">
 <meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/micro-deployment.png">
-<meta property="og:updated_time" content="2019-03-18T11:47:28.632Z">
+<meta property="og:updated_time" content="2019-03-19T03:01:28.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(译)微服务——martinfowler">
 <meta name="twitter:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
@@ -462,7 +462,7 @@
 <p>Netflix就是遵循这一理念的组织的一个很好的例子。分享他们有用，经过他们实战考验的代码，而且鼓励开发者用类似的方式解决同样的问题。当然也可以选择不同的方式。共享组件会让开发人员目标集中到数据存储和进程通讯的问题上。下面我们将深入讨论基础架构的自动化。</p>
 <p>微服务社区中（组件）高开销是难以吸引人的，倒不是说社区不注重服务间的规范。相反，正是因为规范比较多，使开发人员寻找不同的方式去更好的管理（遵循）这些规范。像<code>Tolerant Reader</code>(读者容错模式)和<code>Consumer-Driven</code>（用户驱动模式）这些规则规范在微服务中经常提到。这些帮助规范服务的规则都在独立发展着。作为组成微服务的一部分，用户驱动可以增强开发者信心，并提供服务运行的能否正常运行的及时反馈。据我们所知，一个澳大利亚的团队就是利用用户驱动规则构建了他们的微服务，他们构建服务的工具很简单，没次增加新服务的时候工具代码会自动生成。一直维持到这个服务构建到满意的程度为止——一种避免软件开发中<code>YAGNI</code>[9]困境的方式。这些技术围绕所构建微服务一起成长，从而降低耦合性，减少集中管理的需求。</p>
 <blockquote>
-<p><strong>多语言混编, 更多选择权</strong><br>JVM平台发展起来是多语言混编的最新例子。最近几十年，用高级语言对编程进行更高级的抽象越来越普遍了。用低级语言构建性能敏感的底层引用渐渐不需要了。很多单体应用不用达到那么高的性能要求，也不需要DSL这样的高层次的抽象（让我们很遗憾），相反，单体应用使用单一语言，限制技术使用的范围和数量[10]</p>
+<p><strong>多语言混编, 更多选择权</strong><br>最新例子是：（JVM支持）多语言混编导致JVM平台发展起来很快。最近几十年，用高级语言对编程进行更高级的抽象越来越普遍了。用低级语言构建性能敏感的底层引用渐渐不需要了。很多单体应用不用达到那么高的性能要求，也不需要DSL这样的高层次的抽象（让我们很遗憾），相反，单体应用使用单一语言，限制技术使用的范围和数量[10]</p>
 </blockquote>
 <p>也行去中心化治理的最高境界是<code>build it / run it</code>那句亚马逊广为流传的理念。团队的7*24小时负责他们自己构建的软件的各个方面。虽然这种职责下发是极不规范的，但是我们发现很多公司把越来越多的责任分给开发团队。Netflix就是这样做的公司之一[11]。3:00被喊醒改Bug无疑会激励你关注代码质量，也是从集中治理模式中脱离的好办法。</p>
 <!-- 翻译一半了，OMG -->
@@ -472,12 +472,12 @@
 <p>这个两个标准关键区别在于制定和执行，只有在在现实中大量使用使用的标准，才会成为被组织管理的标准，如IETF，而使用方往往是成功的开源项目</p>
 <p>这些标准通常不是现有的企业标准，通常是出自一个变成经验不足的团队或者受到供应商影响过度而开发的。</p>
 </blockquote>
-<p>This issue is common between applications, but can also occur within applications, particular when that application is divided into separate components. A useful way of thinking about this is the Domain-Driven Design notion of Bounded Context. DDD divides a complex domain up into multiple bounded contexts and maps out the relationships between them. This process is useful for both monolithic and microservice architectures, but there is a natural correlation between service and context boundaries that helps clarify, and as we describe in the section on business capabilities, reinforce the separations.</p>
-<p>As well as decentralizing decisions about conceptual models, microservices also decentralize data storage decisions. While monolithic applications prefer a single logical database for persistant data, enterprises often prefer a single database across a range of applications - many of these decisions driven through vendor’s commercial models around licensing. Microservices prefer letting each service manage its own database, either different instances of the same database technology, or entirely different database systems - an approach called Polyglot Persistence. You can use polyglot persistence in a monolith, but it appears more frequently with microservices.</p>
-<p><img src="https://www.martinfowler.com/articles/microservices/images/decentralised-data.png" alt=""></p>
-<p>Decentralizing responsibility for data across microservices has implications for managing updates. The common approach to dealing with updates has been to use transactions to guarantee consistency when updating multiple resources. This approach is often used within monoliths.</p>
-<p>Using transactions like this helps with consistency, but imposes significant temporal coupling, which is problematic across multiple services. Distributed transactions are notoriously difficult to implement and as a consequence microservice architectures emphasize transactionless coordination between services, with explicit recognition that consistency may only be eventual consistency and problems are dealt with by compensating operations.</p>
-<p>Choosing to manage inconsistencies in this way is a new challenge for many development teams, but it is one that often matches business practice. Often businesses handle a degree of inconsistency in order to respond quickly to demand, while having some kind of reversal process to deal with mistakes. The trade-off is worth it as long as the cost of fixing mistakes is less than the cost of lost business under greater consistency.</p>
+<p>这个问题在程序之间比较常见，有时候也会出现在程序内部，尤其是程序被拆分成单独组件的时候。解决的有效途径是<code>Domain-Driven Design</code>（领域驱动设计）中的<code>notion of Bounded Context</code>有界Context。DDD设计可以将一个复杂的领域拆分成为多个有界Context，映射出他们之间的关系。这中处理流程对单体应用架构和微服务都很有用，但是服务之间的有界Context是一定存在相关性的，边界只是为了帮助更清晰的划分（职能），就像描述服务的业务能力范围一样。</p>
+<p>除了拆分概念模型的方法之外，微服务还可以使用分布式存储策略。虽然单体应用更偏向使用逻辑数据库来做数据持久化，但企业喜欢将多个应用程序公用一套存储系统，这样许多商业模型就可以通过这些逻辑数据来做决策。而微服务更喜欢让每个服务管理自己的数据库，或者使用同一数据库中的不同势力，或者完全干脆是不一样的数据存储系统。这个方式称之为<code>Polyglot Persistence</code>混合持久化。你可以在单体上使用混合持久化，但是微服务使用的频率更高。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-0e3d7b58eff73be4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>跨服务对数据进行操作会有数据不一致的问题，常见的处理办法是使用事务来保证数据的一致性，这种方法常出现在单体应用中。</p>
+<p>使用事务虽然可以解决数据一致性的问题，但是会明显增加时间耦合度。并会影响到多个相关的微服务。众所周知，分布式事务是非常难实现的。因此，微服务体系如何增强结构，尽量保证服务之间无事务处理。明确了解到一致性只是最终结果一致性的情况下，可以通过消息补偿来处理。</p>
+<p>使用这种方式处理数据不一致是开发团队们面临的新挑战，但他也往往和业务实践相匹配。通常，不管是业务中为了快速响应的需求，或回滚某些流程来处理错误，只要能修复企业的损失，这些都是值得权衡考虑的。</p>
 <h2 id="Infrastructure-Automation"><a href="#Infrastructure-Automation" class="headerlink" title="Infrastructure Automation"></a>Infrastructure Automation</h2><p>Infrastructure automation techniques have evolved enormously over the last few years - the evolution of the cloud and AWS in particular has reduced the operational complexity of building, deploying and operating microservices.</p>
 <p>Many of the products or systems being build with microservices are being built by teams with extensive experience of Continuous Delivery and it’s precursor, Continuous Integration. Teams building software this way make extensive use of infrastructure automation techniques. This is illustrated in the build pipeline shown below.</p>
 <p><img src="https://www.martinfowler.com/articles/microservices/images/basic-pipeline.png" alt=""></p>
@@ -549,7 +549,8 @@
 <p>14 March 2014: added section on smart endpoint and dumb pipes</p>
 <p>13 March 2014: added section on products not projects</p>
 <p>12 March 2014: added section on organizing around business capabilities</p>
-<p>10 March 2014: published first installment<br>————微服务课程学习笔记</p>
+<p>10 March 2014: published first installment</p>
+<p>————微服务课程学习笔记</p>
 <p>喜欢请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
 <p><a href="http://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">原文[英]： http://martinfowler<em>.com</em>/articles/microservices.html</a><br><a href="http://martinfowler.cn/articles/microservices.html" target="_blank" rel="noopener">翻译前半部分参考： http://martinfowler<em>.cn</em>/articles/microservices.html</a></p>
 
