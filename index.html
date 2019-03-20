@@ -312,6 +312,288 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="url">(译)微服务——martinfowler</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-20T05:15:31+08:00">
+                2019-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/" class="cy_cmt_count" data-xid="2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="(译)微服务——martinfowler">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Microservice"><a href="#Microservice" class="headerlink" title="Microservice"></a>Microservice</h1><blockquote>
+<p>将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。</p>
+</blockquote>
+<h2 id="新的架构名词"><a href="#新的架构名词" class="headerlink" title="新的架构名词"></a>新的架构名词</h2><p>【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但是这个小小的词却描述了一种被发现越来越具有吸引力的软件架构风格。在过去的几年中，我们已经看到许多个项目使用了这种风格，目前为止这些项目的结果都是积极的，以至于对我的许多同事而言这已成为构建企业应用的默认风格。然而，令人沮丧的是，没有大量的信息明确指出微服务是什么以及我们如何实现它。</p>
+<p>简而言之，微服务架构风格是以一组小服务来开发单个应用程序的方法，每一个服务运行在自己独立的进程中并且使用轻量级的方法通信，通常是一个HTTP API接口。这些服务围绕相关业务范围构建并且由全自动化部署机器独立部署。这些服务只需要最低限度的管理，可以用不同的编程语言去编写并且使用不同的数据存储技术。</p>
+<p>若要解释清楚微服务风格，将它与单体风格（一个单个应用程序作为一个独立单元构建）对比将会很有帮助。企业应用程序通常由三个主要部分组成：一个客户端用户界面（由运行在用户机器上的浏览器中的HTML页面和javscript代码组合成），一个数据库（由多个插入到一种常见的，通常是关系型数据库管理系统中的数据表组合成），以及一个服务端应用程序。这个服务端应用程序将会处理HTTP请求，执行领域逻辑，从数据库获取和更新数据，并且选择和填充发送给浏览器的HTML视图。这个服务器端的应用程序就是单体——一个单一的可执行的逻辑。任何对这个系统的改动都需要重新构建和部署一个服务器端应用程序的新版本。</p>
+<p>很自然地，这样的单体服务器是构建这样一个系统的一种方式。处理一条请求的所有逻辑都在一个单一的进程中运行，这允许你使用编程语言的基本功能将应用程序拆分成类、函数和命名空间。更谨慎的做法是，你可以在一个开发者的笔记本上运行和测试这个应用程序，并且使用一个部署管道来确保改动都被正确的测试并且部署到了生产环境中。你可以通过在一个负载均衡器后运行多个实例的方式来横向缩放这个单体应用。</p>
+<p>单体应用可以被成功运用，但是渐渐地人们对单体应用感到不满——尤其是当越来越多的应用程序被部署到云端。任何改动都会牵一发动全身——哪怕是对应用程序一个小地方的改变都需要整个单体应用被重新构建和部署。随着时间的推移通常会很难保持一个良好的模块结构，使得控制变更仅影响模块内部变得越加困难。如要实现可伸缩，需要变动整个应用程序而不是应用程序的某一部分，这要求更多的资源。</p>
+<h1 id="微服务架构的特征"><a href="#微服务架构的特征" class="headerlink" title="微服务架构的特征"></a>微服务架构的特征</h1><p>我们不能够说微服务有着一个正式地定义，但是我们可以尝试着描述那些被标上“微服务”标签架构的共同特征。尽管可以列出共同特征，但并非所有的微服务架构都具备所有的特征，但是我们猜想绝大多数的微服务架构都显现出多数特征。尽管我们两位作者已经成为微服务这个相当松散的社区的活跃成员，但我们的意愿是试图描述我们在自己和我们所知的团队的工作中所了解的情况。特别要指出，我们不会给出教条式的微服务的定义。</p>
+<h2 id="通过服务实现组件化"><a href="#通过服务实现组件化" class="headerlink" title="通过服务实现组件化"></a>通过服务实现组件化</h2><p>自软件工程诞生伊始，人们就期望有着通过将软件模块组合在一起来构建系统，就如同我们在现实生活中看到的制造东西的方法。在过去的几十年里，我们在公共组件库方面取得了长足的进展，这些大量的公共组件库已经成为多数编程语言平台的一部分。</p>
+<p>当我们讨论组件时，我们首先得回答“什么是组件”。我们的定义是：一个组件就是一个可以被独立替换和升级的软件单元。</p>
+<p>微服务架构也会使用软件库，但是用来实现软件组件化的主要方式是将软件拆分成服务。我们将被连接到一个程序并且通过内存函数调用的组件称为<strong>库</strong>，而<strong>服务</strong>却是进程外加载的组件，它通过例如web服务请求或者远程过程调用的方式通信。（各种<code>OO</code>语言程序中服务又是另一个概念了[3]）</p>
+<p>选择使用服务作为组件（而不是库）的一个主要原因是服务是可以独立部署的。假设你有一个包含多个库的应用程序[4]跑在一个单一的进程里，对任何单一组件的变更都将导致整个应用程序的重新部署。但是如果这个应用程序被分解成多个服务，那么你可以期望对单一服务的多项变更只需要重新部署那个服务。这不是绝对的，某些变更可能会改变服务接口从而导致某些内容协商问题，但是微服务架构的目的就是要通过明确的服务边界和演进设计的服务契约来最小化这些变更。</p>
+<p>使用服务作为组件的另一个好处是更加明确的组件接口。许多语言在定义明确的<a href="https://www.martinfowler.com/bliki/PublishedInterface.html" target="_blank" rel="noopener">公共接口</a>方面表现得不好。通常它只有一些文档来描述如何阻止客户端破坏组件的封装，这将导致组件间过度的耦合。服务通过使用明确的远程调用方法轻松地避免了这个问题。</p>
+<p>像这样使用服务也会带来副作用。远程调用比起进程内调用要花更多代价，因此远程API需要是粗粒度的，通常更加不便于使用。如果你需要更改两个组件的职责分配，在跨流程边界的情形下这种操作将会更加困难。</p>
+<p>我们经常将各个Service近似比作运行中的进程（process），但这只是近似的类比方式。一个Service可以包含很多个一起开发、部署的进程。例如一个应用服务和一个只在该服务中被使用的数据库</p>
+<h2 id="围绕业务的组合"><a href="#围绕业务的组合" class="headerlink" title="围绕业务的组合"></a>围绕业务的组合</h2><p>当大型应用程序拆分成多个部分时，通常情况是在技术层面上分开管理，就有了UI团队，服务端逻辑开发团队，数据库团队。按这种分工模式，即使简单的小改动也会导致跨团队协商和预算评估。敏捷团队会围绕这些问题进行优化，在两个坏处中选择一个代价较小的来解决问题——强制把逻辑塞到所有可以访问的程序中。每个模块都有处理逻辑。这就是Conway’s Law[5] 的实践示例</p>
+<blockquote>
+<p>设计系统(广义上)的组织，其产生的设计等同于组织之内、组织之间的沟通结构。</p>
+<p>– Melvyn Conway, 1967</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2: Conway法则的实际应用"></p>
+<p>微服务架构拆分方式不同之处在于，按照业务能力划分服务团队。这些服务需要采取该业务领域软件的最宽泛（broad-stack）配置，包括用户界面、持久化存储和其他外部协作。因此这样的团队是跨职能的，其内部需要完整的开发技能：用户体验，数据库和项目管理</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-df630018c87b303a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3: 团队职能范围增强的服务范围增强"></p>
+<blockquote>
+<p><strong>How big is a microservice?</strong><br>虽然，”微服务”已流行成为了这种风格架构的代名词，不幸的是这个名字会导致大家关注和争论服务的大小和”微”应该由什么组成。跟其他微服务实践者讨论过各种大小的”服务”,最大的团队差不多跟亚马逊双比萨团队一样（整个团队可以吃掉两面比萨），意味着最多不超过12个人。我们也曾经见过更小的团队编制，6个人支撑了6个”服务”。</p>
+<p>这导致了一个问题：团队下12个人每个人负责的范围，和整个团队负责的范围差异较大，从而不能叫一个”微服务”团队。这种情况下我们认为最好将这俩范围组合在一起，但是当我们深入这种架构风格的时候，一定会改变这个看法</p>
+</blockquote>
+<p><a href="http://www.comparethemarket.com就是按照这种方式组件的一家公司。跨职能团队负责构建与运营每个产品，每个产品拆分成多个服务，并通过一个消息总线（message" target="_blank" rel="noopener">www.comparethemarket.com就是按照这种方式组件的一家公司。跨职能团队负责构建与运营每个产品，每个产品拆分成多个服务，并通过一个消息总线（message</a> bus）通信联系起来</p>
+<p>大型单体应用程序通常也可以围绕业务进行模块化拆分，尽管这种情况不常见。通常我们会组建一个大型团队来打造一个单体程序，好让其在业务线单独划分出来。但有太多的关联关系需要考虑是这种组织面临的主要问题。如果项目整体上跨越了多个模块边界，团队成员可能很难再短期内记住掌握这些关系。此外，还需要大量的强制规范来划分模块范围。组件分割的越明细，团队职责范围越清楚明确。<br>未完待续</p>
+<h2 id="做产品不是搞项目"><a href="#做产品不是搞项目" class="headerlink" title="做产品不是搞项目"></a>做产品不是搞项目</h2><p>大多数程序开发的模式是：开发一些软件来满足一些功能，完成后把这些软件交付给维护团队，而开发这个项目的团队解散掉。</p>
+<p>而微服务支持者是倾向于避免这个模式的，他们更倾向于让团队负责整个软件的生命周期。亚马逊有个共同的认知：”you build, you run it”。让开发团队负责产品的整个生命周期。这使开发者能时时刻刻接触软件在生产环境的表现，并增加他们和用户之间的联系。因为他们至少得为支持（用户使用软件）负责。</p>
+<p>对产品的理解应联系在产品业务能力上，而不是将将软件视为一堆需要完善的功能的组合。这里面临的问题是软件如何辅助用户提高业务能力</p>
+<p>不是说相同的这套架构不能适应单体应用，但是粒度更小的服务可以更简单的将开发者和用户联系起来。</p>
+<h2 id="强化终端弱化通讯通道"><a href="#强化终端弱化通讯通道" class="headerlink" title="强化终端弱化通讯通道"></a>强化终端弱化通讯通道</h2><p>在跨进程中通信方面，我们已经有了不少产品和方法，这些方法多在本身强加了一些敏捷通信的机制。一个很好的例子就是企业服务总线（ESB），其中ESB产品通常包括用于消息路由，编排，转换和应用业务规则的复杂工具</p>
+<blockquote>
+<p><strong>微服务和 SOA</strong></p>
+<p>谈起微服务就会有个常见的问题：这个架构不就是十年前的面向服务架构（SOA）么。这么说的根据是SAO的一些特征和微服务的风格非常相似，但是，SOA代表了一系列不同的东西。我们称之为SOA的大部分东西和我们描述的（”微服务”）的风格有很大区别，通常SOA专注于ESBs来整合单体程序。</p>
+<p>特别是, 我们已经看到了（SOA）如此多的糟糕的服务导向实施的结果 - 从隐藏ESB [6]中的复杂性的趋势，到耗资数百万研发多年却没有提供任何价值的失败计划，再到积极抑制变化的集中治理模型，有时候很难看出这些问题。</p>
+<p>当然，微服务社区使用的许多技术都是从开发人员将服务集成到大型组织中的经验中发展起来的。”olerant Reader”(容错读取)技术就是其中的一个例子。最大限度的利用网络资源，使用简单协议通讯是也是从这些经验中获取的方法——脱离中心化也能具备需要的复杂度标准。坦白说：真是让人叹为观止（任何时候你需要通过增加一个管理个体来管理其他个体，都会让你陷入一个大麻烦）</p>
+<p>SOA这种表现使微服务倡导者竭力反对给微服务加上SOA的标签。尽管微服务是SOA的一种形式，但微服务的倡导是正确的。无论哪种方式，SOA都意味着更多不同的东西，而（微服务）这是一个更能清晰定义这种架构风格的术语</p>
+</blockquote>
+<p>而微服务社区主张另一种方法：灵活的终端和笨拙的通道（重点放在终端而不是通讯）。微服务构建的应用应该致力于高内聚，低耦合。每个服务有自己的领域逻辑，像UNIX理念中的过滤器一样工作：接受请求，执行适当的逻辑处理数据。这些服务使用简单的RESTish协议做编排工具而不是其他复杂的协议如：WS-Choreography 或 BPEL</p>
+<p>最常用的两种协议是使用资源型API的HTTP请求-响应和轻量级消息传送[8]。对第一种协议最好的表述是</p>
+<blockquote>
+<p>Be of the web, not behind the web</p>
+<p>– Ian Robinson</p>
+</blockquote>
+<p>微服务团队用的协议和规范都是构建互联网（更大程度上来说：是Unix）的协议和规范。从开发者和运营者上来说，通常使用的资源都是易于保存的。</p>
+<p>第二种轻量级消息传递是在消息总线上传递消息。这种基础设施通常是笨拙的（只能作为消息传输路由）。——如：RabbitMQ和ZeroMQ这种实现简单，支持可靠的异步通讯的。而服务中的智能灵活的终端去通过这些生产，消费消息。</p>
+<p>整体来说，组件在进程中的通讯是通过函数调用的方式。而将其拆分为微服务后，最大的问题就在于通讯方式的变化。原先从内存中方法调用变成RPC服务间通讯，而RPC的方式性能不及前者。但是，你必须使用这种粗粒度的方式来代替之前细粒度的通讯。</p>
+<h2 id="去中心化治理"><a href="#去中心化治理" class="headerlink" title="去中心化治理"></a>去中心化治理</h2><p>技术单一化，标准化是集中治理的的后果之一。经验表明用这种方法的越来越少，并不是每个问题都是个钉子，而每个解决方案都是一个锤子。我们更喜欢用更好的（语言）工具，而在单体应用中使用不同语言的方式是不常见的。</p>
+<p>讲大型服务组件拆分成服务，那么我们就可以在构建每个最贱的时候自由选择。想使用<code>Node.js</code>去构建一个<code>reports</code>的页面，用<code>C++</code>构建适用的实时组件，没问题，去做吧。如果你想同步不同风格类型的数据库来适应组件的使用，我们自有技术去重新构建它。</p>
+<p>当然，即使你可以做，并不代表你应该那么做。这种系统划分方式只是意味着给你带来了更大的自由去选择合适的方式。</p>
+<p>微服务团队也喜欢采用不同标准的架构。他们比赛在纸上规范好标准，而是通过当前问题，编写能方便开发人员解决类似问题的工具。这些工具在现实中广泛共享，有时会使用开源模型。现在Git和Github已经成为普遍的版本控制系统，也让开源越来越普遍。</p>
+<p>Netflix就是遵循这一理念的组织的一个很好的例子。分享他们有用，经过他们实战考验的代码，而且鼓励开发者用类似的方式解决同样的问题。当然也可以选择不同的方式。共享组件会让开发人员目标集中到数据存储和进程通讯的问题上。下面我们将深入讨论基础架构的自动化。</p>
+<p>微服务社区中（组件）高开销是难以吸引人的，倒不是说社区不注重服务间的规范。相反，正是因为规范比较多，使开发人员寻找不同的方式去更好的管理（遵循）这些规范。像<code>Tolerant Reader</code>(读者容错模式)和<code>Consumer-Driven</code>（用户驱动模式）这些规则规范在微服务中经常提到。这些帮助规范服务的规则都在独立发展着。作为组成微服务的一部分，用户驱动可以增强开发者信心，并提供服务运行的能否正常运行的及时反馈。据我们所知，一个澳大利亚的团队就是利用用户驱动规则构建了他们的微服务，他们构建服务的工具很简单，没次增加新服务的时候工具代码会自动生成。一直维持到这个服务构建到满意的程度为止——一种避免软件开发中<code>YAGNI</code>[9]困境的方式。这些技术围绕所构建微服务一起成长，从而降低耦合性，减少集中管理的需求。</p>
+<blockquote>
+<p><strong>多语言混编, 更多选择权</strong><br>最新例子是：（JVM支持）多语言混编导致JVM平台发展起来很快。最近几十年，用高级语言对编程进行更高级的抽象越来越普遍了。用低级语言构建性能敏感的底层引用渐渐不需要了。很多单体应用不用达到那么高的性能要求，也不需要DSL这样的高层次的抽象（让我们很遗憾），相反，单体应用使用单一语言，限制技术使用的范围和数量[10]</p>
+</blockquote>
+<p>也行去中心化治理的最高境界是<code>build it / run it</code>那句亚马逊广为流传的理念。团队的7*24小时负责他们自己构建的软件的各个方面。虽然这种职责下发是极不规范的，但是我们发现很多公司把越来越多的责任分给开发团队。Netflix就是这样做的公司之一[11]。3:00被喊醒改Bug无疑会激励你关注代码质量，也是从集中治理模式中脱离的好办法。</p>
+<!-- 翻译一半了，OMG -->
+<h2 id="去中心化数据管理"><a href="#去中心化数据管理" class="headerlink" title="去中心化数据管理"></a>去中心化数据管理</h2><p>去中心化数据管理现在有很多种方式，同一个世界的抽象模型在不同的系统是不一样的。每个用户拥有不同的视觉感受是大型服务整合是企业面临的常见问题。有些销售内容在用户界面上根本不会出现，它们确实可能有不同的属性和(更糟糕的)相同属性，这些相同属性在语义上有微妙的差别。</p>
+<blockquote>
+<p><strong>实战测试标准和执行标准</strong><br>这里有点分歧，使用微服务团队倾向于避开企业体系结构组制定的那种严格的强制标准,而是趋向使用和倡导使用公开的标准（如HTTP、ATOM 和其他微型格式）</p>
+<p>这个两个标准关键区别在于制定和执行，只有在在现实中大量使用使用的标准，才会成为被组织管理的标准，如IETF，而使用方往往是成功的开源项目</p>
+<p>这些标准通常不是现有的企业标准，通常是出自一个变成经验不足的团队或者受到供应商影响过度而开发的。</p>
+</blockquote>
+<p>这个问题在程序之间比较常见，有时候也会出现在程序内部，尤其是程序被拆分成单独组件的时候。解决的有效途径是<code>Domain-Driven Design</code>（领域驱动设计）中的<code>notion of Bounded Context</code>有界Context。DDD设计可以将一个复杂的领域拆分成为多个有界Context，映射出他们之间的关系。这中处理流程对单体应用架构和微服务都很有用，但是服务之间的有界Context是一定存在相关性的，边界只是为了帮助更清晰的划分（职能），就像描述服务的业务能力范围一样。</p>
+<p>除了拆分概念模型的方法之外，微服务还可以使用分布式存储策略。虽然单体应用更偏向使用逻辑数据库来做数据持久化，但企业喜欢将多个应用程序公用一套存储系统，这样许多商业模型就可以通过这些逻辑数据来做决策。而微服务更喜欢让每个服务管理自己的数据库，或者使用同一数据库中的不同势力，或者完全干脆是不一样的数据存储系统。这个方式称之为<code>Polyglot Persistence</code>混合持久化。你可以在单体上使用混合持久化，但是微服务使用的频率更高。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-0e3d7b58eff73be4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>跨服务对数据进行操作会有数据不一致的问题，常见的处理办法是使用事务来保证数据的一致性，这种方法常出现在单体应用中。</p>
+<p>使用事务虽然可以解决数据一致性的问题，但是会明显增加时间耦合度。并会影响到多个相关的微服务。众所周知，分布式事务是非常难实现的。因此，微服务体系如何增强结构，尽量保证服务之间无事务处理。明确了解到一致性只是最终结果一致性的情况下，可以通过消息补偿来处理。</p>
+<p>使用这种方式处理数据不一致是开发团队们面临的新挑战，但他也往往和业务实践相匹配。通常，不管是业务中为了快速响应的需求，或回滚某些流程来处理错误，只要能修复企业的损失，这些都是值得权衡考虑的。</p>
+<h2 id="软件构建自动化"><a href="#软件构建自动化" class="headerlink" title="软件构建自动化"></a>软件构建自动化</h2><p>软件构建自动化技术在过去几年发生了翻天覆地的变化。——尤其是云和AWS的演变降低了构建，部署，运营，操作微服务的复杂性</p>
+<p>许多使用微服务构建的软件产品的技术团队都有过持续交付或持续集成（持续交付的前身）的经验。拥有这种经验的团队都曾经广泛使用软件构建自动化的技术，下图对这种方式做了说明：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-14a0965038d1b3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>由于这篇文章不是关于持续交付的。我们这里只提几个比较关注的重点功能，为了提高我们软件运行的可靠性，我们做了很多自动化测试，软件升级流程化意味着部署可以自动化。</p>
+<blockquote>
+<p><strong>让（运维部署）这件事情更容易做对</strong></p>
+<p>由于自动化程度提高，我们发现随之出现了很多好用的工具帮助开发和运维人员操作。用于创建组件，管理代码库，创建简单监控服务或日志服务的工具相当普遍了。Web中最好的例子可能就是Netflix的一组开源工具了，还有一些我我们经常使用的带<code>Dropwizard</code>的其他工具。</p>
+</blockquote>
+<p>单体程序会非常容易构建，测试，推送到各个环境。一旦你将整个流程投入自动化中，那部署大量应用就没那么难了。持续部署的目标之一是让部署变的简单枯燥，不管是部署1个还是3个，只要部署过程都是简单枯燥的就行[12]。</p>
+<p>另一个地方用到自动化构建的时候是生产环境构建微服务的时候，虽然上面说的不同的是只要自动部署是简单枯燥的操作，单体应用和微服务没多大差别，然而各个实际操作环境其实差别很大。</p>
+<p><img src="https://www.martinfowler.com/articles/microservices/images/micro-deployment.png" alt=""></p>
+<h2 id="为容错而设计"><a href="#为容错而设计" class="headerlink" title="为容错而设计"></a>为容错而设计</h2><p>使用服务当组件有一个后果，每个应用都需要设计成可以对内部Service容错。因为可能有运营商导致服务不可用等原因，跨服务通讯都可能出现失败，客户端需要尽可能优雅的应对这种失败。它带来额外的复杂处理逻辑，这一点比不上单体应用。使用微服务的团队不断思考：服务失效时如何（减少）影响用户体验。Netflix的<code>Simian Army</code>在工作日的时候，引导服务故障甚至数据库故障来测试应用的弹性和监控效果。</p>
+<blockquote>
+<p><strong>熔断器和预备上线代码（production ready code）</strong></p>
+<p>熔断器最早出现在《Release It！》中，还有与其结合在一起，用来构建高可用的通信应用的模式。如（隔离器）Bulkhead和（超时计时器）TimeOut。Netflix用了一个博客专门来做解释他们做出来的相关应用。</p>
+</blockquote>
+<p>This kind of automated testing in production would be enough to give most operation groups the kind of shivers usually preceding a week off work. This isn’t to say that monolithic architectural styles aren’t capable of sophisticated monitoring setups - it’s just less common in our experience.</p>
+<p>Since services can fail at any time, it’s important to be able to detect the failures quickly and, if possible, automatically restore service. Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received). Semantic monitoring can provide an early warning system of something going wrong that triggers development teams to follow up and investigate.</p>
+<p>This is particularly important to a microservices architecture because the microservice preference towards choreography and event collaboration leads to emergent behavior. While many pundits praise the value of serendipitous emergence, the truth is that emergent behavior can sometimes be a bad thing. Monitoring is vital to spot bad emergent behavior quickly so it can be fixed.</p>
+<blockquote>
+<p><strong>Synchronous calls considered harmful</strong></p>
+<p>Any time you have a number of synchronous calls between services you will encounter the multiplicative effect of downtime. Simply, this is when the downtime of your system becomes the product of the downtimes of the individual components. You face a choice, making your calls asynchronous or managing the downtime. At <a href="http://www.guardian.co.uk" target="_blank" rel="noopener">www.guardian.co.uk</a> they have implemented a simple rule on the new platform - one synchronous call per user request while at Netflix, their platform API redesign has built asynchronicity into the API fabric.</p>
+</blockquote>
+<p>Monoliths can be built to be as transparent as a microservice - in fact, they should be. The difference is that you absolutely need to know when services running in different processes are disconnected. With libraries within the same process this kind of transparency is less likely to be useful.</p>
+<p>Microservice teams would expect to see sophisticated monitoring and logging setups for each individual service such as dashboards showing up/down status and a variety of operational and business relevant metrics. Details on circuit breaker status, current throughput and latency are other examples we often encounter in the wild.</p>
+<h2 id="Evolutionary-Design"><a href="#Evolutionary-Design" class="headerlink" title="Evolutionary Design"></a>Evolutionary Design</h2><p>Evolutionary Design<br>Microservice practitioners, usually have come from an evolutionary design background and see service decomposition as a further tool to enable application developers to control changes in their application without slowing down change. Change control doesn’t necessarily mean change reduction - with the right attitudes and tools you can make frequent, fast, and well-controlled changes to software.</p>
+<p>Whenever you try to break a software system into components, you’re faced with the decision of how to divide up the pieces - what are the principles on which we decide to slice up our application? The key property of a component is the notion of independent replacement and upgradeability[13] - which implies we look for points where we can imagine rewriting a component without affecting its collaborators. Indeed many microservice groups take this further by explicitly expecting many services to be scrapped rather than evolved in the longer term.</p>
+<p>The Guardian website is a good example of an application that was designed and built as a monolith, but has been evolving in a microservice direction. The monolith still is the core of the website, but they prefer to add new features by building microservices that use the monolith’s API. This approach is particularly handy for features that are inherently temporary, such as specialized pages to handle a sporting event. Such a part of the website can quickly be put together using rapid development languages, and removed once the event is over. We’ve seen similar approaches at a financial institution where new services are added for a market opportunity and discarded after a few months or even weeks.</p>
+<p>This emphasis on replaceability is a special case of a more general principle of modular design, which is to drive modularity through the pattern of change [14]. You want to keep things that change at the same time in the same module. Parts of a system that change rarely should be in different services to those that are currently undergoing lots of churn. If you find yourself repeatedly changing two services together, that’s a sign that they should be merged.</p>
+<p>Putting components into services adds an opportunity for more granular release planning. With a monolith any changes require a full build and deployment of the entire application. With microservices, however, you only need to redeploy the service(s) you modified. This can simplify and speed up the release process. The downside is that you have to worry about changes to one service breaking its consumers. The traditional integration approach is to try to deal with this problem using versioning, but the preference in the microservice world is to only use versioning as a last resort. We can avoid a lot of versioning by designing services to be as tolerant as possible to changes in their suppliers.</p>
+<h1 id="Are-Microservices-the-Future"><a href="#Are-Microservices-the-Future" class="headerlink" title="Are Microservices the Future?"></a>Are Microservices the Future?</h1><p>Our main aim in writing this article is to explain the major ideas and principles of microservices. By taking the time to do this we clearly think that the microservices architectural style is an important idea - one worth serious consideration for enterprise applications. We have recently built several systems using the style and know of others who have used and favor this approach.</p>
+<p>Those we know about who are in some way pioneering the architectural style include Amazon, Netflix, The Guardian, the UK Government Digital Service, realestate.com.au, Forward and comparethemarket.com. The conference circuit in 2013 was full of examples of companies that are moving to something that would class as microservices - including Travis CI. In addition there are plenty of organizations that have long been doing what we would class as microservices, but without ever using the name. (Often this is labelled as SOA - although, as we’ve said, SOA comes in many contradictory forms. [15])</p>
+<p>Despite these positive experiences, however, we aren’t arguing that we are certain that microservices are the future direction for software architectures. While our experiences so far are positive compared to monolithic applications, we’re conscious of the fact that not enough time has passed for us to make a full judgement.</p>
+<blockquote>
+<p>pdf</p>
+</blockquote>
+<p>Often the true consequences of your architectural decisions are only evident several years after you made them. We have seen projects where a good team, with a strong desire for modularity, has built a monolithic architecture that has decayed over the years. Many people believe that such decay is less likely with microservices, since the service boundaries are explicit and hard to patch around. Yet until we see enough systems with enough age, we can’t truly assess how microservice architectures mature.</p>
+<p>There are certainly reasons why one might expect microservices to mature poorly. In any effort at componentization, success depends on how well the software fits into components. It’s hard to figure out exactly where the component boundaries should lie. Evolutionary design recognizes the difficulties of getting boundaries right and thus the importance of it being easy to refactor them. But when your components are services with remote communications, then refactoring is much harder than with in-process libraries. Moving code is difficult across service boundaries, any interface changes need to be coordinated between participants, layers of backwards compatibility need to be added, and testing is made more complicated.</p>
+<p>Another issue is If the components do not compose cleanly, then all you are doing is shifting complexity from inside a component to the connections between components. Not just does this just move complexity around, it moves it to a place that’s less explicit and harder to control. It’s easy to think things are better when you are looking at the inside of a small, simple component, while missing messy connections between services.</p>
+<p>Finally, there is the factor of team skill. New techniques tend to be adopted by more skillful teams. But a technique that is more effective for a more skillful team isn’t necessarily going to work for less skillful teams. We’ve seen plenty of cases of less skillful teams building messy monolithic architectures, but it takes time to see what happens when this kind of mess occurs with microservices. A poor team will always create a poor system - it’s very hard to tell if microservices reduce the mess in this case or make it worse.</p>
+<p>One reasonable argument we’ve heard is that you shouldn’t start with a microservices architecture. Instead begin with a monolith, keep it modular, and split it into microservices once the monolith becomes a problem. (Although this advice isn’t ideal, since a good in-process interface is usually not a good service interface.)</p>
+<p>So we write this with cautious optimism. So far, we’ve seen enough about the microservice style to feel that it can be a worthwhile road to tread. We can’t say for sure where we’ll end up, but one of the challenges of software development is that you can only make decisions based on the imperfect information that you currently have to hand.</p>
+<h1 id="Footnotes"><a href="#Footnotes" class="headerlink" title="Footnotes"></a>Footnotes</h1><p>1: The term “microservice” was discussed at a workshop of software architects near Venice in May, 2011 to describe what the participants saw as a common architectural style that many of them had been recently exploring. In May 2012, the same group decided on “microservices” as the most appropriate name. James presented some of these ideas as a case study in March 2012 at 33rd Degree in Krakow in Microservices - Java, the Unix Way as did Fred George about the same time. Adrian Cockcroft at Netflix, describing this approach as “fine grained SOA” was pioneering the style at web scale as were many of the others mentioned in this article - Joe Walnes, Dan North, Evan Botcher and Graham Tackley.</p>
+<p>2: The term monolith has been in use by the Unix community for some time. It appears in The Art of Unix Programming to describe systems that get too big.</p>
+<p>3: Many object-oriented designers, including ourselves, use the term service object in the Domain-Driven Design sense for an object that carries out a significant process that isn’t tied to an entity. This is a different concept to how we’re using “service” in this article. Sadly the term service has both meanings and we have to live with the polyseme.</p>
+<p>4: We consider an application to be a social construction that binds together a code base, group of functionality, and body of funding.</p>
+<p>5: The original paper can be found on Melvyn Conway’s website here</p>
+<p>6: We can’t resist mentioning Jim Webber’s statement that ESB stands for “Egregious Spaghetti Box”.</p>
+<p>7: Netflix makes the link explicit - until recently referring to their architectural style as fine-grained SOA.</p>
+<p>8: At extremes of scale, organisations often move to binary protocols - protobufs for example. Systems using these still exhibit the characteristic of smart endpoints, dumb pipes - and trade off transparency for scale. Most web properties and certainly the vast majority of enterprises don’t need to make this tradeoff - transparency can be a big win.</p>
+<p>9: “YAGNI” or “You Aren’t Going To Need It” is an XP principle and exhortation to not add features until you know you need them.</p>
+<p>10: It’s a little disengenuous of us to claim that monoliths are single language - in order to build systems on todays web, you probably need to know JavaScript and XHTML, CSS, your server side language of choice, SQL and an ORM dialect. Hardly single language, but you know what we mean.</p>
+<p>11: Adrian Cockcroft specifically mentions “developer self-service” and “Developers run what they wrote”(sic) in this excellent presentation delivered at Flowcon in November, 2013.</p>
+<p>12: We are being a little disengenuous here. Obviously deploying more services, in more complex topologies is more difficult than deploying a single monolith. Fortunately, patterns reduce this complexity - investment in tooling is still a must though.</p>
+<p>13: In fact, Dan North refers to this style as Replaceable Component Architecture rather than microservices. Since this seems to talk to a subset of the characteristics we prefer the latter.</p>
+<p>14: Kent Beck highlights this as one his design principles in Implementation Patterns.</p>
+<p>15: And SOA is hardly the root of this history. I remember people saying “we’ve been doing this for years” when the SOA term appeared at the beginning of the century. One argument was that this style sees its roots as the way COBOL programs communicated via data files in the earliest days of enterprise computing. In another direction, one could argue that microservices are the same thing as the Erlang programming model, but applied to an enterprise application context.</p>
+<p>References<br>While this is not an exhaustive list, there are a number of sources that practitioners have drawn inspiration from or which espouse a similar philosophy to that described in this article.</p>
+<p>Blogs and online articles</p>
+<p>Clemens Vasters’ blog on cloud at microsoft<br>David Morgantini’s introduction to the topic on his blog<br>12 factor apps from Heroku<br>UK Government Digital Service design principles<br>Jimmy Nilsson’s blogand article on infoq about Cloud Chunk Computing<br>Alistair Cockburn on Hexagonal architectures<br>Books</p>
+<p>Release it<br>Rest in practice<br>Web API Design (free ebook). Brian Mulloy, Apigee.<br>Enterprise Integration Patterns<br>Art of unix programming<br>Growing Object Oriented Software, Guided by Tests<br>The Modern Firm: Organizational Design for Performance and Growth<br>Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation<br>Domain-Driven Design: Tackling Complexity in the Heart of Software<br>Presentations</p>
+<p>Architecture without Architects. Erik Doernenburg.<br>Does my bus look big in this?. Jim Webber and Martin Fowler, QCon 2008<br>Guerilla SOA. Jim Webber, 2006<br>Patterns of Effective Delivery. Dan North, 2011.<br>Adrian Cockcroft’s slideshare channel.<br>Hydras and Hypermedia. Ian Robinson, JavaZone 2010<br>Justice will take a million intricate moves. Leonard Richardson, Qcon 2008.<br>Java, the UNIX way. James Lewis, JavaZone 2012<br>Micro services architecture. Fred George, YOW! 2012<br>Democratising attention data at guardian.co.uk. Graham Tackley, GOTO Aarhus 2013<br>Functional Reactive Programming with RxJava. Ben Christensen, GOTO Aarhus 2013 (registration required).<br>Breaking the Monolith. Stefan Tilkov, May 2012.<br>Papers</p>
+<p>L. Lamport, “The Implementation of Reliable Distributed Multiprocess Systems”, 1978 http:// research.microsoft.com/en-us/um/people/lamport/pubs/implementation.pdf<br>L. Lamport, R. Shostak, M. Pease, “The Byzantine Generals Problem”, 1982 (available at) http:// <a href="http://www.cs.cornell.edu/courses/cs614/2004sp/papers/lsp82.pdf" target="_blank" rel="noopener">www.cs.cornell.edu/courses/cs614/2004sp/papers/lsp82.pdf</a><br>R.T. Fielding, “Architectural Styles and the Design of Network-based Software Architectures”, 2000 <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm" target="_blank" rel="noopener">http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm</a><br>E. A. Brewer, “Towards Robust Distributed Systems”, 2000 <a href="http://www.cs.berkeley.edu/" target="_blank" rel="noopener">http://www.cs.berkeley.edu/</a> ~brewer/cs262b-2004/PODC-keynote.pdf<br>E. Brewer, “CAP Twelve Years Later: How the ‘Rules’ Have Changed”, 2012, http:// <a href="http://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed" target="_blank" rel="noopener">www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed</a></p>
+<p>Significant Revisions<br>25 March 2014: last installment on are microservices the future?</p>
+<p>24 March 2014: added section on evolutionary design</p>
+<p>19 March 2014: added sections on infrastructure automation and design for failure</p>
+<p>18 March 2014: added section on decentralized data</p>
+<p>17 March 2014: added section on decentralized governance</p>
+<p>14 March 2014: added section on smart endpoint and dumb pipes</p>
+<p>13 March 2014: added section on products not projects</p>
+<p>12 March 2014: added section on organizing around business capabilities</p>
+<p>10 March 2014: published first installment</p>
+<p>————微服务课程学习笔记</p>
+<p>喜欢请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
+<p><a href="http://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">原文[英]： http://martinfowler<em>.com</em>/articles/microservices.html</a><br><a href="http://martinfowler.cn/articles/microservices.html" target="_blank" rel="noopener">翻译前半部分参考： http://martinfowler<em>.cn</em>/articles/microservices.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/13/JavaLan/01-learning-thread-note/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -557,288 +839,6 @@
 </blockquote>
 <h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>微服务是一种架构风格，广泛用于拆分模、业务。并且能够自动部署</p>
 <p>————微服务课程学习笔记</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/image/head_3.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AIX Zing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="url">(译)微服务——martinfowler</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T23:34:07+08:00">
-                2019-03-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="cy_cmt_count" data-xid="2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
-                </a>
-              
-            
-          
-
-          
-          
-             <span id="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="(译)微服务——martinfowler">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </span></div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Microservice"><a href="#Microservice" class="headerlink" title="Microservice"></a>Microservice</h1><blockquote>
-<p>将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。</p>
-</blockquote>
-<h2 id="新的架构名词"><a href="#新的架构名词" class="headerlink" title="新的架构名词"></a>新的架构名词</h2><p>【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但是这个小小的词却描述了一种被发现越来越具有吸引力的软件架构风格。在过去的几年中，我们已经看到许多个项目使用了这种风格，目前为止这些项目的结果都是积极的，以至于对我的许多同事而言这已成为构建企业应用的默认风格。然而，令人沮丧的是，没有大量的信息明确指出微服务是什么以及我们如何实现它。</p>
-<p>简而言之，微服务架构风格是以一组小服务来开发单个应用程序的方法，每一个服务运行在自己独立的进程中并且使用轻量级的方法通信，通常是一个HTTP API接口。这些服务围绕相关业务范围构建并且由全自动化部署机器独立部署。这些服务只需要最低限度的管理，可以用不同的编程语言去编写并且使用不同的数据存储技术。</p>
-<p>若要解释清楚微服务风格，将它与单体风格（一个单个应用程序作为一个独立单元构建）对比将会很有帮助。企业应用程序通常由三个主要部分组成：一个客户端用户界面（由运行在用户机器上的浏览器中的HTML页面和javscript代码组合成），一个数据库（由多个插入到一种常见的，通常是关系型数据库管理系统中的数据表组合成），以及一个服务端应用程序。这个服务端应用程序将会处理HTTP请求，执行领域逻辑，从数据库获取和更新数据，并且选择和填充发送给浏览器的HTML视图。这个服务器端的应用程序就是单体——一个单一的可执行的逻辑。任何对这个系统的改动都需要重新构建和部署一个服务器端应用程序的新版本。</p>
-<p>很自然地，这样的单体服务器是构建这样一个系统的一种方式。处理一条请求的所有逻辑都在一个单一的进程中运行，这允许你使用编程语言的基本功能将应用程序拆分成类、函数和命名空间。更谨慎的做法是，你可以在一个开发者的笔记本上运行和测试这个应用程序，并且使用一个部署管道来确保改动都被正确的测试并且部署到了生产环境中。你可以通过在一个负载均衡器后运行多个实例的方式来横向缩放这个单体应用。</p>
-<p>单体应用可以被成功运用，但是渐渐地人们对单体应用感到不满——尤其是当越来越多的应用程序被部署到云端。任何改动都会牵一发动全身——哪怕是对应用程序一个小地方的改变都需要整个单体应用被重新构建和部署。随着时间的推移通常会很难保持一个良好的模块结构，使得控制变更仅影响模块内部变得越加困难。如要实现可伸缩，需要变动整个应用程序而不是应用程序的某一部分，这要求更多的资源。</p>
-<h1 id="微服务架构的特征"><a href="#微服务架构的特征" class="headerlink" title="微服务架构的特征"></a>微服务架构的特征</h1><p>我们不能够说微服务有着一个正式地定义，但是我们可以尝试着描述那些被标上“微服务”标签架构的共同特征。尽管可以列出共同特征，但并非所有的微服务架构都具备所有的特征，但是我们猜想绝大多数的微服务架构都显现出多数特征。尽管我们两位作者已经成为微服务这个相当松散的社区的活跃成员，但我们的意愿是试图描述我们在自己和我们所知的团队的工作中所了解的情况。特别要指出，我们不会给出教条式的微服务的定义。</p>
-<h2 id="通过服务实现组件化"><a href="#通过服务实现组件化" class="headerlink" title="通过服务实现组件化"></a>通过服务实现组件化</h2><p>自软件工程诞生伊始，人们就期望有着通过将软件模块组合在一起来构建系统，就如同我们在现实生活中看到的制造东西的方法。在过去的几十年里，我们在公共组件库方面取得了长足的进展，这些大量的公共组件库已经成为多数编程语言平台的一部分。</p>
-<p>当我们讨论组件时，我们首先得回答“什么是组件”。我们的定义是：一个组件就是一个可以被独立替换和升级的软件单元。</p>
-<p>微服务架构也会使用软件库，但是用来实现软件组件化的主要方式是将软件拆分成服务。我们将被连接到一个程序并且通过内存函数调用的组件称为<strong>库</strong>，而<strong>服务</strong>却是进程外加载的组件，它通过例如web服务请求或者远程过程调用的方式通信。（各种<code>OO</code>语言程序中服务又是另一个概念了[3]）</p>
-<p>选择使用服务作为组件（而不是库）的一个主要原因是服务是可以独立部署的。假设你有一个包含多个库的应用程序[4]跑在一个单一的进程里，对任何单一组件的变更都将导致整个应用程序的重新部署。但是如果这个应用程序被分解成多个服务，那么你可以期望对单一服务的多项变更只需要重新部署那个服务。这不是绝对的，某些变更可能会改变服务接口从而导致某些内容协商问题，但是微服务架构的目的就是要通过明确的服务边界和演进设计的服务契约来最小化这些变更。</p>
-<p>使用服务作为组件的另一个好处是更加明确的组件接口。许多语言在定义明确的<a href="https://www.martinfowler.com/bliki/PublishedInterface.html" target="_blank" rel="noopener">公共接口</a>方面表现得不好。通常它只有一些文档来描述如何阻止客户端破坏组件的封装，这将导致组件间过度的耦合。服务通过使用明确的远程调用方法轻松地避免了这个问题。</p>
-<p>像这样使用服务也会带来副作用。远程调用比起进程内调用要花更多代价，因此远程API需要是粗粒度的，通常更加不便于使用。如果你需要更改两个组件的职责分配，在跨流程边界的情形下这种操作将会更加困难。</p>
-<p>我们经常将各个Service近似比作运行中的进程（process），但这只是近似的类比方式。一个Service可以包含很多个一起开发、部署的进程。例如一个应用服务和一个只在该服务中被使用的数据库</p>
-<h2 id="围绕业务的组合"><a href="#围绕业务的组合" class="headerlink" title="围绕业务的组合"></a>围绕业务的组合</h2><p>当大型应用程序拆分成多个部分时，通常情况是在技术层面上分开管理，就有了UI团队，服务端逻辑开发团队，数据库团队。按这种分工模式，即使简单的小改动也会导致跨团队协商和预算评估。敏捷团队会围绕这些问题进行优化，在两个坏处中选择一个代价较小的来解决问题——强制把逻辑塞到所有可以访问的程序中。每个模块都有处理逻辑。这就是Conway’s Law[5] 的实践示例</p>
-<blockquote>
-<p>设计系统(广义上)的组织，其产生的设计等同于组织之内、组织之间的沟通结构。</p>
-<p>– Melvyn Conway, 1967</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2: Conway法则的实际应用"></p>
-<p>微服务架构拆分方式不同之处在于，按照业务能力划分服务团队。这些服务需要采取该业务领域软件的最宽泛（broad-stack）配置，包括用户界面、持久化存储和其他外部协作。因此这样的团队是跨职能的，其内部需要完整的开发技能：用户体验，数据库和项目管理</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-df630018c87b303a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3: 团队职能范围增强的服务范围增强"></p>
-<blockquote>
-<p><strong>How big is a microservice?</strong><br>虽然，”微服务”已流行成为了这种风格架构的代名词，不幸的是这个名字会导致大家关注和争论服务的大小和”微”应该由什么组成。跟其他微服务实践者讨论过各种大小的”服务”,最大的团队差不多跟亚马逊双比萨团队一样（整个团队可以吃掉两面比萨），意味着最多不超过12个人。我们也曾经见过更小的团队编制，6个人支撑了6个”服务”。</p>
-<p>这导致了一个问题：团队下12个人每个人负责的范围，和整个团队负责的范围差异较大，从而不能叫一个”微服务”团队。这种情况下我们认为最好将这俩范围组合在一起，但是当我们深入这种架构风格的时候，一定会改变这个看法</p>
-</blockquote>
-<p><a href="http://www.comparethemarket.com就是按照这种方式组件的一家公司。跨职能团队负责构建与运营每个产品，每个产品拆分成多个服务，并通过一个消息总线（message" target="_blank" rel="noopener">www.comparethemarket.com就是按照这种方式组件的一家公司。跨职能团队负责构建与运营每个产品，每个产品拆分成多个服务，并通过一个消息总线（message</a> bus）通信联系起来</p>
-<p>大型单体应用程序通常也可以围绕业务进行模块化拆分，尽管这种情况不常见。通常我们会组建一个大型团队来打造一个单体程序，好让其在业务线单独划分出来。但有太多的关联关系需要考虑是这种组织面临的主要问题。如果项目整体上跨越了多个模块边界，团队成员可能很难再短期内记住掌握这些关系。此外，还需要大量的强制规范来划分模块范围。组件分割的越明细，团队职责范围越清楚明确。<br>未完待续</p>
-<h2 id="做产品不是搞项目"><a href="#做产品不是搞项目" class="headerlink" title="做产品不是搞项目"></a>做产品不是搞项目</h2><p>大多数程序开发的模式是：开发一些软件来满足一些功能，完成后把这些软件交付给维护团队，而开发这个项目的团队解散掉。</p>
-<p>而微服务支持者是倾向于避免这个模式的，他们更倾向于让团队负责整个软件的生命周期。亚马逊有个共同的认知：”you build, you run it”。让开发团队负责产品的整个生命周期。这使开发者能时时刻刻接触软件在生产环境的表现，并增加他们和用户之间的联系。因为他们至少得为支持（用户使用软件）负责。</p>
-<p>对产品的理解应联系在产品业务能力上，而不是将将软件视为一堆需要完善的功能的组合。这里面临的问题是软件如何辅助用户提高业务能力</p>
-<p>不是说相同的这套架构不能适应单体应用，但是粒度更小的服务可以更简单的将开发者和用户联系起来。</p>
-<h2 id="强化终端弱化通讯通道"><a href="#强化终端弱化通讯通道" class="headerlink" title="强化终端弱化通讯通道"></a>强化终端弱化通讯通道</h2><p>在跨进程中通信方面，我们已经有了不少产品和方法，这些方法多在本身强加了一些敏捷通信的机制。一个很好的例子就是企业服务总线（ESB），其中ESB产品通常包括用于消息路由，编排，转换和应用业务规则的复杂工具</p>
-<blockquote>
-<p><strong>微服务和 SOA</strong></p>
-<p>谈起微服务就会有个常见的问题：这个架构不就是十年前的面向服务架构（SOA）么。这么说的根据是SAO的一些特征和微服务的风格非常相似，但是，SOA代表了一系列不同的东西。我们称之为SOA的大部分东西和我们描述的（”微服务”）的风格有很大区别，通常SOA专注于ESBs来整合单体程序。</p>
-<p>特别是, 我们已经看到了（SOA）如此多的糟糕的服务导向实施的结果 - 从隐藏ESB [6]中的复杂性的趋势，到耗资数百万研发多年却没有提供任何价值的失败计划，再到积极抑制变化的集中治理模型，有时候很难看出这些问题。</p>
-<p>当然，微服务社区使用的许多技术都是从开发人员将服务集成到大型组织中的经验中发展起来的。”olerant Reader”(容错读取)技术就是其中的一个例子。最大限度的利用网络资源，使用简单协议通讯是也是从这些经验中获取的方法——脱离中心化也能具备需要的复杂度标准。坦白说：真是让人叹为观止（任何时候你需要通过增加一个管理个体来管理其他个体，都会让你陷入一个大麻烦）</p>
-<p>SOA这种表现使微服务倡导者竭力反对给微服务加上SOA的标签。尽管微服务是SOA的一种形式，但微服务的倡导是正确的。无论哪种方式，SOA都意味着更多不同的东西，而（微服务）这是一个更能清晰定义这种架构风格的术语</p>
-</blockquote>
-<p>而微服务社区主张另一种方法：灵活的终端和笨拙的通道（重点放在终端而不是通讯）。微服务构建的应用应该致力于高内聚，低耦合。每个服务有自己的领域逻辑，像UNIX理念中的过滤器一样工作：接受请求，执行适当的逻辑处理数据。这些服务使用简单的RESTish协议做编排工具而不是其他复杂的协议如：WS-Choreography 或 BPEL</p>
-<p>最常用的两种协议是使用资源型API的HTTP请求-响应和轻量级消息传送[8]。对第一种协议最好的表述是</p>
-<blockquote>
-<p>Be of the web, not behind the web</p>
-<p>– Ian Robinson</p>
-</blockquote>
-<p>微服务团队用的协议和规范都是构建互联网（更大程度上来说：是Unix）的协议和规范。从开发者和运营者上来说，通常使用的资源都是易于保存的。</p>
-<p>第二种轻量级消息传递是在消息总线上传递消息。这种基础设施通常是笨拙的（只能作为消息传输路由）。——如：RabbitMQ和ZeroMQ这种实现简单，支持可靠的异步通讯的。而服务中的智能灵活的终端去通过这些生产，消费消息。</p>
-<p>整体来说，组件在进程中的通讯是通过函数调用的方式。而将其拆分为微服务后，最大的问题就在于通讯方式的变化。原先从内存中方法调用变成RPC服务间通讯，而RPC的方式性能不及前者。但是，你必须使用这种粗粒度的方式来代替之前细粒度的通讯。</p>
-<h2 id="去中心化治理"><a href="#去中心化治理" class="headerlink" title="去中心化治理"></a>去中心化治理</h2><p>技术单一化，标准化是集中治理的的后果之一。经验表明用这种方法的越来越少，并不是每个问题都是个钉子，而每个解决方案都是一个锤子。我们更喜欢用更好的（语言）工具，而在单体应用中使用不同语言的方式是不常见的。</p>
-<p>讲大型服务组件拆分成服务，那么我们就可以在构建每个最贱的时候自由选择。想使用<code>Node.js</code>去构建一个<code>reports</code>的页面，用<code>C++</code>构建适用的实时组件，没问题，去做吧。如果你想同步不同风格类型的数据库来适应组件的使用，我们自有技术去重新构建它。</p>
-<p>当然，即使你可以做，并不代表你应该那么做。这种系统划分方式只是意味着给你带来了更大的自由去选择合适的方式。</p>
-<p>微服务团队也喜欢采用不同标准的架构。他们比赛在纸上规范好标准，而是通过当前问题，编写能方便开发人员解决类似问题的工具。这些工具在现实中广泛共享，有时会使用开源模型。现在Git和Github已经成为普遍的版本控制系统，也让开源越来越普遍。</p>
-<p>Netflix就是遵循这一理念的组织的一个很好的例子。分享他们有用，经过他们实战考验的代码，而且鼓励开发者用类似的方式解决同样的问题。当然也可以选择不同的方式。共享组件会让开发人员目标集中到数据存储和进程通讯的问题上。下面我们将深入讨论基础架构的自动化。</p>
-<p>微服务社区中（组件）高开销是难以吸引人的，倒不是说社区不注重服务间的规范。相反，正是因为规范比较多，使开发人员寻找不同的方式去更好的管理（遵循）这些规范。像<code>Tolerant Reader</code>(读者容错模式)和<code>Consumer-Driven</code>（用户驱动模式）这些规则规范在微服务中经常提到。这些帮助规范服务的规则都在独立发展着。作为组成微服务的一部分，用户驱动可以增强开发者信心，并提供服务运行的能否正常运行的及时反馈。据我们所知，一个澳大利亚的团队就是利用用户驱动规则构建了他们的微服务，他们构建服务的工具很简单，没次增加新服务的时候工具代码会自动生成。一直维持到这个服务构建到满意的程度为止——一种避免软件开发中<code>YAGNI</code>[9]困境的方式。这些技术围绕所构建微服务一起成长，从而降低耦合性，减少集中管理的需求。</p>
-<blockquote>
-<p><strong>多语言混编, 更多选择权</strong><br>最新例子是：（JVM支持）多语言混编导致JVM平台发展起来很快。最近几十年，用高级语言对编程进行更高级的抽象越来越普遍了。用低级语言构建性能敏感的底层引用渐渐不需要了。很多单体应用不用达到那么高的性能要求，也不需要DSL这样的高层次的抽象（让我们很遗憾），相反，单体应用使用单一语言，限制技术使用的范围和数量[10]</p>
-</blockquote>
-<p>也行去中心化治理的最高境界是<code>build it / run it</code>那句亚马逊广为流传的理念。团队的7*24小时负责他们自己构建的软件的各个方面。虽然这种职责下发是极不规范的，但是我们发现很多公司把越来越多的责任分给开发团队。Netflix就是这样做的公司之一[11]。3:00被喊醒改Bug无疑会激励你关注代码质量，也是从集中治理模式中脱离的好办法。</p>
-<!-- 翻译一半了，OMG -->
-<h2 id="去中心化数据管理"><a href="#去中心化数据管理" class="headerlink" title="去中心化数据管理"></a>去中心化数据管理</h2><p>去中心化数据管理现在有很多种方式，同一个世界的抽象模型在不同的系统是不一样的。每个用户拥有不同的视觉感受是大型服务整合是企业面临的常见问题。有些销售内容在用户界面上根本不会出现，它们确实可能有不同的属性和(更糟糕的)相同属性，这些相同属性在语义上有微妙的差别。</p>
-<blockquote>
-<p><strong>实战测试标准和执行标准</strong><br>这里有点分歧，使用微服务团队倾向于避开企业体系结构组制定的那种严格的强制标准,而是趋向使用和倡导使用公开的标准（如HTTP、ATOM 和其他微型格式）</p>
-<p>这个两个标准关键区别在于制定和执行，只有在在现实中大量使用使用的标准，才会成为被组织管理的标准，如IETF，而使用方往往是成功的开源项目</p>
-<p>这些标准通常不是现有的企业标准，通常是出自一个变成经验不足的团队或者受到供应商影响过度而开发的。</p>
-</blockquote>
-<p>这个问题在程序之间比较常见，有时候也会出现在程序内部，尤其是程序被拆分成单独组件的时候。解决的有效途径是<code>Domain-Driven Design</code>（领域驱动设计）中的<code>notion of Bounded Context</code>有界Context。DDD设计可以将一个复杂的领域拆分成为多个有界Context，映射出他们之间的关系。这中处理流程对单体应用架构和微服务都很有用，但是服务之间的有界Context是一定存在相关性的，边界只是为了帮助更清晰的划分（职能），就像描述服务的业务能力范围一样。</p>
-<p>除了拆分概念模型的方法之外，微服务还可以使用分布式存储策略。虽然单体应用更偏向使用逻辑数据库来做数据持久化，但企业喜欢将多个应用程序公用一套存储系统，这样许多商业模型就可以通过这些逻辑数据来做决策。而微服务更喜欢让每个服务管理自己的数据库，或者使用同一数据库中的不同势力，或者完全干脆是不一样的数据存储系统。这个方式称之为<code>Polyglot Persistence</code>混合持久化。你可以在单体上使用混合持久化，但是微服务使用的频率更高。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-0e3d7b58eff73be4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>跨服务对数据进行操作会有数据不一致的问题，常见的处理办法是使用事务来保证数据的一致性，这种方法常出现在单体应用中。</p>
-<p>使用事务虽然可以解决数据一致性的问题，但是会明显增加时间耦合度。并会影响到多个相关的微服务。众所周知，分布式事务是非常难实现的。因此，微服务体系如何增强结构，尽量保证服务之间无事务处理。明确了解到一致性只是最终结果一致性的情况下，可以通过消息补偿来处理。</p>
-<p>使用这种方式处理数据不一致是开发团队们面临的新挑战，但他也往往和业务实践相匹配。通常，不管是业务中为了快速响应的需求，或回滚某些流程来处理错误，只要能修复企业的损失，这些都是值得权衡考虑的。</p>
-<h2 id="Infrastructure-Automation"><a href="#Infrastructure-Automation" class="headerlink" title="Infrastructure Automation"></a>Infrastructure Automation</h2><p>Infrastructure automation techniques have evolved enormously over the last few years - the evolution of the cloud and AWS in particular has reduced the operational complexity of building, deploying and operating microservices.</p>
-<p>Many of the products or systems being build with microservices are being built by teams with extensive experience of Continuous Delivery and it’s precursor, Continuous Integration. Teams building software this way make extensive use of infrastructure automation techniques. This is illustrated in the build pipeline shown below.</p>
-<p><img src="https://www.martinfowler.com/articles/microservices/images/basic-pipeline.png" alt=""></p>
-<p>Since this isn’t an article on Continuous Delivery we will call attention to just a couple of key features here. We want as much confidence as possible that our software is working, so we run lots of automated tests. Promotion of working software ‘up’ the pipeline means we automate deployment to each new environment.</p>
-<blockquote>
-<p><strong>Make it easy to do the right thing</strong></p>
-<p>One side effect we have found of increased automation as a consequence of continuous delivery and deployment is the creation of useful tools to help developers and operations folk. Tooling for creating artefacts, managing codebases, standing up simple services or for adding standard monitoring and logging are pretty common now. The best example on the web is probably Netflix’s set of open source tools, but there are others including Dropwizard which we have used extensively.</p>
-</blockquote>
-<p>A monolithic application will be built, tested and pushed through these environments quite happlily. It turns out that once you have invested in automating the path to production for a monolith, then deploying more applications doesn’t seem so scary any more. Remember, one of the aims of CD is to make deployment boring, so whether its one or three applications, as long as its still boring it doesn’t matter[12].</p>
-<p>Another area where we see teams using extensive infrastructure automation is when managing microservices in production. In contrast to our assertion above that as long as deployment is boring there isn’t that much difference between monoliths and microservices, the operational landscape for each can be strikingly different.</p>
-<p><img src="https://www.martinfowler.com/articles/microservices/images/micro-deployment.png" alt=""></p>
-<h2 id="Design-for-failure"><a href="#Design-for-failure" class="headerlink" title="Design for failure"></a>Design for failure</h2><p>A consequence of using services as components, is that applications need to be designed so that they can tolerate the failure of services. Any service call could fail due to unavailability of the supplier, the client has to respond to this as gracefully as possible. This is a disadvantage compared to a monolithic design as it introduces additional complexity to handle it. The consequence is that microservice teams constantly reflect on how service failures affect the user experience. Netflix’s Simian Army induces failures of services and even datacenters during the working day to test both the application’s resilience and monitoring.</p>
-<blockquote>
-<p><strong>The circuit breaker and production ready code</strong></p>
-<p>Circuit Breaker appears in Release It! alongside other patterns such as Bulkhead and Timeout. Implemented together, these patterns are crucially important when building communicating applications. This Netflix blog entry does a great job of explaining their application of them.</p>
-</blockquote>
-<p>This kind of automated testing in production would be enough to give most operation groups the kind of shivers usually preceding a week off work. This isn’t to say that monolithic architectural styles aren’t capable of sophisticated monitoring setups - it’s just less common in our experience.</p>
-<p>Since services can fail at any time, it’s important to be able to detect the failures quickly and, if possible, automatically restore service. Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received). Semantic monitoring can provide an early warning system of something going wrong that triggers development teams to follow up and investigate.</p>
-<p>This is particularly important to a microservices architecture because the microservice preference towards choreography and event collaboration leads to emergent behavior. While many pundits praise the value of serendipitous emergence, the truth is that emergent behavior can sometimes be a bad thing. Monitoring is vital to spot bad emergent behavior quickly so it can be fixed.</p>
-<blockquote>
-<p><strong>Synchronous calls considered harmful</strong></p>
-<p>Any time you have a number of synchronous calls between services you will encounter the multiplicative effect of downtime. Simply, this is when the downtime of your system becomes the product of the downtimes of the individual components. You face a choice, making your calls asynchronous or managing the downtime. At <a href="http://www.guardian.co.uk" target="_blank" rel="noopener">www.guardian.co.uk</a> they have implemented a simple rule on the new platform - one synchronous call per user request while at Netflix, their platform API redesign has built asynchronicity into the API fabric.</p>
-</blockquote>
-<p>Monoliths can be built to be as transparent as a microservice - in fact, they should be. The difference is that you absolutely need to know when services running in different processes are disconnected. With libraries within the same process this kind of transparency is less likely to be useful.</p>
-<p>Microservice teams would expect to see sophisticated monitoring and logging setups for each individual service such as dashboards showing up/down status and a variety of operational and business relevant metrics. Details on circuit breaker status, current throughput and latency are other examples we often encounter in the wild.</p>
-<h2 id="Evolutionary-Design"><a href="#Evolutionary-Design" class="headerlink" title="Evolutionary Design"></a>Evolutionary Design</h2><p>Evolutionary Design<br>Microservice practitioners, usually have come from an evolutionary design background and see service decomposition as a further tool to enable application developers to control changes in their application without slowing down change. Change control doesn’t necessarily mean change reduction - with the right attitudes and tools you can make frequent, fast, and well-controlled changes to software.</p>
-<p>Whenever you try to break a software system into components, you’re faced with the decision of how to divide up the pieces - what are the principles on which we decide to slice up our application? The key property of a component is the notion of independent replacement and upgradeability[13] - which implies we look for points where we can imagine rewriting a component without affecting its collaborators. Indeed many microservice groups take this further by explicitly expecting many services to be scrapped rather than evolved in the longer term.</p>
-<p>The Guardian website is a good example of an application that was designed and built as a monolith, but has been evolving in a microservice direction. The monolith still is the core of the website, but they prefer to add new features by building microservices that use the monolith’s API. This approach is particularly handy for features that are inherently temporary, such as specialized pages to handle a sporting event. Such a part of the website can quickly be put together using rapid development languages, and removed once the event is over. We’ve seen similar approaches at a financial institution where new services are added for a market opportunity and discarded after a few months or even weeks.</p>
-<p>This emphasis on replaceability is a special case of a more general principle of modular design, which is to drive modularity through the pattern of change [14]. You want to keep things that change at the same time in the same module. Parts of a system that change rarely should be in different services to those that are currently undergoing lots of churn. If you find yourself repeatedly changing two services together, that’s a sign that they should be merged.</p>
-<p>Putting components into services adds an opportunity for more granular release planning. With a monolith any changes require a full build and deployment of the entire application. With microservices, however, you only need to redeploy the service(s) you modified. This can simplify and speed up the release process. The downside is that you have to worry about changes to one service breaking its consumers. The traditional integration approach is to try to deal with this problem using versioning, but the preference in the microservice world is to only use versioning as a last resort. We can avoid a lot of versioning by designing services to be as tolerant as possible to changes in their suppliers.</p>
-<h1 id="Are-Microservices-the-Future"><a href="#Are-Microservices-the-Future" class="headerlink" title="Are Microservices the Future?"></a>Are Microservices the Future?</h1><p>Our main aim in writing this article is to explain the major ideas and principles of microservices. By taking the time to do this we clearly think that the microservices architectural style is an important idea - one worth serious consideration for enterprise applications. We have recently built several systems using the style and know of others who have used and favor this approach.</p>
-<p>Those we know about who are in some way pioneering the architectural style include Amazon, Netflix, The Guardian, the UK Government Digital Service, realestate.com.au, Forward and comparethemarket.com. The conference circuit in 2013 was full of examples of companies that are moving to something that would class as microservices - including Travis CI. In addition there are plenty of organizations that have long been doing what we would class as microservices, but without ever using the name. (Often this is labelled as SOA - although, as we’ve said, SOA comes in many contradictory forms. [15])</p>
-<p>Despite these positive experiences, however, we aren’t arguing that we are certain that microservices are the future direction for software architectures. While our experiences so far are positive compared to monolithic applications, we’re conscious of the fact that not enough time has passed for us to make a full judgement.</p>
-<blockquote>
-<p>pdf</p>
-</blockquote>
-<p>Often the true consequences of your architectural decisions are only evident several years after you made them. We have seen projects where a good team, with a strong desire for modularity, has built a monolithic architecture that has decayed over the years. Many people believe that such decay is less likely with microservices, since the service boundaries are explicit and hard to patch around. Yet until we see enough systems with enough age, we can’t truly assess how microservice architectures mature.</p>
-<p>There are certainly reasons why one might expect microservices to mature poorly. In any effort at componentization, success depends on how well the software fits into components. It’s hard to figure out exactly where the component boundaries should lie. Evolutionary design recognizes the difficulties of getting boundaries right and thus the importance of it being easy to refactor them. But when your components are services with remote communications, then refactoring is much harder than with in-process libraries. Moving code is difficult across service boundaries, any interface changes need to be coordinated between participants, layers of backwards compatibility need to be added, and testing is made more complicated.</p>
-<p>Another issue is If the components do not compose cleanly, then all you are doing is shifting complexity from inside a component to the connections between components. Not just does this just move complexity around, it moves it to a place that’s less explicit and harder to control. It’s easy to think things are better when you are looking at the inside of a small, simple component, while missing messy connections between services.</p>
-<p>Finally, there is the factor of team skill. New techniques tend to be adopted by more skillful teams. But a technique that is more effective for a more skillful team isn’t necessarily going to work for less skillful teams. We’ve seen plenty of cases of less skillful teams building messy monolithic architectures, but it takes time to see what happens when this kind of mess occurs with microservices. A poor team will always create a poor system - it’s very hard to tell if microservices reduce the mess in this case or make it worse.</p>
-<p>One reasonable argument we’ve heard is that you shouldn’t start with a microservices architecture. Instead begin with a monolith, keep it modular, and split it into microservices once the monolith becomes a problem. (Although this advice isn’t ideal, since a good in-process interface is usually not a good service interface.)</p>
-<p>So we write this with cautious optimism. So far, we’ve seen enough about the microservice style to feel that it can be a worthwhile road to tread. We can’t say for sure where we’ll end up, but one of the challenges of software development is that you can only make decisions based on the imperfect information that you currently have to hand.</p>
-<h1 id="Footnotes"><a href="#Footnotes" class="headerlink" title="Footnotes"></a>Footnotes</h1><p>1: The term “microservice” was discussed at a workshop of software architects near Venice in May, 2011 to describe what the participants saw as a common architectural style that many of them had been recently exploring. In May 2012, the same group decided on “microservices” as the most appropriate name. James presented some of these ideas as a case study in March 2012 at 33rd Degree in Krakow in Microservices - Java, the Unix Way as did Fred George about the same time. Adrian Cockcroft at Netflix, describing this approach as “fine grained SOA” was pioneering the style at web scale as were many of the others mentioned in this article - Joe Walnes, Dan North, Evan Botcher and Graham Tackley.</p>
-<p>2: The term monolith has been in use by the Unix community for some time. It appears in The Art of Unix Programming to describe systems that get too big.</p>
-<p>3: Many object-oriented designers, including ourselves, use the term service object in the Domain-Driven Design sense for an object that carries out a significant process that isn’t tied to an entity. This is a different concept to how we’re using “service” in this article. Sadly the term service has both meanings and we have to live with the polyseme.</p>
-<p>4: We consider an application to be a social construction that binds together a code base, group of functionality, and body of funding.</p>
-<p>5: The original paper can be found on Melvyn Conway’s website here</p>
-<p>6: We can’t resist mentioning Jim Webber’s statement that ESB stands for “Egregious Spaghetti Box”.</p>
-<p>7: Netflix makes the link explicit - until recently referring to their architectural style as fine-grained SOA.</p>
-<p>8: At extremes of scale, organisations often move to binary protocols - protobufs for example. Systems using these still exhibit the characteristic of smart endpoints, dumb pipes - and trade off transparency for scale. Most web properties and certainly the vast majority of enterprises don’t need to make this tradeoff - transparency can be a big win.</p>
-<p>9: “YAGNI” or “You Aren’t Going To Need It” is an XP principle and exhortation to not add features until you know you need them.</p>
-<p>10: It’s a little disengenuous of us to claim that monoliths are single language - in order to build systems on todays web, you probably need to know JavaScript and XHTML, CSS, your server side language of choice, SQL and an ORM dialect. Hardly single language, but you know what we mean.</p>
-<p>11: Adrian Cockcroft specifically mentions “developer self-service” and “Developers run what they wrote”(sic) in this excellent presentation delivered at Flowcon in November, 2013.</p>
-<p>12: We are being a little disengenuous here. Obviously deploying more services, in more complex topologies is more difficult than deploying a single monolith. Fortunately, patterns reduce this complexity - investment in tooling is still a must though.</p>
-<p>13: In fact, Dan North refers to this style as Replaceable Component Architecture rather than microservices. Since this seems to talk to a subset of the characteristics we prefer the latter.</p>
-<p>14: Kent Beck highlights this as one his design principles in Implementation Patterns.</p>
-<p>15: And SOA is hardly the root of this history. I remember people saying “we’ve been doing this for years” when the SOA term appeared at the beginning of the century. One argument was that this style sees its roots as the way COBOL programs communicated via data files in the earliest days of enterprise computing. In another direction, one could argue that microservices are the same thing as the Erlang programming model, but applied to an enterprise application context.</p>
-<p>References<br>While this is not an exhaustive list, there are a number of sources that practitioners have drawn inspiration from or which espouse a similar philosophy to that described in this article.</p>
-<p>Blogs and online articles</p>
-<p>Clemens Vasters’ blog on cloud at microsoft<br>David Morgantini’s introduction to the topic on his blog<br>12 factor apps from Heroku<br>UK Government Digital Service design principles<br>Jimmy Nilsson’s blogand article on infoq about Cloud Chunk Computing<br>Alistair Cockburn on Hexagonal architectures<br>Books</p>
-<p>Release it<br>Rest in practice<br>Web API Design (free ebook). Brian Mulloy, Apigee.<br>Enterprise Integration Patterns<br>Art of unix programming<br>Growing Object Oriented Software, Guided by Tests<br>The Modern Firm: Organizational Design for Performance and Growth<br>Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation<br>Domain-Driven Design: Tackling Complexity in the Heart of Software<br>Presentations</p>
-<p>Architecture without Architects. Erik Doernenburg.<br>Does my bus look big in this?. Jim Webber and Martin Fowler, QCon 2008<br>Guerilla SOA. Jim Webber, 2006<br>Patterns of Effective Delivery. Dan North, 2011.<br>Adrian Cockcroft’s slideshare channel.<br>Hydras and Hypermedia. Ian Robinson, JavaZone 2010<br>Justice will take a million intricate moves. Leonard Richardson, Qcon 2008.<br>Java, the UNIX way. James Lewis, JavaZone 2012<br>Micro services architecture. Fred George, YOW! 2012<br>Democratising attention data at guardian.co.uk. Graham Tackley, GOTO Aarhus 2013<br>Functional Reactive Programming with RxJava. Ben Christensen, GOTO Aarhus 2013 (registration required).<br>Breaking the Monolith. Stefan Tilkov, May 2012.<br>Papers</p>
-<p>L. Lamport, “The Implementation of Reliable Distributed Multiprocess Systems”, 1978 http:// research.microsoft.com/en-us/um/people/lamport/pubs/implementation.pdf<br>L. Lamport, R. Shostak, M. Pease, “The Byzantine Generals Problem”, 1982 (available at) http:// <a href="http://www.cs.cornell.edu/courses/cs614/2004sp/papers/lsp82.pdf" target="_blank" rel="noopener">www.cs.cornell.edu/courses/cs614/2004sp/papers/lsp82.pdf</a><br>R.T. Fielding, “Architectural Styles and the Design of Network-based Software Architectures”, 2000 <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm" target="_blank" rel="noopener">http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm</a><br>E. A. Brewer, “Towards Robust Distributed Systems”, 2000 <a href="http://www.cs.berkeley.edu/" target="_blank" rel="noopener">http://www.cs.berkeley.edu/</a> ~brewer/cs262b-2004/PODC-keynote.pdf<br>E. Brewer, “CAP Twelve Years Later: How the ‘Rules’ Have Changed”, 2012, http:// <a href="http://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed" target="_blank" rel="noopener">www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed</a></p>
-<p>Significant Revisions<br>25 March 2014: last installment on are microservices the future?</p>
-<p>24 March 2014: added section on evolutionary design</p>
-<p>19 March 2014: added sections on infrastructure automation and design for failure</p>
-<p>18 March 2014: added section on decentralized data</p>
-<p>17 March 2014: added section on decentralized governance</p>
-<p>14 March 2014: added section on smart endpoint and dumb pipes</p>
-<p>13 March 2014: added section on products not projects</p>
-<p>12 March 2014: added section on organizing around business capabilities</p>
-<p>10 March 2014: published first installment</p>
-<p>————微服务课程学习笔记</p>
-<p>喜欢请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>如有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
-<p><a href="http://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">原文[英]： http://martinfowler<em>.com</em>/articles/microservices.html</a><br><a href="http://martinfowler.cn/articles/microservices.html" target="_blank" rel="noopener">翻译前半部分参考： http://martinfowler<em>.cn</em>/articles/microservices.html</a></p>
 
           
         

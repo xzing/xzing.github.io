@@ -94,16 +94,16 @@
 <meta name="keywords" content="Spring,微服务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="(译)微服务——martinfowler">
-<meta property="og:url" content="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/index.html">
+<meta property="og:url" content="http://xzing.github.io/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/index.html">
 <meta property="og:site_name" content="AIX Zing">
 <meta property="og:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-16869bbea235b9db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-df630018c87b303a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-0e3d7b58eff73be4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/basic-pipeline.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-14a0965038d1b3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/micro-deployment.png">
-<meta property="og:updated_time" content="2019-03-19T03:01:28.818Z">
+<meta property="og:updated_time" content="2019-03-20T03:42:07.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(译)微服务——martinfowler">
 <meta name="twitter:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
@@ -135,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/">
+  <link rel="canonical" href="http://xzing.github.io/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/">
 
 
 
@@ -318,7 +318,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -347,8 +347,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T23:34:07+08:00">
-                2019-03-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-20T05:15:31+08:00">
+                2019-03-20
               </time>
             
 
@@ -367,8 +367,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
+                <a href="/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -376,7 +376,7 @@
 
           
           
-             <span id="/2019/03/06/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="(译)微服务——martinfowler">
+             <span id="/2019/03/20/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="(译)微服务——martinfowler">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -478,21 +478,21 @@
 <p>跨服务对数据进行操作会有数据不一致的问题，常见的处理办法是使用事务来保证数据的一致性，这种方法常出现在单体应用中。</p>
 <p>使用事务虽然可以解决数据一致性的问题，但是会明显增加时间耦合度。并会影响到多个相关的微服务。众所周知，分布式事务是非常难实现的。因此，微服务体系如何增强结构，尽量保证服务之间无事务处理。明确了解到一致性只是最终结果一致性的情况下，可以通过消息补偿来处理。</p>
 <p>使用这种方式处理数据不一致是开发团队们面临的新挑战，但他也往往和业务实践相匹配。通常，不管是业务中为了快速响应的需求，或回滚某些流程来处理错误，只要能修复企业的损失，这些都是值得权衡考虑的。</p>
-<h2 id="Infrastructure-Automation"><a href="#Infrastructure-Automation" class="headerlink" title="Infrastructure Automation"></a>Infrastructure Automation</h2><p>Infrastructure automation techniques have evolved enormously over the last few years - the evolution of the cloud and AWS in particular has reduced the operational complexity of building, deploying and operating microservices.</p>
-<p>Many of the products or systems being build with microservices are being built by teams with extensive experience of Continuous Delivery and it’s precursor, Continuous Integration. Teams building software this way make extensive use of infrastructure automation techniques. This is illustrated in the build pipeline shown below.</p>
-<p><img src="https://www.martinfowler.com/articles/microservices/images/basic-pipeline.png" alt=""></p>
-<p>Since this isn’t an article on Continuous Delivery we will call attention to just a couple of key features here. We want as much confidence as possible that our software is working, so we run lots of automated tests. Promotion of working software ‘up’ the pipeline means we automate deployment to each new environment.</p>
+<h2 id="软件构建自动化"><a href="#软件构建自动化" class="headerlink" title="软件构建自动化"></a>软件构建自动化</h2><p>软件构建自动化技术在过去几年发生了翻天覆地的变化。——尤其是云和AWS的演变降低了构建，部署，运营，操作微服务的复杂性</p>
+<p>许多使用微服务构建的软件产品的技术团队都有过持续交付或持续集成（持续交付的前身）的经验。拥有这种经验的团队都曾经广泛使用软件构建自动化的技术，下图对这种方式做了说明：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-14a0965038d1b3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>由于这篇文章不是关于持续交付的。我们这里只提几个比较关注的重点功能，为了提高我们软件运行的可靠性，我们做了很多自动化测试，软件升级流程化意味着部署可以自动化。</p>
 <blockquote>
-<p><strong>Make it easy to do the right thing</strong></p>
-<p>One side effect we have found of increased automation as a consequence of continuous delivery and deployment is the creation of useful tools to help developers and operations folk. Tooling for creating artefacts, managing codebases, standing up simple services or for adding standard monitoring and logging are pretty common now. The best example on the web is probably Netflix’s set of open source tools, but there are others including Dropwizard which we have used extensively.</p>
+<p><strong>让（运维部署）这件事情更容易做对</strong></p>
+<p>由于自动化程度提高，我们发现随之出现了很多好用的工具帮助开发和运维人员操作。用于创建组件，管理代码库，创建简单监控服务或日志服务的工具相当普遍了。Web中最好的例子可能就是Netflix的一组开源工具了，还有一些我我们经常使用的带<code>Dropwizard</code>的其他工具。</p>
 </blockquote>
-<p>A monolithic application will be built, tested and pushed through these environments quite happlily. It turns out that once you have invested in automating the path to production for a monolith, then deploying more applications doesn’t seem so scary any more. Remember, one of the aims of CD is to make deployment boring, so whether its one or three applications, as long as its still boring it doesn’t matter[12].</p>
-<p>Another area where we see teams using extensive infrastructure automation is when managing microservices in production. In contrast to our assertion above that as long as deployment is boring there isn’t that much difference between monoliths and microservices, the operational landscape for each can be strikingly different.</p>
+<p>单体程序会非常容易构建，测试，推送到各个环境。一旦你将整个流程投入自动化中，那部署大量应用就没那么难了。持续部署的目标之一是让部署变的简单枯燥，不管是部署1个还是3个，只要部署过程都是简单枯燥的就行[12]。</p>
+<p>另一个地方用到自动化构建的时候是生产环境构建微服务的时候，虽然上面说的不同的是只要自动部署是简单枯燥的操作，单体应用和微服务没多大差别，然而各个实际操作环境其实差别很大。</p>
 <p><img src="https://www.martinfowler.com/articles/microservices/images/micro-deployment.png" alt=""></p>
-<h2 id="Design-for-failure"><a href="#Design-for-failure" class="headerlink" title="Design for failure"></a>Design for failure</h2><p>A consequence of using services as components, is that applications need to be designed so that they can tolerate the failure of services. Any service call could fail due to unavailability of the supplier, the client has to respond to this as gracefully as possible. This is a disadvantage compared to a monolithic design as it introduces additional complexity to handle it. The consequence is that microservice teams constantly reflect on how service failures affect the user experience. Netflix’s Simian Army induces failures of services and even datacenters during the working day to test both the application’s resilience and monitoring.</p>
+<h2 id="为容错而设计"><a href="#为容错而设计" class="headerlink" title="为容错而设计"></a>为容错而设计</h2><p>使用服务当组件有一个后果，每个应用都需要设计成可以对内部Service容错。因为可能有运营商导致服务不可用等原因，跨服务通讯都可能出现失败，客户端需要尽可能优雅的应对这种失败。它带来额外的复杂处理逻辑，这一点比不上单体应用。使用微服务的团队不断思考：服务失效时如何（减少）影响用户体验。Netflix的<code>Simian Army</code>在工作日的时候，引导服务故障甚至数据库故障来测试应用的弹性和监控效果。</p>
 <blockquote>
-<p><strong>The circuit breaker and production ready code</strong></p>
-<p>Circuit Breaker appears in Release It! alongside other patterns such as Bulkhead and Timeout. Implemented together, these patterns are crucially important when building communicating applications. This Netflix blog entry does a great job of explaining their application of them.</p>
+<p><strong>熔断器和预备上线代码（production ready code）</strong></p>
+<p>熔断器最早出现在《Release It！》中，还有与其结合在一起，用来构建高可用的通信应用的模式。如（隔离器）Bulkhead和（超时计时器）TimeOut。Netflix用了一个博客专门来做解释他们做出来的相关应用。</p>
 </blockquote>
 <p>This kind of automated testing in production would be enough to give most operation groups the kind of shivers usually preceding a week off work. This isn’t to say that monolithic architectural styles aren’t capable of sophisticated monitoring setups - it’s just less common in our experience.</p>
 <p>Since services can fail at any time, it’s important to be able to detect the failures quickly and, if possible, automatically restore service. Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received). Semantic monitoring can provide an early warning system of something going wrong that triggers development teams to follow up and investigate.</p>
@@ -597,8 +597,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/06/SpringBoot/03-spring-boot-and-spring-clould/" rel="next" title="03- SpringBoot and Spring Clould">
-                <i class="fa fa-chevron-left"></i> 03- SpringBoot and Spring Clould
+              <a href="/2019/03/13/JavaLan/01-learning-thread-note/" rel="next" title="从0开始学Java并发（一）">
+                <i class="fa fa-chevron-left"></i> 从0开始学Java并发（一）
               </a>
             
           </div>
@@ -606,10 +606,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/06/SpringBoot/04-spring-boot-and-spring-clould/" rel="prev" title="04- SpringBoot and Spring Clould">
-                04- SpringBoot and Spring Clould <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -729,7 +725,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Microservice"><span class="nav-number">1.</span> <span class="nav-text">Microservice</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#新的架构名词"><span class="nav-number">1.1.</span> <span class="nav-text">新的架构名词</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微服务架构的特征"><span class="nav-number">2.</span> <span class="nav-text">微服务架构的特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过服务实现组件化"><span class="nav-number">2.1.</span> <span class="nav-text">通过服务实现组件化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#围绕业务的组合"><span class="nav-number">2.2.</span> <span class="nav-text">围绕业务的组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#做产品不是搞项目"><span class="nav-number">2.3.</span> <span class="nav-text">做产品不是搞项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强化终端弱化通讯通道"><span class="nav-number">2.4.</span> <span class="nav-text">强化终端弱化通讯通道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去中心化治理"><span class="nav-number">2.5.</span> <span class="nav-text">去中心化治理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去中心化数据管理"><span class="nav-number">2.6.</span> <span class="nav-text">去中心化数据管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Infrastructure-Automation"><span class="nav-number">2.7.</span> <span class="nav-text">Infrastructure Automation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-for-failure"><span class="nav-number">2.8.</span> <span class="nav-text">Design for failure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evolutionary-Design"><span class="nav-number">2.9.</span> <span class="nav-text">Evolutionary Design</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Are-Microservices-the-Future"><span class="nav-number">3.</span> <span class="nav-text">Are Microservices the Future?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Footnotes"><span class="nav-number">4.</span> <span class="nav-text">Footnotes</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Microservice"><span class="nav-number">1.</span> <span class="nav-text">Microservice</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#新的架构名词"><span class="nav-number">1.1.</span> <span class="nav-text">新的架构名词</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微服务架构的特征"><span class="nav-number">2.</span> <span class="nav-text">微服务架构的特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过服务实现组件化"><span class="nav-number">2.1.</span> <span class="nav-text">通过服务实现组件化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#围绕业务的组合"><span class="nav-number">2.2.</span> <span class="nav-text">围绕业务的组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#做产品不是搞项目"><span class="nav-number">2.3.</span> <span class="nav-text">做产品不是搞项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强化终端弱化通讯通道"><span class="nav-number">2.4.</span> <span class="nav-text">强化终端弱化通讯通道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去中心化治理"><span class="nav-number">2.5.</span> <span class="nav-text">去中心化治理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去中心化数据管理"><span class="nav-number">2.6.</span> <span class="nav-text">去中心化数据管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件构建自动化"><span class="nav-number">2.7.</span> <span class="nav-text">软件构建自动化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为容错而设计"><span class="nav-number">2.8.</span> <span class="nav-text">为容错而设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evolutionary-Design"><span class="nav-number">2.9.</span> <span class="nav-text">Evolutionary Design</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Are-Microservices-the-Future"><span class="nav-number">3.</span> <span class="nav-text">Are Microservices the Future?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Footnotes"><span class="nav-number">4.</span> <span class="nav-text">Footnotes</span></a></li></ol></div>
             
 
           </div>
