@@ -103,7 +103,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-0e3d7b58eff73be4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-14a0965038d1b3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://www.martinfowler.com/articles/microservices/images/micro-deployment.png">
-<meta property="og:updated_time" content="2019-03-25T03:28:50.546Z">
+<meta property="og:updated_time" content="2019-03-25T03:31:40.689Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(译)微服务——martinfowler">
 <meta name="twitter:description" content="Microservice 将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。  新的架构名词【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但">
@@ -495,7 +495,7 @@
 <p>熔断器最早出现在《Release It！》中，还有与其结合在一起，用来构建高可用的通信应用的模式。如（隔离器）Bulkhead和（超时计时器）TimeOut。Netflix用了一个博客专门来做解释他们做出来的相关应用。</p>
 </blockquote>
 <p>生产环境下做这种测试足以让大多数运营团队不寒而栗，尤其是在休假之前的一周做这种测试。倒不是说单体架构应用不能监控得住这种测试，只是我们对这样的操作缺乏经验。</p>
-<p>由于服务可能随时宕机，及时处理这些问题并重启服务变得越来越重要。微服务应用内置了一大堆监控来实时监测应用。检查服务中的组件运行状态（如数据库请求数）和业务相关指标（如每分钟收到多少订单）</p>
+<p>由于服务可能随时宕机，及时处理这些问题并重启服务变得越来越重要。微服务应用内置了一大堆监控来实时监测应用。检查服务中的组件运行状态（如数据库请求数）和业务相关指标（如每分钟收到多少订单）。实时监控可以提供一个预警系统，方便及时追踪和调查。</p>
 <p>Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received). Semantic monitoring can provide an early warning system of something going wrong that triggers development teams to follow up and investigate.</p>
 <p>This is particularly important to a microservices architecture because the microservice preference towards choreography and event collaboration leads to emergent behavior. While many pundits praise the value of serendipitous emergence, the truth is that emergent behavior can sometimes be a bad thing. Monitoring is vital to spot bad emergent behavior quickly so it can be fixed.</p>
 <blockquote>
