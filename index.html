@@ -492,8 +492,9 @@
 <p><strong>熔断器和预备上线代码（production ready code）</strong></p>
 <p>熔断器最早出现在《Release It！》中，还有与其结合在一起，用来构建高可用的通信应用的模式。如（隔离器）Bulkhead和（超时计时器）TimeOut。Netflix用了一个博客专门来做解释他们做出来的相关应用。</p>
 </blockquote>
-<p>This kind of automated testing in production would be enough to give most operation groups the kind of shivers usually preceding a week off work. This isn’t to say that monolithic architectural styles aren’t capable of sophisticated monitoring setups - it’s just less common in our experience.</p>
-<p>Since services can fail at any time, it’s important to be able to detect the failures quickly and, if possible, automatically restore service. Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received). Semantic monitoring can provide an early warning system of something going wrong that triggers development teams to follow up and investigate.</p>
+<p>生产环境下做这种测试足以让大多数运营团队不寒而栗，尤其是在休假之前的一周做这种测试。倒不是说单体架构应用不能监控得住这种测试，只是我们对这样的操作缺乏经验。</p>
+<p>由于服务可能随时宕机，及时处理这些问题并重启服务变得越来越重要。微服务应用内置了一大堆监控来实时监测应用。检查服务中的组件运行状态（如数据库请求数）和业务相关指标（如每分钟收到多少订单）</p>
+<p>Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received). Semantic monitoring can provide an early warning system of something going wrong that triggers development teams to follow up and investigate.</p>
 <p>This is particularly important to a microservices architecture because the microservice preference towards choreography and event collaboration leads to emergent behavior. While many pundits praise the value of serendipitous emergence, the truth is that emergent behavior can sometimes be a bad thing. Monitoring is vital to spot bad emergent behavior quickly so it can be fixed.</p>
 <blockquote>
 <p><strong>Synchronous calls considered harmful</strong></p>
