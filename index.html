@@ -493,12 +493,11 @@
 <p>熔断器最早出现在《Release It！》中，还有与其结合在一起，用来构建高可用的通信应用的模式。如（隔离器）Bulkhead和（超时计时器）TimeOut。Netflix用了一个博客专门来做解释他们做出来的相关应用。</p>
 </blockquote>
 <p>生产环境下做这种测试足以让大多数运营团队不寒而栗，尤其是在休假之前的一周做这种测试。倒不是说单体架构应用不能监控得住这种测试，只是我们对这样的操作缺乏经验。</p>
-<p>由于服务可能随时宕机，及时处理这些问题并重启服务变得越来越重要。微服务应用内置了一大堆监控来实时监测应用。检查服务中的组件运行状态（如数据库请求数）和业务相关指标（如每分钟收到多少订单）。实时监控可以提供一个预警系统，方便及时追踪和调查。</p>
-<p>Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received). Semantic monitoring can provide an early warning system of something going wrong that triggers development teams to follow up and investigate.</p>
-<p>This is particularly important to a microservices architecture because the microservice preference towards choreography and event collaboration leads to emergent behavior. While many pundits praise the value of serendipitous emergence, the truth is that emergent behavior can sometimes be a bad thing. Monitoring is vital to spot bad emergent behavior quickly so it can be fixed.</p>
+<p>由于服务随时可能宕机，及时处理这些问题并重启服务变得越来越重要。微服务应用内置了一大堆监控来实时监测应用。检查服务中的组件运行状态（如数据库请求数）和业务相关指标（如每分钟收到多少订单）。实时监控可以提供一个预警系统，方便及时追踪和调查。</p>
+<p>因为微服务对编排和事件协作的偏好会导致紧急行为,所以监控对微服务体架构格外重要。虽然很多专家认为偶发的事件有观察的价值，但是这种突发事件可能导致严重的后果。实时监控对及时发现这种紧急冲突事件，快速修复至关重要。</p>
 <blockquote>
-<p><strong>Synchronous calls considered harmful</strong></p>
-<p>Any time you have a number of synchronous calls between services you will encounter the multiplicative effect of downtime. Simply, this is when the downtime of your system becomes the product of the downtimes of the individual components. You face a choice, making your calls asynchronous or managing the downtime. At <a href="http://www.guardian.co.uk" target="_blank" rel="noopener">www.guardian.co.uk</a> they have implemented a simple rule on the new platform - one synchronous call per user request while at Netflix, their platform API redesign has built asynchronicity into the API fabric.</p>
+<p><strong>有害的同步调用</strong></p>
+<p>当服务器之间有多个同步调用的时候，就服务就会停机等待，且这个有倍增效应。简单来说，系统停滞时间约等于各个组件停机时间的乘积。你得在异步调用和管理停滞中选一个。<a href="http://www.guardian.co.uk" target="_blank" rel="noopener">www.guardian.co.uk</a> 上实现的是每个用户每次只能同步调用一个接口。而Netflix平台重新设计接口，已经将异步性构建到 API 结构中。</p>
 </blockquote>
 <p>Monoliths can be built to be as transparent as a microservice - in fact, they should be. The difference is that you absolutely need to know when services running in different processes are disconnected. With libraries within the same process this kind of transparency is less likely to be useful.</p>
 <p>Microservice teams would expect to see sophisticated monitoring and logging setups for each individual service such as dashboards showing up/down status and a variety of operational and business relevant metrics. Details on circuit breaker status, current throughput and latency are other examples we often encounter in the wild.</p>
