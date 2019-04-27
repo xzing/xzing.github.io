@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="SpringBoot配置分析SpringBoot 有3种Config方式  properties文件配置 yml文件配置 Java代码配置   喜欢请点个赞转载请注明出处：https://www.jianshu.com/u/4915ed24d1e3 如有错误，请务必不吝指正。谢谢 我的博客：https://xzing.github.io/">
+<meta name="description" content="SpringBoot配置分析SpringBoot 有3种Config方式 properties文件配置yml文件配置代码注解配置，注解配置暂且不表，后续再说 properties文件配置配置形式如下 1234environments.dev.url=https://dev.example.comenvironments.dev.name=Developer Setupenvironments.pr">
 <meta name="keywords" content="Spring,微服务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot配置分析">
 <meta property="og:url" content="http://xzing.github.io/2019/04/22/SpringBoot/09-spring-boot-and-spring-clould/index.html">
 <meta property="og:site_name" content="AIX Zing">
-<meta property="og:description" content="SpringBoot配置分析SpringBoot 有3种Config方式  properties文件配置 yml文件配置 Java代码配置   喜欢请点个赞转载请注明出处：https://www.jianshu.com/u/4915ed24d1e3 如有错误，请务必不吝指正。谢谢 我的博客：https://xzing.github.io/">
+<meta property="og:description" content="SpringBoot配置分析SpringBoot 有3种Config方式 properties文件配置yml文件配置代码注解配置，注解配置暂且不表，后续再说 properties文件配置配置形式如下 1234environments.dev.url=https://dev.example.comenvironments.dev.name=Developer Setupenvironments.pr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-24T15:58:46.787Z">
+<meta property="og:updated_time" content="2019-04-27T15:58:50.064Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot配置分析">
-<meta name="twitter:description" content="SpringBoot配置分析SpringBoot 有3种Config方式  properties文件配置 yml文件配置 Java代码配置   喜欢请点个赞转载请注明出处：https://www.jianshu.com/u/4915ed24d1e3 如有错误，请务必不吝指正。谢谢 我的博客：https://xzing.github.io/">
+<meta name="twitter:description" content="SpringBoot配置分析SpringBoot 有3种Config方式 properties文件配置yml文件配置代码注解配置，注解配置暂且不表，后续再说 properties文件配置配置形式如下 1234environments.dev.url=https://dev.example.comenvironments.dev.name=Developer Setupenvironments.pr">
 
 
 
@@ -399,11 +399,11 @@
 
       
         <h1 id="SpringBoot配置分析"><a href="#SpringBoot配置分析" class="headerlink" title="SpringBoot配置分析"></a>SpringBoot配置分析</h1><p>SpringBoot 有3种Config方式</p>
-<ol>
-<li>properties文件配置</li>
-<li>yml文件配置</li>
-<li>Java代码配置</li>
-</ol>
+<p>properties文件配置<br>yml文件配置<br>代码注解配置，注解配置暂且不表，后续再说</p>
+<h2 id="properties文件配置"><a href="#properties文件配置" class="headerlink" title="properties文件配置"></a>properties文件配置</h2><p>配置形式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">environments.dev.url=https://dev.example.com</span><br><span class="line">environments.dev.name=Developer Setup</span><br><span class="line">environments.prod.url=https://another.example.com</span><br><span class="line">environments.prod.name=My Cool App</span><br></pre></td></tr></table></figure>
+<h2 id="yml文件配置"><a href="#yml文件配置" class="headerlink" title="yml文件配置"></a>yml文件配置</h2><p>配置形式</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">environments:</span></span><br><span class="line"><span class="attr">  dev:</span></span><br><span class="line"><span class="attr">    url:</span> <span class="attr">https://dev.example.com</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">Developer</span> <span class="string">Setup</span></span><br><span class="line"><span class="attr">  prod:</span></span><br><span class="line"><span class="attr">    url:</span> <span class="attr">https://another.example.com</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">My</span> <span class="string">Cool</span> <span class="string">App</span></span><br></pre></td></tr></table></figure>
 <hr>
 <p>喜欢请点个赞<br><br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a> <br><br>如有错误，请务必不吝指正。谢谢 <br><br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a> <br></p>
 
@@ -582,7 +582,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot配置分析"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot配置分析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot配置分析"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot配置分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#properties文件配置"><span class="nav-number">1.1.</span> <span class="nav-text">properties文件配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yml文件配置"><span class="nav-number">1.2.</span> <span class="nav-text">yml文件配置</span></a></li></ol></li></ol></div>
             
 
           </div>
