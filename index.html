@@ -312,7 +312,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/05/16/GoLang/02-go-basic-constant-usage/">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/05/16/GoLang/02-go-array-and-pointer/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -331,7 +331,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/16/GoLang/02-go-basic-constant-usage/" itemprop="url">02-Go的数组和指针</a></h1>
+                <a class="post-title-link" href="/2019/05/16/GoLang/02-go-array-and-pointer/" itemprop="url">02-Go的数组和指针</a></h1>
         
 
         <div class="post-meta">
@@ -363,8 +363,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2019/05/16/GoLang/02-go-basic-constant-usage/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2019/05/16/GoLang/02-go-basic-constant-usage/" class="cy_cmt_count" data-xid="2019/05/16/GoLang/02-go-basic-constant-usage/" itemprop="commentsCount"></span>
+                <a href="/2019/05/16/GoLang/02-go-array-and-pointer/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2019/05/16/GoLang/02-go-array-and-pointer/" class="cy_cmt_count" data-xid="2019/05/16/GoLang/02-go-array-and-pointer/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -372,7 +372,7 @@
 
           
           
-             <span id="/2019/05/16/GoLang/02-go-basic-constant-usage/" class="leancloud_visitors" data-flag-title="02-Go的数组和指针">
+             <span id="/2019/05/16/GoLang/02-go-array-and-pointer/" class="leancloud_visitors" data-flag-title="02-Go的数组和指针">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -409,7 +409,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/05/16/GoLang/02-go-basic-constant-usage/#more" rel="contents">
+            <a class="btn" href="/2019/05/16/GoLang/02-go-array-and-pointer/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -544,42 +544,18 @@
 
       
         
-          
-            <p><img src="https://upload-images.jianshu.io/upload_images/1112615-7cd40ee4f855dde2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+          <p><img src="https://upload-images.jianshu.io/upload_images/1112615-7cd40ee4f855dde2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><ol>
 <li>布尔和字符串<br>bool  true 和 false<br>string 字符串””</li>
-<li><p>整数<br>int 随操作系统<br>int8<br>int16<br>int32<br>int64<br>uint<br>uint8<br>uint16<br>uint32<br>uint64<br>uintptr 指针</p>
-</li>
-<li><p>字节与字符<br>byte<br>rune 根据不同编码，其占用字节数不一样</p>
-</li>
-<li><p>浮点数<br>float32<br>float64<br>complex64 复数（实部虚部）<br>complex128 复数（实部虚部 ）</p>
-</li>
+<li>整数<br>int 随操作系统<br>int8<br>int16<br>int32<br>int64<br>uint<br>uint8<br>uint16<br>uint32<br>uint64<br>uintptr 指针</li>
 </ol>
-<h2 id="定义类型"><a href="#定义类型" class="headerlink" title="定义类型"></a>定义类型</h2><h3 id="使用var-关键字"><a href="#使用var-关键字" class="headerlink" title="使用var 关键字"></a>使用var 关键字</h3><ol>
-<li><p>分开定义</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a  <span class="keyword">int</span></span><br><span class="line"><span class="keyword">var</span> s <span class="keyword">string</span></span><br><span class="line">fmt.Printf(<span class="string">"%d %q\n"</span>, a, s)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>逗号定义同种类型</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a, b  <span class="keyword">int</span> = <span class="number">3</span>, <span class="number">4</span></span><br><span class="line"><span class="keyword">var</span> s <span class="keyword">string</span> = <span class="string">"abc"</span></span><br><span class="line">fmt.Println(<span class="string">"%d %q\n"</span>, a, b, s)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>自动类型</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 需要一一对应变量</span></span><br><span class="line"><span class="keyword">var</span> a, b, c, s = <span class="number">3</span>, <span class="number">4</span>, <span class="literal">true</span>, <span class="string">"asome"</span></span><br><span class="line">fmt.Println( a, b, c, s)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用括号</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	a = <span class="number">1</span></span><br><span class="line">	b = <span class="number">2</span></span><br><span class="line">)</span><br><span class="line">fmt.Println(<span class="string">"%d %q"</span>, a, b)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="使用-符号"><a href="#使用-符号" class="headerlink" title="使用:=符号"></a>使用<code>:=</code>符号</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 仅限函数内定义，仅限第一次定义</span></span><br><span class="line">a, b, c, s := <span class="number">3</span>, <span class="number">4</span>, <span class="literal">true</span>, <span class="string">"alsome"</span></span><br><span class="line">fmt.Println( a, b, c, s)</span><br></pre></td></tr></table></figure>
-<h3 id="在函数外定义变量"><a href="#在函数外定义变量" class="headerlink" title="在函数外定义变量"></a>在函数外定义变量</h3><ol>
-<li><p>var 关键字</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a, b, c, s = <span class="number">3</span>, <span class="number">4</span>, <span class="literal">true</span>, <span class="string">"asome"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">aFunction</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用括号</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	a = <span class="number">1</span></span><br><span class="line">	b = <span class="literal">true</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">aFunction</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/06/GoLang/01-go-basic-variable-style/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
