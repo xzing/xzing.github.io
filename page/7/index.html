@@ -312,6 +312,197 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/12/10/JavaLan/Java-Proxy-mode/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/10/JavaLan/Java-Proxy-mode/" itemprop="url">Java里的动态代理模式与代理加强</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-10T22:28:32+08:00">
+                2016-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2016/12/10/JavaLan/Java-Proxy-mode/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2016/12/10/JavaLan/Java-Proxy-mode/" class="cy_cmt_count" data-xid="2016/12/10/JavaLan/Java-Proxy-mode/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2016/12/10/JavaLan/Java-Proxy-mode/" class="leancloud_visitors" data-flag-title="Java里的动态代理模式与代理加强">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="http://upload-images.jianshu.io/upload_images/1112615-f59cb26d91d9c8b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>代理模式是设计模式中的一种，是比较常用的。这种模式在面向切面编程中发挥了很大的作用。<br>直接说代理模式比较抽象，我们先从使用场景开始入手。</p>
+<h3 id="那么，举个栗子来说一下代理模式"><a href="#那么，举个栗子来说一下代理模式" class="headerlink" title="那么，举个栗子来说一下代理模式"></a>那么，举个栗子来说一下代理模式</h3><p>比如，烧开水泡茶这个活动，这件事情前面需要洗茶壶，后面需要把茶杯洗好收起来。我们将烧开水这件事抽象起来与其他的事情剥离，来降低耦合。前后的事情交给代理增强来做。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-d62dbb07b41d8f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="就像这样"></p>
+<h3 id="JDK-里面的动态代理"><a href="#JDK-里面的动态代理" class="headerlink" title="JDK 里面的动态代理"></a>JDK 里面的动态代理</h3><p>JDK是自带动态代理的，我们今天就介绍一下JDK中自带的动态代理的使用。 </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-c3cc7c540bc86019.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="java中的动态代理模式模型图"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-f88241fdfb09d45a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="简单翻译"></p>
+<p>通过代码，我们来看看具体的。</p>
+<p>首先，我们创建一个人类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.proxy_demo;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by zing on 2016/12/1.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String name = <span class="string">"Zing"</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再创建一个工作接口，并实现这个接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.proxy_demo;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by zing on 2016/12/1.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">iWorkingSomething</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">work</span><span class="params">(Person who)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.zing.proxy_demo;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by zing on 2016/12/1.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GuDuWork</span> <span class="keyword">implements</span> <span class="title">iWorkingSomething</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">(Person someOne)</span> </span>&#123;</span><br><span class="line">        System.out.println(someOne.name + <span class="string">"正在咕嘟咕嘟烧开水……\n一年之后终于烧好了\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有人要问为什么不直接写Work，要加层接口，这是要问Java里的动态代理是面向接口的，必须这么玩。</p>
+<p>从代码里能看出来，Zing要放到work方法中，来烧开水。<br>我们还需要：</p>
+<ul>
+<li>在烧水泡茶之前洗洗水壶，准备柴火。</li>
+<li>在喝完茶之后，把茶杯洗好收起来</li>
+</ul>
+<p>这俩动作，我们放在织入Handler中，让织入Handler，帮我们把这两个方法织入到work方法里。</p>
+<p>我们创建一个织入组件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.proxy_demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by zing on 2016/12/1.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WavingInvocationHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//需要代理的目标对象</span></span><br><span class="line">    <span class="keyword">private</span> Object target;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将目标对象存入，一定得是具体的对象，而不是class</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> target</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WavingInvocationHandler</span><span class="params">(Object target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.target = target;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="comment">//前置增强 </span></span><br><span class="line">        System.out.println(<span class="string">"洗水壶，准备茶叶，茶点\n"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//生成织入类，作为代理</span></span><br><span class="line">        Object obj = method.invoke(target,args);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//后置增强</span></span><br><span class="line">        System.out.println(<span class="string">"喝完，洗茶杯，收拾……\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//将包含织入方法的代理对象返回  </span></span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个组件用来织入并生成新对象，那如何使用呢，我们可以用一个JUnit来验证一下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testProxy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//需要代理的目标对象</span></span><br><span class="line">    GuDuWork guDuGudu = <span class="keyword">new</span> GuDuWork();</span><br><span class="line">    <span class="comment">//将原来目标放进织入组件中</span></span><br><span class="line">    WavingInvocationHandler handler = <span class="keyword">new</span> WavingInvocationHandler(guDuGudu);</span><br><span class="line">    <span class="comment">//生成织入增强的代理对象</span></span><br><span class="line">    iWorkingSomething somethingWork = (iWorkingSomething) Proxy.newProxyInstance(</span><br><span class="line">            guDuGudu.getClass().getClassLoader(),</span><br><span class="line">            guDuGudu.getClass().getInterfaces(),</span><br><span class="line">            handler</span><br><span class="line">    );</span><br><span class="line">    <span class="comment">//代理对象增强版测试</span></span><br><span class="line">    somethingWork.work(<span class="keyword">new</span> Person());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们看到了整个流程涉及到了4个方面</p>
+<blockquote>
+<ul>
+<li>目标对象 <code>GuDuWork</code></li>
+<li>织入类  <code>WavingInvocationHandler</code></li>
+<li>代理对象 <code>Proxy.newProxyInstance()方法生成的对象</code></li>
+<li>接口 <code>iWorkingSomething</code><br>整个流程就是<code>iWorkingSomething</code>的子类在执行<code>work(Person who)</code>方法的时候，会在执行前完成一些任务，执行之后，也会完成一些任务。而这些任务不会让<code>iWorkingSomething</code>的实现类去操心。<br>这就是完整的代理模式使用的简单演示。</li>
+</ul>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-16550a1cd0e932e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="演示结果"></p>
+<h1 id="在业务中，代理模式的应用"><a href="#在业务中，代理模式的应用" class="headerlink" title="在业务中，代理模式的应用"></a>在业务中，代理模式的应用</h1><p>很多人会觉得，要是在work方法里面直接加前置方法，和后置方法不是更简单吗？<br>在这个demo里确实会省略很多代码。</p>
+<blockquote>
+</blockquote>
+<p>不过：</p>
+<ul>
+<li>当你在写完一个完整的业务模块，需要测试并打印日志。你会发现你的业务模块了充满了日志代码，而这些代码跟主业务逻辑没有半毛钱关系。还会影响代码阅读。</li>
+<li>还有当一些一部消息需要传递到其他模块的时候，你不会希望发送消息的代码（一堆判断，验证，分析逻辑）出现在你主业务模块里面，而是自动触发。</li>
+</ul>
+<p>以上两个场景只是简单的描述了一下，你会发现面向切面编程就是为了解决这些跟主业务垂直逻辑无关，但是却很重要的业务。</p>
+<p>可是我们能不能更简单的实现代理模式呢？<br>答案是：可以，用CGLib。那么我来简单介绍一下CGLib的代理模式。</p>
+<h1 id="用CGLib实现代理模式"><a href="#用CGLib实现代理模式" class="headerlink" title="用CGLib实现代理模式"></a>用CGLib实现代理模式</h1><p>CGLib是利用字节码技术来创建代理子类的，可以再字节码层直接拦截父类方法，并且可以织入增强方法。只需要</p>
+<blockquote>
+<ul>
+<li>目标对象</li>
+<li>织入类</li>
+<li>代理类</li>
+</ul>
+</blockquote>
+<p>这3个即可，话不多说，亮代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//目标对象依旧是 GuDuWork.class</span></span><br></pre></td></tr></table></figure></p>
+<p>织入类CGLibProxy<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zing.proxy_demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.Enhancer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.MethodInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.MethodProxy;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by zing on 2016/12/10.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CGLibProxy</span> <span class="keyword">implements</span> <span class="title">MethodInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Enhancer enhancer = <span class="keyword">new</span> Enhancer();</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建代理对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> proxiedClass</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">madeAnProxiedObject</span><span class="params">(Class proxiedClass)</span> </span>&#123;</span><br><span class="line">        enhancer.setSuperclass(proxiedClass);</span><br><span class="line">        enhancer.setCallback(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">return</span> enhancer.create();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对代理类的方法进行增强！</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> o</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> method</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> params</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> methodProxy</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Throwable</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object o, Method method, Object[] params, MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="comment">//前置增强</span></span><br><span class="line">        System.out.println(<span class="string">"Zing 要请大家喝茶，快去通知小伙伴\n"</span>);</span><br><span class="line">        <span class="comment">//执行方法</span></span><br><span class="line">        Object result = methodProxy.invokeSuper(o, params);</span><br><span class="line">        <span class="comment">//后置增强</span></span><br><span class="line">        System.out.println(<span class="string">"终于喝完了，大家都走了，留下Zing一个人默默的刷杯子\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代理对象（使用）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCGLibProxy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    CGLibProxy cgLibProxy = <span class="keyword">new</span> CGLibProxy();</span><br><span class="line">    GuDuWork workingSomething = (GuDuWork) cgLibProxy.madeAnProxiedObject(GuDuWork.class); </span><br><span class="line">   workingSomething.work(<span class="keyword">new</span> Person());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-a149d1f9f097570a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="执行结果"></p>
+<p>以上就是CGLib实现代理模式的代码。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>代理模式是重要的设计模式之一，有了代理模式，后面，也就有了著名的面向切面编程，<em>Aspect Oriented Programming(AOP)</em>。是Spring AOP的基石。希望大家看完有所收获</p>
+<p>感兴趣的可以再了解一下CGLib，因为深入到字节码，CGLib能干的事情非常多，是一个非常强的Java库。</p>
+<p><a href="https://micorochio.github.io" target="_blank" rel="noopener">我的博客   Zing ，欢迎点击，来踩</a></p>
+<hr>
+<p>love &amp; peace<br><a href="https://micorochio.github.io/fs-plan/" target="_blank" rel="noopener">FS全栈计划目录：https://micorochio.github.io/fs-plan/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2016/12/08/diary/2016-12-0723-25-54/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1739,7 +1930,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
