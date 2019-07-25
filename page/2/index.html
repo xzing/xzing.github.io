@@ -312,6 +312,151 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/04/04/SpringBoot/05-spring-boot-and-spring-clould/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/04/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="url">(译)微服务——martinfowler</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-04T18:50:44+08:00">
+                2019-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2019/04/04/SpringBoot/05-spring-boot-and-spring-clould/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://xzing.github.io/2019/04/04/SpringBoot/05-spring-boot-and-spring-clould/" class="cy_cmt_count" data-xid="2019/04/04/SpringBoot/05-spring-boot-and-spring-clould/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2019/04/04/SpringBoot/05-spring-boot-and-spring-clould/" class="leancloud_visitors" data-flag-title="(译)微服务——martinfowler">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Microservice"><a href="#Microservice" class="headerlink" title="Microservice"></a>Microservice</h1><blockquote>
+<p>将软件设计成一系列独立部署的服务的架构方式叫做【微服务】，这个词在过去的几年中越来越火爆。尽管目前尚没有对这种架构风格的明确定义，但是围绕组织结构、业务能力、自动化部署、终端结点的智能化程度，编程语言和数据的去中心化控制这几个方面，这种架构风格有着某些共同的特征。</p>
+</blockquote>
+<h2 id="新的架构名词"><a href="#新的架构名词" class="headerlink" title="新的架构名词"></a>新的架构名词</h2><p>【微服务】——在软件架构拥挤的街道出现的又一个新词。尽管我们习惯性地投以这类事物轻蔑的一瞥，但是这个小小的词却描述了一种被发现越来越具有吸引力的软件架构风格。在过去的几年中，我们已经看到许多个项目使用了这种风格，目前为止这些项目的结果都是积极的，以至于对我的许多同事而言这已成为构建企业应用的默认风格。然而，令人沮丧的是，没有大量的信息明确指出微服务是什么以及我们如何实现它。</p>
+<p>简而言之，微服务架构风格是以一组小服务来开发单个应用程序的方法，每一个服务运行在自己独立的进程中并且使用轻量级的方法通信，通常是一个HTTP API接口。这些服务围绕相关业务范围构建并且由全自动化部署机器独立部署。这些服务只需要最低限度的管理，可以用不同的编程语言去编写并且使用不同的数据存储技术。</p>
+<p>若要解释清楚微服务风格，将它与单体风格（一个单个应用程序作为一个独立单元构建）对比将会很有帮助。企业应用程序通常由三个主要部分组成：一个客户端用户界面（由运行在用户机器上的浏览器中的HTML页面和javscript代码组合成），一个数据库（由多个插入到一种常见的，通常是关系型数据库管理系统中的数据表组合成），以及一个服务端应用程序。这个服务端应用程序将会处理HTTP请求，执行领域逻辑，从数据库获取和更新数据，并且选择和填充发送给浏览器的HTML视图。这个服务器端的应用程序就是单体——一个单一的可执行的逻辑。任何对这个系统的改动都需要重新构建和部署一个服务器端应用程序的新版本。</p>
+<p>很自然地，这样的单体服务器是构建这样一个系统的一种方式。处理一条请求的所有逻辑都在一个单一的进程中运行，这允许你使用编程语言的基本功能将应用程序拆分成类、函数和命名空间。更谨慎的做法是，你可以在一个开发者的笔记本上运行和测试这个应用程序，并且使用一个部署管道来确保改动都被正确的测试并且部署到了生产环境中。你可以通过在一个负载均衡器后运行多个实例的方式来横向缩放这个单体应用。</p>
+<p>单体应用可以被成功运用，但是渐渐地人们对单体应用感到不满——尤其是当越来越多的应用程序被部署到云端。任何改动都会牵一发动全身——哪怕是对应用程序一个小地方的改变都需要整个单体应用被重新构建和部署。随着时间的推移通常会很难保持一个良好的模块结构，使得控制变更仅影响模块内部变得越加困难。如要实现可伸缩，需要变动整个应用程序而不是应用程序的某一部分，这要求更多的资源。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/04/SpringBoot/05-spring-boot-and-spring-clould/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/03/13/JavaLan/01-learning-thread-note/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1635,150 +1780,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/image/head_3.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AIX Zing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/" itemprop="url">macOS Mojave如何为蓝牙耳机开启AAC、aptX</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-29T00:58:58+08:00">
-                2019-01-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/" class="cy_cmt_count" data-xid="2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/" itemprop="commentsCount"></span>
-                </a>
-              
-            
-          
-
-          
-          
-             <span id="/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/" class="leancloud_visitors" data-flag-title="macOS Mojave如何为蓝牙耳机开启AAC、aptX">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </span></div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://upload-images.jianshu.io/upload_images/1112615-28e1d5e5b0632dc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>SBC协议音质不好，虽然我耳朵不是很灵敏，但是没有对比就没有伤害，换成AAC明显能感受到音质的提升。<br>步骤如下<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/01/29/MacTip/Mac-open-AAC-aptX-for-bluetooth-headphone/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1821,7 +1827,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-count">71</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1834,7 +1840,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">79</span>
+                <span class="site-state-item-count">80</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
