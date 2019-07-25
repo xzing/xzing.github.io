@@ -401,30 +401,19 @@
 
       
         
-          
-            <h2 id="什么是CAP"><a href="#什么是CAP" class="headerlink" title="什么是CAP"></a>什么是CAP</h2><p><img src="https://upload-images.jianshu.io/upload_images/1112615-a6db3ec50f1fb53a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CAP"></p>
+          <h2 id="什么是CAP"><a href="#什么是CAP" class="headerlink" title="什么是CAP"></a>什么是CAP</h2><p><img src="https://upload-images.jianshu.io/upload_images/1112615-a6db3ec50f1fb53a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CAP"></p>
 <p>任何一个分布式数据库产品都无法达到C.A.P特点俱全，这是目前的结论。但是这个不代表这个只能三取其二，二是在3者中间找平衡点。</p>
-<p>那么首先介绍一下，CAP是什么</p>
-<ul>
-<li><p>Consistency 一致性<br>All clients see the same view of data, even right after update or delete<br>即使在更新或删除后，所有客户端都会看到相同的数据视图</p>
-</li>
-<li><p>Availability 可用性<br>All clients can find a replica of data, even in case of partial node failures<br>即使出现部分节点故障，所有客户端都可以找到数据副本</p>
-</li>
-<li><p>Partitioning 容错性<br>The system continues to work as expected, even in presence of partial network failure<br>即使存在部分网络故障，系统也会按预期继续工作</p>
-</li>
-</ul>
-<h2 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h2><p>CP (一致性+容错性) —— 首先这个看起来很奇怪，其实是CP指的是仅在网络分区（存在互不可达的节点）的情况下牺牲可用性。</p>
-<p>CA (一致性+可用性) —— 一般指没有网络分区的的分布式服务，单节点虽然没有网络分区，但是不是分布式范畴内的。</p>
-<p>AP (可用性+容错性) —— 这种是指存在网络分区的分布式节点，可以做到可用性，但做不到实时一致性。</p>
-<h2 id="常用数据库的划分"><a href="#常用数据库的划分" class="headerlink" title="常用数据库的划分"></a>常用数据库的划分</h2><p>从网上盗来一张图，是主流数据库的 CAP倾向</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-0901d3177848a8a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>针对数据的特性，选择相应的数据库，非常重要。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>对于一个分布式系统来说，CAP三者中，Partitioning是基本要求，只能通过基础设施提升，无法通过牺牲Consistency和Availability 某个，或者同时牺牲两个来提高。<br>基本要求满足了，Consistency和Availability直接可以根据具体要求权衡实现。</p>
-
-          
+<p>那么首先介绍一下，CAP是什么<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/25/Database/distributed-database-and-cap-theorem/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
-    </div>
+    </p></div>
 
     <div>
       
