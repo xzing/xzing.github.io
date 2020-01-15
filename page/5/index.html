@@ -312,6 +312,269 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/06/05/OperationAndMaintenance/ansible-learning-02/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/05/OperationAndMaintenance/ansible-learning-02/" itemprop="url">Ansible自动化部署入门</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-05T01:48:58+08:00">
+                2017-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/05/OperationAndMaintenance/ansible-learning-02/" class="leancloud_visitors" data-flag-title="Ansible自动化部署入门">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="http://upload-images.jianshu.io/upload_images/1112615-1a9c0f3807270562.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li>Ansible的特性：<ul>
+<li>ansible基于Python实现，有Paramiko、PyYAML、JinJia2主要模块</li>
+<li>使用SSH链接主机，部署简单</li>
+<li>可以使用自定义模块，也可以使用其他语言编写的模块，基于模块可以完成各种任务。</li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/05/OperationAndMaintenance/ansible-learning-02/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/05/31/OperationAndMaintenance/ansible-learning-01/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/head_3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AIX Zing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/31/OperationAndMaintenance/ansible-learning-01/" itemprop="url">自动化部署工具 Ansible填坑记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T01:48:58+08:00">
+                2017-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/31/OperationAndMaintenance/ansible-learning-01/" class="leancloud_visitors" data-flag-title="自动化部署工具 Ansible填坑记录">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>因为公司想对项目逐步转向为自动化部署，所以安排我和一位大佬做起了运维。目前是想先用ansible实现从git上获取code，在ansible主机上编译，配置，打包，发布。所以就有了这篇文章。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-fea8ebad97cb96d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/31/OperationAndMaintenance/ansible-learning-01/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/05/08/OtherTips/gradle-learning-01/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -357,17 +620,6 @@
 
           
             
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/05/08/OtherTips/gradle-learning-01/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/05/08/OtherTips/gradle-learning-01/" class="cy_cmt_count" data-xid="2017/05/08/OtherTips/gradle-learning-01/" itemprop="commentsCount"></span>
-                </a>
-              
-            
           
 
           
@@ -390,7 +642,7 @@
 
           
 
-        </span></div>
+        </div>
       </header>
     
 
@@ -496,17 +748,6 @@
 
           
             
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/05/07/OperationAndMaintenance/make-ubuntu-to-be-your-dev-system/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/05/07/OperationAndMaintenance/make-ubuntu-to-be-your-dev-system/" class="cy_cmt_count" data-xid="2017/05/07/OperationAndMaintenance/make-ubuntu-to-be-your-dev-system/" itemprop="commentsCount"></span>
-                </a>
-              
-            
           
 
           
@@ -529,7 +770,7 @@
 
           
 
-        </span></div>
+        </div>
       </header>
     
 
@@ -651,17 +892,6 @@
 
           
             
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/04/29/diary/2017-04-2823:53:23/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/04/29/diary/2017-04-2823:53:23/" class="cy_cmt_count" data-xid="2017/04/29/diary/2017-04-2823:53:23/" itemprop="commentsCount"></span>
-                </a>
-              
-            
           
 
           
@@ -684,7 +914,7 @@
 
           
 
-        </span></div>
+        </div>
       </header>
     
 
@@ -791,17 +1021,6 @@
 
           
             
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/03/30/jvm/How-Java-GC-Play-with-Memery/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/03/30/jvm/How-Java-GC-Play-with-Memery/" class="cy_cmt_count" data-xid="2017/03/30/jvm/How-Java-GC-Play-with-Memery/" itemprop="commentsCount"></span>
-                </a>
-              
-            
           
 
           
@@ -824,7 +1043,7 @@
 
           
 
-        </span></div>
+        </div>
       </header>
     
 
@@ -935,17 +1154,6 @@
 
           
             
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/03/19/JavaLan/spring-mvc-note/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/03/19/JavaLan/spring-mvc-note/" class="cy_cmt_count" data-xid="2017/03/19/JavaLan/spring-mvc-note/" itemprop="commentsCount"></span>
-                </a>
-              
-            
           
 
           
@@ -968,7 +1176,7 @@
 
           
 
-        </span></div>
+        </div>
       </header>
     
 
@@ -1075,17 +1283,6 @@
 
           
             
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/03/17/JavaLan/ten-kind-of-design-pattern/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/03/17/JavaLan/ten-kind-of-design-pattern/" class="cy_cmt_count" data-xid="2017/03/17/JavaLan/ten-kind-of-design-pattern/" itemprop="commentsCount"></span>
-                </a>
-              
-            
           
 
           
@@ -1108,7 +1305,7 @@
 
           
 
-        </span></div>
+        </div>
       </header>
     
 
@@ -1226,17 +1423,6 @@
 
           
             
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/03/09/JavaLan/basic-of-java-JDBC/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/03/09/JavaLan/basic-of-java-JDBC/" class="cy_cmt_count" data-xid="2017/03/09/JavaLan/basic-of-java-JDBC/" itemprop="commentsCount"></span>
-                </a>
-              
-            
           
 
           
@@ -1259,7 +1445,7 @@
 
           
 
-        </span></div>
+        </div>
       </header>
     
 
@@ -1366,17 +1552,6 @@
 
           
             
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/02/28/JavaLan/how-to-play-with-SpringAOP/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/02/28/JavaLan/how-to-play-with-SpringAOP/" class="cy_cmt_count" data-xid="2017/02/28/JavaLan/how-to-play-with-SpringAOP/" itemprop="commentsCount"></span>
-                </a>
-              
-            
           
 
           
@@ -1399,7 +1574,7 @@
 
           
 
-        </span></div>
+        </div>
       </header>
     
 
@@ -1414,298 +1589,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/28/JavaLan/how-to-play-with-SpringAOP/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/02/25/JavaLan/introduction-of-AOP/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/image/head_3.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AIX Zing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/25/JavaLan/introduction-of-AOP/" itemprop="url">(FS计划)AOP和Spring中AOP的简单介绍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-25T08:05:48+08:00">
-                2017-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/02/25/JavaLan/introduction-of-AOP/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/02/25/JavaLan/introduction-of-AOP/" class="cy_cmt_count" data-xid="2017/02/25/JavaLan/introduction-of-AOP/" itemprop="commentsCount"></span>
-                </a>
-              
-            
-          
-
-          
-          
-             <span id="/2017/02/25/JavaLan/introduction-of-AOP/" class="leancloud_visitors" data-flag-title="(FS计划)AOP和Spring中AOP的简单介绍">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </span></div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://upload-images.jianshu.io/upload_images/1112615-f513cbc11f698921.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h2 id="0x00-AOP是什么"><a href="#0x00-AOP是什么" class="headerlink" title="0x00 AOP是什么"></a>0x00 AOP是什么</h2><p>AOP <em><code>(Aspect Oriented Programming)</code></em>面向切面编程，Spring是通过Java动态代理实现的。</p>
-<p>AOP的目的是为了将组件和业务代码分离开，让日志、事务处理、缓存、性能统计、权限控制等等模块跟实际的业务模块解耦。</p>
-<p>这么说还是很笼统，Java的类中，属性和方法才是主流，切面是什么，完全没这个概念。<br>那么以拍电影举个栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.前期筹备，剧本确定、演员试镜确定</span><br><span class="line">############分割线a</span><br><span class="line">2. 开拍、剪辑、制作</span><br><span class="line">############分割线b</span><br><span class="line">3. 营销、宣传、公映</span><br></pre></td></tr></table></figure></p>
-<p>1-&gt;2-&gt;3这个流程是拍电影的业务流程，但是如果我要拍花絮怎么办，这个流程不属于现在的电影业务流程，我们需要安排一个零时的业务，那我们就要在<code>############分割线a</code>分割线那里添加摄花絮的计划，分配一些人员。<br>那么分割线那里，就是切面。这些切面干什么，由切面代理去管理和运行，这就是AOP。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/25/JavaLan/introduction-of-AOP/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xzing.github.io/2017/02/23/diary/2017-02-2215-56-13/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/image/head_3.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AIX Zing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/23/diary/2017-02-2215-56-13/" itemprop="url">个人全栈计划开始</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-23T05:00:06+08:00">
-                2017-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/02/23/diary/2017-02-2215-56-13/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://xzing.github.io/2017/02/23/diary/2017-02-2215-56-13/" class="cy_cmt_count" data-xid="2017/02/23/diary/2017-02-2215-56-13/" itemprop="commentsCount"></span>
-                </a>
-              
-            
-          
-
-          
-          
-             <span id="/2017/02/23/diary/2017-02-2215-56-13/" class="leancloud_visitors" data-flag-title="个人全栈计划开始">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </span></div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>讲道理，全栈工程师很少说自己是全栈，倒是一些什么都会一点的人喜欢把全栈挂嘴边，其实什么都不精通。<br>一直想做个全栈，可惜还差得远。所以写个计划：一方面激励一下自己，防止放荡不羁的太过分；另一方做个积淀，是时候正儿八经的做事情了。</p>
-<p>目前计划只是个雏形，不过肯定是围绕Java Web和NodeJS的<br>后面也许会学习一下PHP和Python，但是不敢打包票，毕竟1口吃不下N个胖子</p>
-<h2 id="计划列表"><a href="#计划列表" class="headerlink" title="计划列表"></a>计划列表</h2><ol>
-<li>Java 8新特性和老知识细嚼慢咽</li>
-<li>Spring家族</li>
-<li>MySQL</li>
-<li>ES6.0</li>
-<li>NodeJS</li>
-<li>TypeScript</li>
-<li>Angular 2 等前端框架</li>
-</ol>
-<p>……乍一看已经挖坑很深了，后面服务器运维的东西已经不敢提上日程了。如果顺利的话，大概得明年才能开启。<br>目前打算Java语言特性会作为穿插写一写，先从Spring开始扒起，和持久层一起看，主要是自己看的东西，笔记，也可能是转载。</p>
-<p>如果努力的话，上半年能把Spring家族的坑，填个十之八九，接下来就是新的JavaScript、NodeJS和一些前端框架了<br>年底如果没完成，自打80大板<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/23/diary/2017-02-2215-56-13/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1789,7 +1672,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">71</span>
+                <span class="site-state-item-count">73</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1844,7 +1727,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1978,10 +1861,6 @@
 
 
 
-
-  
-    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cysYXx7FA"></script>
-  
 
 
 
