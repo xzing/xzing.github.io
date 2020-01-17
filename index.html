@@ -660,11 +660,15 @@
       
         
           
-            <h2 id="用Docker免配置安装镜像"><a href="#用Docker免配置安装镜像" class="headerlink" title="用Docker免配置安装镜像"></a>用Docker免配置安装镜像</h2><p>开发最烦的就是搭建大项目环境的时候一堆软件要安装，比如Nginx、Redis、Kafka、MySQL……等等，如果是在公司，有开发环境在线上还比较方便，但是自己在家弄自己的玩具时，你得搞自己的一套，那繁琐程度相当于自己搞了一遍全环境。转行当运维的我就不说了，但是如果不是特地学习或者特殊化测试，弄一套Docker image就够了</p>
-<p>Docker run 几乎是一键搭建好你想要的任何中间件，数据库。比你下载源码，make半天要舒服多了。</p>
+            <h2 id="用Docker免配置安装镜像"><a href="#用Docker免配置安装镜像" class="headerlink" title="用Docker免配置安装镜像"></a>用Docker免配置安装镜像</h2><p>开发最烦的就是搭建大项目环境的时候一堆软件要安装，比如Nginx、Redis、Kafka、MySQL……等等，如果是在公司，有开发环境在线上还比较方便，但是自己在家弄自己的玩具时，你得搞自己的一套，那繁琐程度相当于自己搞了一遍全环境。想转行当运维的暂且不表，但是如果不是特地学习或者特殊化测试，弄一套Docker image，把这些装起来就够了。Docker run 几乎是一键搭建好你想要的任何中间件，数据库。比你下载源码，cmake编译半天，搞N多配置要舒服多了。想想Mac的homebrew，不香吗？</p>
 <p>以 redis 为例：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 6366:6366 --name localRedis redis</span><br></pre></td></tr></table></figure></p>
 <p>然后进度条跑完，你就有Redis了。【慢是因为你的网络不够科学，自己可以找国内镜像】</p>
 <h2 id="使用IDEA管理这些容器"><a href="#使用IDEA管理这些容器" class="headerlink" title="使用IDEA管理这些容器"></a>使用IDEA管理这些容器</h2><p>前面有一篇从IDEA官方博客翻译的文章：<a href="https://www.jianshu.com/p/2e2332f247fe" target="_blank" rel="noopener">IDEA Services 工具窗口: 一个管理所有服务的地方【译】</a><br>介绍了Service Tool 窗口管理运行所有服务，那么好玩的来了，可以用IDEA在这个窗口下管理和运行Docker的镜像和容器了</p>
+<p>操作和之前文章是一样的，不过不是选择Docker<br><img src="https://upload-images.jianshu.io/upload_images/1112615-a806b733fb43f44f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="look"></p>
+<p>双击Docker小图标就可以看到image镜像和container容器了<br><img src="https://upload-images.jianshu.io/upload_images/1112615-3443bb2d81be338c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="look me again"></p>
+<p>同样，自建的Docker镜像也可以在这里找到。<br>如何使用IntelliJ IDEA在Docker中调试Java应用程序，我就不做搬运了，参考：<a href="https://blog.jetbrains.com/idea/2019/04/debug-your-java-applications-in-docker-using-intellij-idea/" target="_blank" rel="noopener">Debug your Java applications in Docker using IntelliJ IDEA</a></p>
+<p>这次小分享就到这里。</p>
+<p>如果觉得有帮助，请点个赞<br>转载请注明出处：<a href="https://www.jianshu.com/u/4915ed24d1e3" target="_blank" rel="noopener">https://www.jianshu.com/u/4915ed24d1e3</a><br>若有错误，请务必指正。谢谢<br>我的博客：<a href="https://xzing.github.io/">https://xzing.github.io/</a></p>
 
           
         
