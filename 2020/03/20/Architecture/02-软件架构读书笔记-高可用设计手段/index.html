@@ -90,19 +90,19 @@
 
 
 
-<meta name="description" content="微服务高可用的设计手段 服务冗余，服务无状态化 负载均衡，ApI幂等设计 异步设计，添加超时机制 数据复制缓存分片，服务限流降级熔断 架构拆分 服务治理  服务分级：按业务划分，主业务要保证可用性，其他业务要保证故障率不会影响主业务，其他系统故障要求不会出现长时间不可用（根据实际情况设定阈值）；常见的划分方式是1-3级  无缝停止线上服务：网关设置热切换开关IPTABLES 设置只允许流量进入，不">
+<meta name="description" content="微服务高可用的设计手段 服务冗余，服务无状态化 负载均衡，ApI幂等设计 异步设计，添加超时机制 数据复制缓存分片，服务限流降级熔断 架构拆分 服务治理  服务分级：按业务划分，主业务要保证可用性，其他业务要保证故障率不会影响主业务，其他系统故障要求不会出现长时间不可用（根据实际情况设定阈值）；常见的划分方式是1-3级">
 <meta name="keywords" content="Architecture">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高可用常见设计手段">
 <meta property="og:url" content="http://xzing.github.io/2020/03/20/Architecture/02-软件架构读书笔记-高可用设计手段/index.html">
 <meta property="og:site_name" content="AIX Zing">
-<meta property="og:description" content="微服务高可用的设计手段 服务冗余，服务无状态化 负载均衡，ApI幂等设计 异步设计，添加超时机制 数据复制缓存分片，服务限流降级熔断 架构拆分 服务治理  服务分级：按业务划分，主业务要保证可用性，其他业务要保证故障率不会影响主业务，其他系统故障要求不会出现长时间不可用（根据实际情况设定阈值）；常见的划分方式是1-3级  无缝停止线上服务：网关设置热切换开关IPTABLES 设置只允许流量进入，不">
+<meta property="og:description" content="微服务高可用的设计手段 服务冗余，服务无状态化 负载均衡，ApI幂等设计 异步设计，添加超时机制 数据复制缓存分片，服务限流降级熔断 架构拆分 服务治理  服务分级：按业务划分，主业务要保证可用性，其他业务要保证故障率不会影响主业务，其他系统故障要求不会出现长时间不可用（根据实际情况设定阈值）；常见的划分方式是1-3级">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-3337bf10d697f45f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2020-04-10T01:54:17.588Z">
+<meta property="og:updated_time" content="2020-08-14T10:33:26.888Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高可用常见设计手段">
-<meta name="twitter:description" content="微服务高可用的设计手段 服务冗余，服务无状态化 负载均衡，ApI幂等设计 异步设计，添加超时机制 数据复制缓存分片，服务限流降级熔断 架构拆分 服务治理  服务分级：按业务划分，主业务要保证可用性，其他业务要保证故障率不会影响主业务，其他系统故障要求不会出现长时间不可用（根据实际情况设定阈值）；常见的划分方式是1-3级  无缝停止线上服务：网关设置热切换开关IPTABLES 设置只允许流量进入，不">
+<meta name="twitter:description" content="微服务高可用的设计手段 服务冗余，服务无状态化 负载均衡，ApI幂等设计 异步设计，添加超时机制 数据复制缓存分片，服务限流降级熔断 架构拆分 服务治理  服务分级：按业务划分，主业务要保证可用性，其他业务要保证故障率不会影响主业务，其他系统故障要求不会出现长时间不可用（根据实际情况设定阈值）；常见的划分方式是1-3级">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1112615-3337bf10d697f45f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -397,7 +397,7 @@
 <li>架构拆分 服务治理</li>
 </ol>
 <p><strong>服务分级：</strong><br>按业务划分，主业务要保证可用性，其他业务要保证故障率不会影响主业务，其他系统故障要求不会出现长时间不可用（根据实际情况设定阈值）；常见的划分方式是1-3级</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1112615-3337bf10d697f45f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1112615-3337bf10d697f45f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><a id="more"></a></p>
 <p>无缝停止线上服务：<br>网关设置热切换开关<br>IPTABLES 设置只允许流量进入，不允许流出</p>
 <h3 id="高并发设计手段"><a href="#高并发设计手段" class="headerlink" title="高并发设计手段"></a>高并发设计手段</h3><p>软件性的优化目标</p>
 <ul>
